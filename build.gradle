@@ -60,6 +60,29 @@ application {
     mainClass = 'xaos.Towns'
 }
 
+// Headless deterministic test mode: worldgen + simulation, no window and
+// no proprietary assets. Same JVM setup as run, different entry point.
+//   .\gradlew runHeadless -Pseed=42 -Pticks=3000
+tasks.register('runHeadless', JavaExec) {
+    // Custom JavaExec tasks don't pick up the toolchain by themselves
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'xaos.TownsHeadless'
+    workingDir = file('src')
+    jvmArgs '-Djava.library.path=lib/native'
+    jvmArgs '--enable-native-access=ALL-UNNAMED'
+    jvmArgs '--sun-misc-unsafe-memory-access=allow'
+    if (project.hasProperty('seed')) {
+        args "--seed=${project.property('seed')}"
+    }
+    if (project.hasProperty('ticks')) {
+        args "--ticks=${project.property('ticks')}"
+    }
+    if (project.hasProperty('userFolder')) {
+        args "--user-folder=${project.property('userFolder')}"
+    }
+}
+
 tasks.named('run') {
     // The game resolves towns.ini, graphics.ini, audio.ini and data/
     // relative to the working directory. lib/native is only needed for

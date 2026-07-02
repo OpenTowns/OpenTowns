@@ -126,6 +126,10 @@ public final class UtilsGL {
 
 
 	public static void initGLModes () {
+		if (Game.isHeadless ()) {
+			return;
+		}
+
 		GL11.glDisable (GL11.GL_LIGHTING);
 		GL11.glDisable (GL11.GL_DITHER);
 		GL11.glDisable (GL11.GL_STENCIL_TEST);
@@ -699,6 +703,10 @@ public final class UtilsGL {
 			return null;
 		}
 
+		if (Game.isHeadless ()) {
+			return headlessTexture (imageFile);
+		}
+
 		ImageData image = cachedImages.get (imageFile);
 		if (image == null || reload) {
 			image = loadImage (imageFile, reload);
@@ -730,6 +738,23 @@ public final class UtilsGL {
 
 	private static int getFreeTextureID () {
 		return !freeTextureIds.isEmpty () ? freeTextureIds.poll () : maxTextureId++;
+	}
+
+
+	/**
+	 * Headless mode has no GL context and no graphics assets on disk: hand
+	 * out a cached 1x1 stub per file name, with unique IDs, so tile setup
+	 * code runs unchanged.
+	 */
+	private static TextureData headlessTexture (String imageFile) {
+		ImageData cached = cachedImages.get (imageFile);
+		if (cached instanceof TextureData) {
+			return (TextureData) cached;
+		}
+
+		TextureData stub = new TextureData (imageFile, 1, 1, ByteBuffer.allocateDirect (4), GL11.GL_RGBA, getFreeTextureID ());
+		cachedImages.put (imageFile, stub);
+		return stub;
 	}
 
 
@@ -945,6 +970,11 @@ public final class UtilsGL {
 
 
 	public static boolean[][] generateAlpha (Tile tile, int width, int height, String sFilename) {
+		if (Game.isHeadless ()) {
+			// Alpha masks drive pixel-precise mouse hit tests; no pixels headless
+			return new boolean [width] [height];
+		}
+
 		boolean[][] alphaArray = new boolean [tile.getTileWidth ()] [tile.getTileHeight ()];
 		boolean[][] storedAlpha = cachedTextureAlphas.get (sFilename);
 		if (storedAlpha == null) {

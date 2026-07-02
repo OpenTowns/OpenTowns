@@ -33,6 +33,12 @@ public final class UtilFont {
     }
 
     public static void parseFont() {
+        if (Game.isHeadless()) {
+            // No font assets headless; empty table gives zero-width metrics
+            chars = new CharDef[0];
+            return;
+        }
+
         try {
             // now parse the font file
             BufferedReader in = null;

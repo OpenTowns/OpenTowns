@@ -71,6 +71,19 @@ public final class MainMenuPanel implements Runnable {
 
     private String errorToShow = null;
 
+    /**
+     * Headless stub: worldgen reports its progress through
+     * Game.getPanelMainMenu().setLoadingText(), so headless mode needs an
+     * instance — one that never loads textures, builds menus or starts the
+     * loader thread. It stays inactive, so setLoadingText only stores text.
+     */
+    public static MainMenuPanel createHeadlessStub() {
+        return new MainMenuPanel();
+    }
+
+    private MainMenuPanel() {
+    }
+
     public MainMenuPanel(int renderX, int renderY, int renderWidth, int renderHeight) {
         resize(renderX, renderY, renderWidth, renderHeight);
 

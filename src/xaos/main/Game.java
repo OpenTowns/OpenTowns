@@ -175,6 +175,8 @@ public final class Game {
 
 	private static String savegameName;
 
+	private static boolean headless;
+
 	private boolean displayFullscreen = false;
 
 
@@ -195,38 +197,7 @@ public final class Game {
 		}
 		userFolder = fUserFolder.getAbsolutePath ();
 
-		// Música?
-		musicON = Boolean.parseBoolean (Towns.getPropertiesString ("MUSIC")); //$NON-NLS-1$
-		FXON = Boolean.parseBoolean (Towns.getPropertiesString ("FX")); //$NON-NLS-1$
-
-		// Game options
-		mouseScrollON = Boolean.parseBoolean (Towns.getPropertiesString ("MOUSE_SCROLL")); //$NON-NLS-1$
-		mouseScrollEarsON = Boolean.parseBoolean (Towns.getPropertiesString ("MOUSE_SCROLL_EARS")); //$NON-NLS-1$
-		mouse2DCubesON = Boolean.parseBoolean (Towns.getPropertiesString ("MOUSE_2D_CUBES")); //$NON-NLS-1$
-		disabledItemsON = Boolean.parseBoolean (Towns.getPropertiesString ("DISABLED_ITEMS")); //$NON-NLS-1$
-		disabledGodsON = Boolean.parseBoolean (Towns.getPropertiesString ("DISABLED_GODS")); //$NON-NLS-1$
-		pauseStartON = Boolean.parseBoolean (Towns.getPropertiesString ("PAUSE_START")); //$NON-NLS-1$
-		setAutosaveDays (Towns.getPropertiesInt ("AUTOSAVE_DAYS", 0)); //$NON-NLS-1$
-		setSiegeDifficulty (Towns.getPropertiesInt ("SIEGES", SIEGE_DIFFICULTY_NORMAL)); //$NON-NLS-1$
-		siegePause = Boolean.parseBoolean (Towns.getPropertiesString ("SIEGE_PAUSE")); //$NON-NLS-1$
-		caravanPause = Boolean.parseBoolean (Towns.getPropertiesString ("CARAVAN_PAUSE")); //$NON-NLS-1$
-		allowBury = Boolean.parseBoolean (Towns.getPropertiesString ("ALLOW_BURY")); //$NON-NLS-1$
-		setVolumeMusic (Towns.getPropertiesInt ("VOLUME_MUSIC", 10)); //$NON-NLS-1$
-		setVolumeFX (Towns.getPropertiesInt ("VOLUME_FX", 10)); //$NON-NLS-1$
-
-		setPathfindingCPULevel (Towns.getPropertiesInt ("PATHFINDING_LEVEL", 2)); //$NON-NLS-1$
-		// Mods loaded
-		setModsLoaded (Towns.getPropertiesString ("MODS")); //$NON-NLS-1$
-
-		// Servers
-		setServers (Towns.getPropertiesString ("SERVERS")); //$NON-NLS-1$
-
-		// Shortcuts
-		UtilsKeyboard.loadShortcuts ();
-
-		// FPS
-		FPS_MAINMENU = Towns.getPropertiesInt ("FPS_MAINMENU", FPS_MAINMENU); //$NON-NLS-1$
-		FPS_INGAME = Towns.getPropertiesInt ("FPS_INGAME", FPS_INGAME); //$NON-NLS-1$
+		loadConfig ();
 
 		// window size
 		int desktopWidth = Display.getDesktopDisplayMode ().getWidth ();
@@ -297,6 +268,93 @@ public final class Game {
 		// Main loop
 		run ();
 
+	}
+
+
+	/**
+	 * Options read from towns.ini, shared by the windowed constructor and
+	 * headless init. Expects userFolder to be set (the user-folder towns.ini
+	 * overlays the local one).
+	 */
+	private static void loadConfig () {
+		// Música?
+		musicON = Boolean.parseBoolean (Towns.getPropertiesString ("MUSIC")); //$NON-NLS-1$
+		FXON = Boolean.parseBoolean (Towns.getPropertiesString ("FX")); //$NON-NLS-1$
+
+		// Game options
+		mouseScrollON = Boolean.parseBoolean (Towns.getPropertiesString ("MOUSE_SCROLL")); //$NON-NLS-1$
+		mouseScrollEarsON = Boolean.parseBoolean (Towns.getPropertiesString ("MOUSE_SCROLL_EARS")); //$NON-NLS-1$
+		mouse2DCubesON = Boolean.parseBoolean (Towns.getPropertiesString ("MOUSE_2D_CUBES")); //$NON-NLS-1$
+		disabledItemsON = Boolean.parseBoolean (Towns.getPropertiesString ("DISABLED_ITEMS")); //$NON-NLS-1$
+		disabledGodsON = Boolean.parseBoolean (Towns.getPropertiesString ("DISABLED_GODS")); //$NON-NLS-1$
+		pauseStartON = Boolean.parseBoolean (Towns.getPropertiesString ("PAUSE_START")); //$NON-NLS-1$
+		setAutosaveDays (Towns.getPropertiesInt ("AUTOSAVE_DAYS", 0)); //$NON-NLS-1$
+		setSiegeDifficulty (Towns.getPropertiesInt ("SIEGES", SIEGE_DIFFICULTY_NORMAL)); //$NON-NLS-1$
+		siegePause = Boolean.parseBoolean (Towns.getPropertiesString ("SIEGE_PAUSE")); //$NON-NLS-1$
+		caravanPause = Boolean.parseBoolean (Towns.getPropertiesString ("CARAVAN_PAUSE")); //$NON-NLS-1$
+		allowBury = Boolean.parseBoolean (Towns.getPropertiesString ("ALLOW_BURY")); //$NON-NLS-1$
+		setVolumeMusic (Towns.getPropertiesInt ("VOLUME_MUSIC", 10)); //$NON-NLS-1$
+		setVolumeFX (Towns.getPropertiesInt ("VOLUME_FX", 10)); //$NON-NLS-1$
+
+		setPathfindingCPULevel (Towns.getPropertiesInt ("PATHFINDING_LEVEL", 2)); //$NON-NLS-1$
+		// Mods loaded
+		setModsLoaded (Towns.getPropertiesString ("MODS")); //$NON-NLS-1$
+
+		// Servers
+		setServers (Towns.getPropertiesString ("SERVERS")); //$NON-NLS-1$
+
+		// Shortcuts
+		UtilsKeyboard.loadShortcuts ();
+
+		// FPS
+		FPS_MAINMENU = Towns.getPropertiesInt ("FPS_MAINMENU", FPS_MAINMENU); //$NON-NLS-1$
+		FPS_INGAME = Towns.getPropertiesInt ("FPS_INGAME", FPS_INGAME); //$NON-NLS-1$
+	}
+
+
+	/**
+	 * Headless init (test mode): no window, GL context, audio device or UI,
+	 * so none of the proprietary graphics/audio/font assets are needed.
+	 * The user folder lives at the given base path instead of user.home to
+	 * keep test runs out of the player's real save folder. The caller drives
+	 * the simulation itself (startGame + World.nextTurn); there is no run()
+	 * loop.
+	 */
+	public static void initHeadless (String sUserFolderBase) {
+		headless = true;
+
+		File fUserFolder = Utils.createUserFolder (sUserFolderBase);
+		if (fUserFolder == null) {
+			Log.log (Log.LEVEL_ERROR, Messages.getString ("Game.7"), "Game"); //$NON-NLS-1$ //$NON-NLS-2$
+			exit ();
+		}
+		userFolder = fUserFolder.getAbsolutePath ();
+		Towns.propertiesMain = null;
+
+		loadConfig ();
+
+		// Force everything the simulation doesn't need off, regardless of
+		// what towns.ini says: no audio backend, no pause-at-start (the tick
+		// loop would freeze), no autosave (its progress overlay renders),
+		// and no bury (excluded from the deterministic surface).
+		musicON = false;
+		FXON = false;
+		pauseStartON = false;
+		setAutosaveDays (0);
+		allowBury = false;
+
+		// Depths
+		Cell.generateDepths ();
+
+		// The loading-screen panel doubles as the loading-progress sink for
+		// worldgen; give it an inactive stub so those calls just store text.
+		panelMainMenu = MainMenuPanel.createHeadlessStub ();
+		MessagesPanel.clear ();
+	}
+
+
+	public static boolean isHeadless () {
+		return headless;
 	}
 
 
@@ -454,8 +512,10 @@ public final class Game {
 		}
 		getPanelMainMenu ().setLoadingText (Messages.getString ("Game.8")); //$NON-NLS-1$
 
-		getPanelUI ().initialize (sCampaignID, sMissionID, true);
-		CommandPanel.initialize (sCampaignID, sMissionID);
+		if (!headless) {
+			getPanelUI ().initialize (sCampaignID, sMissionID, true);
+			CommandPanel.initialize (sCampaignID, sMissionID);
+		}
 		if (TownsProperties.DEBUG_MODE) {
 			sLog += (System.currentTimeMillis () - lTime) + "ms)"; //$NON-NLS-1$
 			Log.log (Log.LEVEL_DEBUG, sLog, "Game"); //$NON-NLS-1$
@@ -602,8 +662,14 @@ public final class Game {
 		}
 
 		// A* thread
-		Thread t = new Thread (new AStarQueue ());
-		t.start ();
+		if (AStarQueue.isSynchronousMode ()) {
+			// Test mode: queues only; the test runner drains them on its own
+			// thread after each tick
+			new AStarQueue ();
+		} else {
+			Thread t = new Thread (new AStarQueue ());
+			t.start ();
+		}
 
 		// Paramos la música del main menú y arrancamos la música in-game
 		UtilsAL.stop (UtilsAL.SOURCE_MUSIC_MAINMENU);
@@ -2128,7 +2194,13 @@ public final class Game {
 					alServers.add (sServerAddress.trim ());
 
 					// Buscamos el nombre
-					alServerNames.add (UtilsServer.getServerName (sServerAddress.trim ()));
+					if (headless) {
+						// Test mode stays offline: the lookup is an HTTP call
+						// and the name only feeds the server-list menu
+						alServerNames.add (sServerAddress.trim ());
+					} else {
+						alServerNames.add (UtilsServer.getServerName (sServerAddress.trim ()));
+					}
 				}
 			}
 			sortServers ();

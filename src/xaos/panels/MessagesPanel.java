@@ -144,6 +144,11 @@ public final class MessagesPanel {
     }
 
     public static void addMessage(int iMessageType, String sMessage, ColorGL color, Point3DShort view, int entityID) {
+        if (Game.isHeadless()) {
+            // Message log is pure UI; laying it out needs the UI panel tiles
+            return;
+        }
+
         MessagesPanelData[] messagesData = messagesDataFull.get(iMessageType * 2);
         for (int i = 0; i < (messagesData.length - 1); i++) {
             messagesData[i] = messagesData[i + 1];

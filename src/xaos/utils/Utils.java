@@ -50,6 +50,16 @@ public final class Utils {
 
     private Utils() { /*static utility class*/ }
 
+    /**
+     * Replaces the game RNG with a seeded one (deterministic test mode).
+     * Every random draw in the game goes through this single instance, so
+     * seeding it before worldgen fixes the whole run. The shipped game never
+     * calls this and stays non-deterministic.
+     */
+    public static void setRandomSeed(long seed) {
+        random = new Random(seed);
+    }
+
 	// ************
     // * 2D UTILS *
     // ************

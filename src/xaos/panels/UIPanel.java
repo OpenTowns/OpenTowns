@@ -9053,6 +9053,11 @@ public final class UIPanel {
 
 
 	public static void createTradePanelContent (CaravanData caravanData) {
+		if (Game.isHeadless ()) {
+			// Caravan sim opens its trade UI on arrival; nothing to open here
+			return;
+		}
+
 		if (caravanData != null) {
 			if (tradePanel == null) {
 				tradePanel = new TradePanel (caravanData, tradePanelPoint, TRADE_PANEL_WIDTH, TRADE_PANEL_HEIGHT);

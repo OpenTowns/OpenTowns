@@ -105,13 +105,45 @@ Still vendored in `lib/` (from a Steam Towns install):
 - `data/languages/*.properties` must stay ISO-8859-1/ASCII; Java 8 era `PropertyResourceBundle` reads that encoding by spec.
 - towns.ini keybinds store LWJGL 2 keycodes and key names; the input shim translates from GLFW, so configs from the original game keep working.
 
+## Headless deterministic test mode
+
+`xaos.TownsHeadless` runs worldgen and the simulation without a window, GL
+context, audio device, or any proprietary asset. Run it with:
+
+```
+.\gradlew runHeadless -Pseed=42 -Pticks=3000            # deterministic
+.\gradlew runHeadless -Pticks=3000                      # headless, unseeded
+```
+
+Plus optional `-Pmap=normal|desert|jungle|mixed|snow|mountains` and
+`-PuserFolder=path`. A windowed "New game" is campaign `c1` with the map type
+as the mission id; `-Pmap` picks the same thing. The user folder defaults to
+a sandbox under the system temp dir, so test runs never touch `~/.towns`.
+
+With a seed, the run is deterministic: the single game RNG (`Utils.random`,
+which every random draw funnels through) is seeded before worldgen, and
+pathfinding runs synchronously each tick (`AStarQueue.drainSynchronously`)
+instead of on the worker thread. Same seed + same tick count = identical
+world state; the runner prints a state hash over terrain, livings and items
+to compare runs. Without a seed the RNG and async A* worker behave exactly
+like the shipped game.
+
+How it works: `Game.initHeadless()` reads the same config as the windowed
+constructor and forces audio, autosave, pause-at-start and bury off. A
+handful of `Game.isHeadless()` guards give the sim no-op paths where it
+brushes against presentation: texture loads return 1x1 stubs with unique
+IDs, font metrics are zero-width, message-log adds and the caravan trade
+panel return early, and alpha masks (mouse hit-testing) come back empty.
+The bury feature is excluded from the deterministic surface on purpose
+(`Point3DShort`-keyed HashMaps iterate by identity hash). Vanilla behavior
+is untouched: every guard is behind the headless flag, which only
+`TownsHeadless` sets.
+
 ## Next intended steps
-- Headless mode. Lets `World` + worldgen + the task system tick without a window. Goal to run in test without proprietary assets.
-- Inject seed to RNG source, for deterministic test mode. Shipped game remains non-deterministic.
+- Full test suite on top of headless mode, then CI.
 - Decouple `UIPanel`. Extraction of one sub-panel at a time, retaining original behavior.
 - Decouple `Utils`. Extraction into mechanical pieces based on responsibility.
 - Player-ready release. Self-contained builds using `jpackage`.
-- Full test suite. For proper CI.
 
 ## Pie-in-the-sky desires
 - Expose `data\*.xml` as a public moddable API, with load-time validation.

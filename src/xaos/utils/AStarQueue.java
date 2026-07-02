@@ -18,6 +18,10 @@ public final class AStarQueue implements Runnable {
     private static boolean pause;
     private static boolean pauseOK = false;
 
+    // Test mode: no worker thread; the test runner drains the queue on its
+    // own thread after each tick, making pathfinding deterministic
+    private static boolean synchronousMode = false;
+
     public AStarQueue() {
         exitOK = true;
         pauseOK = false;
@@ -203,6 +207,10 @@ public final class AStarQueue implements Runnable {
 
     public static void pause() {
         pause = true;
+        if (synchronousMode) {
+            // No worker thread to acknowledge; don't leave callers spinning
+            pauseOK = true;
+        }
     }
 
     public static void resume() {
@@ -212,5 +220,37 @@ public final class AStarQueue implements Runnable {
 
     public static boolean isPauseOK() {
         return pauseOK;
+    }
+
+    public static void setSynchronousMode(boolean value) {
+        synchronousMode = value;
+    }
+
+    public static boolean isSynchronousMode() {
+        return synchronousMode;
+    }
+
+    /**
+     * Test mode: runs every queued search to completion on the calling
+     * thread. Requests are processed in queue order, so with a seeded RNG
+     * the resulting paths are identical run to run.
+     */
+    public static void drainSynchronously() {
+        synchronized (requests) {
+            while (!requests.isEmpty()) {
+                AStarQueueItem item = requests.remove(0);
+                if (item == null) {
+                    continue;
+                }
+
+                while (!item.isFinished()) {
+                    item.search(NUM_ITERATIONS);
+                }
+
+                synchronized (finishedRequests) {
+                    finishedRequests.add(item);
+                }
+            }
+        }
     }
 }
