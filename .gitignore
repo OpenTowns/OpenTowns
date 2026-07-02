@@ -1,0 +1,13 @@
+/.idea
+/out/
+/build/
+/.gradle/
+*.iml
+
+# Proprietary runtime pieces from Steam install.
+# These must never be committed to a public fork.
+# (original assets are not covered by the GPL code license)
+/src/lib/
+/src/data/graphics/
+/src/data/audio/
+/src/data/fonts/

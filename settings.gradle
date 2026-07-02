@@ -1,0 +1,6 @@
+plugins {
+    // Lets Gradle auto-download a JDK 8 toolchain if none is installed locally
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
+}
+
+rootProject.name = 'OpenTowns'

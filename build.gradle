@@ -1,0 +1,51 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+// The game shipped against Java 6/7-era APIs and LWJGL 2: JDK 8 is the
+// safest runtime for the AWT-embedded Display.
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
+
+// Original source layout is kept as-is:
+// src/ holds the xaos/ package tree next to the runtime data and libs.
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+            exclude 'data/**'
+            exclude 'lib/**'
+        }
+        resources {
+            srcDirs = []
+        }
+    }
+}
+
+dependencies {
+    // Vendored jars from the original Steam install (src/lib is gitignored).
+    // xaos.jar is the original compiled game: reference only, must never
+    // be on the classpath or it can shadow the freshly built classes.
+    implementation fileTree(dir: 'src/lib', include: '*.jar', exclude: 'xaos.jar')
+}
+
+tasks.withType(JavaCompile).configureEach {
+    // Sources are ISO-8859-1 (Spanish comments), not UTF-8
+    options.encoding = 'ISO-8859-1'
+}
+
+application {
+    mainClass = 'xaos.Towns'
+}
+
+tasks.named('run') {
+    // The game resolves towns.ini, graphics.ini, audio.ini and data/
+    // relative to the working directory; lib/native holds the LWJGL,
+    // OpenAL, jinput and steam_api DLLs.
+    workingDir = file('src')
+    jvmArgs '-Djava.library.path=lib/native'
+}
