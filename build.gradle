@@ -3,11 +3,9 @@ plugins {
     id 'application'
 }
 
-// The game shipped against Java 6/7-era APIs and LWJGL 2: JDK 8 is the
-// safest runtime for the AWT-embedded Display.
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(8)
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }
 
@@ -47,4 +45,11 @@ tasks.named('run') {
     // OpenAL, jinput and steam_api DLLs.
     workingDir = file('src')
     jvmArgs '-Djava.library.path=lib/native'
+    // JDK 25: JNA and LWJGL 2 load native code from the unnamed module;
+    // restricted native access will be blocked by default in a future JDK.
+    jvmArgs '--enable-native-access=ALL-UNNAMED'
+    // JDK 25: LWJGL 2 (MemoryUtilSun) still uses sun.misc.Unsafe memory
+    // access, deprecated for removal (JEP 498). The LWJGL 3 port removes
+    // this dependency; until then, opt in explicitly.
+    jvmArgs '--sun-misc-unsafe-memory-access=allow'
 }
