@@ -1,0 +1,9 @@
+# Mechanical commits that touched every line without changing behavior.
+# git blame skips these when configured with:
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# Normalize line endings to LF
+cf0524ac7417d1b58de1cee2f86e430a206e401f
+
+# Full UTF-8 conversion
+b8956508c79577460892e7a59888d4dd47a2c0ab

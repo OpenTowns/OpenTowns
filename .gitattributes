@@ -12,6 +12,7 @@ gradlew        text eol=lf
 *.sh           text eol=lf
 .gitattributes text eol=lf
 .gitignore     text eol=lf
+.git-blame-ignore-revs text eol=lf
 LICENSE        text eol=lf
 CHANGELOG.md   text eol=lf
 
