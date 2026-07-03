@@ -517,10 +517,10 @@ public final class CommandPanel {
                 Stockpile.disableAll(Integer.parseInt(sParameter), sParameter2);
             } else if (sCommand.equals(COMMAND_STOCKPILE_MANAGE)) {
                 int iPileID = Integer.parseInt(sParameter);
-                UIPanel.setPilePanelActive(iPileID, false);
+                PileUIPanel.setPilePanelActive(iPileID, false);
             } else if (sCommand.equals(COMMAND_CONTAINER_MANAGE)) {
                 int iContainerID = Integer.parseInt(sParameter);
-                UIPanel.setPilePanelActive(iContainerID, true);
+                PileUIPanel.setPilePanelActive(iContainerID, true);
             } else if (sCommand.equals(COMMAND_STOCKPILE_ENABLE_ITEM)) {
                 Stockpile stockpile = Stockpile.getStockpile(p3dDirect.toPoint3DShort());
                 if (stockpile != null && !stockpile.getType().contains(sParameter)) {
@@ -927,7 +927,7 @@ public final class CommandPanel {
             } else if (sCommand.equals(COMMAND_MINIBLOCKS)) {
                 MainPanel.toggleMiniBlocks();
             } else if (sCommand.equals(COMMAND_TRADE)) {
-                UIPanel.setTradePanelActive(true);
+                TradeUIPanel.setTradePanelActive(true);
             } else if (sCommand.equals(COMMAND_SAVE)) {
                 try {
                     UtilsSavegame.save (true);

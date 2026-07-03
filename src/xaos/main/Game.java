@@ -48,6 +48,13 @@ import xaos.panels.MatsPanelData;
 import xaos.panels.MessagesPanel;
 import xaos.panels.MiniMapPanel;
 import xaos.panels.TypingPanel;
+import xaos.panels.PrioritiesUIPanel;
+import xaos.panels.MessagesUIPanel;
+import xaos.panels.MatsUIPanel;
+import xaos.panels.ProductionUIPanel;
+import xaos.panels.RightMenuUIPanel;
+import xaos.panels.BottomMenuUIPanel;
+import xaos.panels.TradeUIPanel;
 import xaos.panels.UIPanel;
 import xaos.panels.menus.ContextMenu;
 import xaos.property.MainProperties;
@@ -258,7 +265,7 @@ public final class Game {
 		} else {
 			panelCommand = new CommandPanel (UtilsGL.getWidth () - World.MAP_WIDTH, World.MAP_HEIGHT, World.MAP_WIDTH, UtilsGL.getHeight () - World.MAP_HEIGHT, Game.getWorld ().getCampaignID (), Game.getWorld ().getMissionID ());
 		}
-		panelMessages = new MessagesPanel (UIPanel.MESSAGES_PANEL_WIDTH, UIPanel.MESSAGES_PANEL_HEIGHT);
+		panelMessages = new MessagesPanel (MessagesUIPanel.MESSAGES_PANEL_WIDTH, MessagesUIPanel.MESSAGES_PANEL_HEIGHT);
 
 		// Cargamos las texturas
 		loadAllIniTextures ();
@@ -1059,7 +1066,7 @@ public final class Game {
 	// }
 
 	public static void togglePause (boolean showInfo) {
-		if (UIPanel.isTradePanelActive ()) {
+		if (TradeUIPanel.isTradePanelActive ()) {
 			return;
 		}
 
@@ -1071,7 +1078,7 @@ public final class Game {
 
 
 	public static void pause (boolean showInfo) {
-		if (UIPanel.isTradePanelActive ()) {
+		if (TradeUIPanel.isTradePanelActive ()) {
 			return;
 		}
 
@@ -1085,7 +1092,7 @@ public final class Game {
 
 
 	public static void resume (boolean showInfo) {
-		if (UIPanel.isTradePanelActive ()) {
+		if (TradeUIPanel.isTradePanelActive ()) {
 			return;
 		}
 
@@ -1212,7 +1219,7 @@ public final class Game {
 			if (!getPanelMainMenu ().isActive ()) {
 				final int BORDE = UIPanel.PIXELS_TO_BORDER; // Si se acerca X pixels al borde moveremos la cámara
 				if (mouseX < BORDE) {
-					if (Game.isMouseScrollEarsON () || !UIPanel.isMouseCloseToOpenCloseProductionIcon (mouseX, mouseY)) {
+					if (Game.isMouseScrollEarsON () || !ProductionUIPanel.isMouseCloseToOpenCloseProductionIcon (mouseX, mouseY)) {
 						if (getCurrentState () == STATE_SHOWING_CONTEXT_MENU) {
 							if (!(mouseX >= getCurrentContextMenu ().getX () && mouseX < (getCurrentContextMenu ().getX () + getCurrentContextMenu ().getWidth ()) && mouseY >= getCurrentContextMenu ().getY () && mouseY < (getCurrentContextMenu ().getY () + getCurrentContextMenu ().getHeight ()))) {
 								world.keyPressed (Keyboard.KEY_NONE, UtilsKeyboard.FN_LEFT);
@@ -1223,7 +1230,7 @@ public final class Game {
 					}
 				} else if (mouseX > (UtilsGL.getWidth () - BORDE - 1)) {
 					// Miramos que no esté cerca del botón de abrir/cerrar el menu
-					if (Game.isMouseScrollEarsON () || !UIPanel.isMouseCloseToOpenCloseMenuIcon (mouseX, mouseY)) {
+					if (Game.isMouseScrollEarsON () || !RightMenuUIPanel.isMouseCloseToOpenCloseMenuIcon (mouseX, mouseY)) {
 						if (getCurrentState () == STATE_SHOWING_CONTEXT_MENU) {
 							if (!(mouseX >= getCurrentContextMenu ().getX () && mouseX < (getCurrentContextMenu ().getX () + getCurrentContextMenu ().getWidth ()) && mouseY >= getCurrentContextMenu ().getY () && mouseY < (getCurrentContextMenu ().getY () + getCurrentContextMenu ().getHeight ()))) {
 								world.keyPressed (Keyboard.KEY_NONE, UtilsKeyboard.FN_RIGHT);
@@ -1242,7 +1249,7 @@ public final class Game {
 						world.keyPressed (Keyboard.KEY_NONE, UtilsKeyboard.FN_UP);
 					}
 				} else if (mouseY > (UtilsGL.getHeight () - BORDE - 1)) {
-					if (Game.isMouseScrollEarsON () || !UIPanel.isMouseCloseToOpenCloseBottomIcon (mouseX, mouseY)) {
+					if (Game.isMouseScrollEarsON () || !BottomMenuUIPanel.isMouseCloseToOpenCloseBottomIcon (mouseX, mouseY)) {
 						if (getCurrentState () == STATE_SHOWING_CONTEXT_MENU) {
 							if (!(mouseX >= getCurrentContextMenu ().getX () && mouseX < (getCurrentContextMenu ().getX () + getCurrentContextMenu ().getWidth ()) && mouseY >= getCurrentContextMenu ().getY () && mouseY < (getCurrentContextMenu ().getY () + getCurrentContextMenu ().getHeight ()))) {
 								world.keyPressed (Keyboard.KEY_NONE, UtilsKeyboard.FN_DOWN);
@@ -1324,11 +1331,11 @@ public final class Game {
 							// closeInfoPanel();
 							// }
 						} else if (iFN == UtilsKeyboard.FN_SHOW_STOCK) {
-							UIPanel.setMatsPanelActive (!UIPanel.isMatsPanelActive ());
+							MatsUIPanel.setMatsPanelActive (!MatsUIPanel.isMatsPanelActive ());
 						} else if (iFN == UtilsKeyboard.FN_SHOW_PRIORITIES) {
-							UIPanel.setPrioritiesPanelActive (!UIPanel.isPrioritiesPanelActive ());
+							PrioritiesUIPanel.setPrioritiesPanelActive (!PrioritiesUIPanel.isPrioritiesPanelActive ());
 						} else if (iFN == UtilsKeyboard.FN_SHOW_TRADE) {
-							UIPanel.setTradePanelActive (!UIPanel.isTradePanelActive ());
+							TradeUIPanel.setTradePanelActive (!TradeUIPanel.isTradePanelActive ());
 							// } else if (iKEY == Keyboard.KEY_F5) {
 							// UIPanel.setMenuPanelActive (!UIPanel.isMenuPanelActive ());
 							// } else if (iKEY == Keyboard.KEY_F6) {

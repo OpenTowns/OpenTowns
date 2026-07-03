@@ -96,7 +96,7 @@ public final class MessagesPanel {
             clear();
         }
 
-        maxRenderLines = (UIPanel.MESSAGES_PANEL_SUBPANEL_HEIGHT - 2 * UIPanel.tileMessagesPanel[1].getTileHeight()) / (UtilFont.MAX_HEIGHT);
+        maxRenderLines = (MessagesUIPanel.MESSAGES_PANEL_SUBPANEL_HEIGHT - 2 * MessagesUIPanel.tileMessagesPanel[1].getTileHeight()) / (UtilFont.MAX_HEIGHT);
         if (maxRenderLines < 1) {
             maxRenderLines = 1;
         }
@@ -185,7 +185,7 @@ public final class MessagesPanel {
             color = new ColorGL(null);
         }
 
-        int iMaxChars = UtilFont.getMaxCharsByWidth(sMessage, UIPanel.MESSAGES_PANEL_SUBPANEL_WIDTH - 2 * UIPanel.tileMessagesPanel[3].getTileWidth());
+        int iMaxChars = UtilFont.getMaxCharsByWidth(sMessage, MessagesUIPanel.MESSAGES_PANEL_SUBPANEL_WIDTH - 2 * MessagesUIPanel.tileMessagesPanel[3].getTileWidth());
         if (sMessage.length() > iMaxChars) {
             // No cabe, lo partimos
             messagesDataRender[messagesDataRender.length - 1] = new MessagesPanelData(sMessage.substring(0, iMaxChars).trim(), color, view, iEntityID);

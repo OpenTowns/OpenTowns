@@ -31,6 +31,7 @@ import xaos.main.Game;
 import xaos.main.World;
 import xaos.panels.CommandPanel;
 import xaos.panels.MessagesPanel;
+import xaos.panels.TradeUIPanel;
 import xaos.panels.UIPanel;
 import xaos.panels.menus.SmartMenu;
 import xaos.property.PropertyFile;
@@ -2819,7 +2820,7 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 		if (lemi.getCaravan () != null) {
 			// Caravana, borramos los datos
 			Game.getWorld ().setCurrentCaravanData (null);
-			UIPanel.deleteTradePanel ();
+			TradeUIPanel.deleteTradePanel ();
 		}
 
 		// Edad

@@ -109,8 +109,8 @@ public class TradePanel {
 
         resize(caravanData);
 
-        UIPanel.resizeIcons(getMenuCaravan(), UIPanel.TRADE_PANEL_BUTTON_WIDTH, UIPanel.TRADE_PANEL_BUTTON_HEIGHT);
-        UIPanel.resizeIcons(getMenuTown(), UIPanel.TRADE_PANEL_BUTTON_WIDTH, UIPanel.TRADE_PANEL_BUTTON_HEIGHT);
+        UIPanel.resizeIcons(getMenuCaravan(), TradeUIPanel.TRADE_PANEL_BUTTON_WIDTH, TradeUIPanel.TRADE_PANEL_BUTTON_HEIGHT);
+        UIPanel.resizeIcons(getMenuTown(), TradeUIPanel.TRADE_PANEL_BUTTON_WIDTH, TradeUIPanel.TRADE_PANEL_BUTTON_HEIGHT);
     }
 
     private void createCaravanMenu(CaravanData caravanData) {
@@ -708,9 +708,9 @@ public class TradePanel {
     }
 
     public void resize(CaravanData caravanData) {
-        Point coordinates = UIPanel.tradePanelPoint;
+        Point coordinates = TradeUIPanel.tradePanelPoint;
         int COLUMN1X = coordinates.x + 48;
-        int COLUMN4X = coordinates.x + UIPanel.TRADE_PANEL_WIDTH - 48 - tileTradeButton.getTileWidth();
+        int COLUMN4X = coordinates.x + TradeUIPanel.TRADE_PANEL_WIDTH - 48 - tileTradeButton.getTileWidth();
         int iAux = (COLUMN4X - COLUMN1X) / 4;
         int COLUMN2X = COLUMN1X + iAux - tileTradeButton.getTileWidth() - 16;
         int COLUMN3X = COLUMN4X - iAux - tileTradeButton.getTileWidth() / 2 - 16;
@@ -720,10 +720,10 @@ public class TradePanel {
         setTownCoinsIconPoint(new Point(COLUMN4X + tileTradeButton.getTileWidth() / 2 - tileTradeTownCoins.getTileWidth() / 2, coordinates.y + 12));
         setBuyIconPoint(new Point(COLUMN2X + tileTradeButton.getTileWidth() / 2 - tileTradeBuy.getTileWidth() / 2 + (tileTradeButton.getTileWidth() * 2), coordinates.y + 48));
         setSellIconPoint(new Point(COLUMN3X + tileTradeButton.getTileWidth() / 2 - tileTradeSell.getTileWidth() / 2, coordinates.y + 48));
-        setCostPoint(new Point(coordinates.x + UIPanel.TRADE_PANEL_WIDTH / 2 - tileTradeCost.getTileWidth() / 2, coordinates.y + 12));
+        setCostPoint(new Point(coordinates.x + TradeUIPanel.TRADE_PANEL_WIDTH / 2 - tileTradeCost.getTileWidth() / 2, coordinates.y + 12));
 
         int iYMin = getCaravanCoinsIconPoint().y + tileTradeCaravanCoins.getTileHeight() + UtilFont.MAX_HEIGHT * 2;
-        int iYMax = coordinates.y + UIPanel.TRADE_PANEL_HEIGHT - 48 - UIPanel.tileScrollDown.getTileHeight() - 16 - UtilFont.MAX_HEIGHT * 2;
+        int iYMax = coordinates.y + TradeUIPanel.TRADE_PANEL_HEIGHT - 48 - UIPanel.tileScrollDown.getTileHeight() - 16 - UtilFont.MAX_HEIGHT * 2;
         MAX_VERTICAL_BUTTONS = (iYMax - iYMin) / (tileTradeButton.getTileHeight() + 16);
 
 		// Caravan buttons
@@ -773,7 +773,7 @@ public class TradePanel {
         setScrollDownCaravanToBuyPoint(new Point(COLUMN2X + tileTradeButton.getTileWidth() / 2 - UIPanel.tileScrollDown.getTileWidth() / 2 + (tileTradeButton.getTileWidth() * 2), iYMin));
 
         // Confirm
-        setConfirmPoint(new Point(coordinates.x + UIPanel.TRADE_PANEL_WIDTH / 2 - tileTradeConfirm.getTileWidth() / 2, coordinates.y + UIPanel.TRADE_PANEL_HEIGHT - tileTradeConfirm.getTileHeight() - 8));
+        setConfirmPoint(new Point(coordinates.x + TradeUIPanel.TRADE_PANEL_WIDTH / 2 - tileTradeConfirm.getTileWidth() / 2, coordinates.y + TradeUIPanel.TRADE_PANEL_HEIGHT - tileTradeConfirm.getTileHeight() - 8));
 
         // Price
         recheckPriceToBuySell(caravanData);
@@ -939,7 +939,7 @@ public class TradePanel {
                 sm.setIcon(menuItem.getIcon().getIniHeader());
                 sm.setIconType(menuItem.getIconType());
                 caravanData.getMenuCaravanToBuy().addItem(sm);
-                UIPanel.resizeIcons(caravanData.getMenuCaravanToBuy(), UIPanel.TRADE_PANEL_BUTTON_WIDTH, UIPanel.TRADE_PANEL_BUTTON_HEIGHT);
+                UIPanel.resizeIcons(caravanData.getMenuCaravanToBuy(), TradeUIPanel.TRADE_PANEL_BUTTON_WIDTH, TradeUIPanel.TRADE_PANEL_BUTTON_HEIGHT);
 
                 scrollDownToBuyCaravan();
 
@@ -1087,7 +1087,7 @@ public class TradePanel {
                 sm.setIcon(menuItem.getIcon().getIniHeader());
                 sm.setIconType(menuItem.getIconType());
                 caravanData.getMenuTownToSell().addItem(sm);
-                UIPanel.resizeIcons(caravanData.getMenuTownToSell(), UIPanel.TRADE_PANEL_BUTTON_WIDTH, UIPanel.TRADE_PANEL_BUTTON_HEIGHT);
+                UIPanel.resizeIcons(caravanData.getMenuTownToSell(), TradeUIPanel.TRADE_PANEL_BUTTON_WIDTH, TradeUIPanel.TRADE_PANEL_BUTTON_HEIGHT);
                 scrollDownToSellTown();
 
                 resize(caravanData);

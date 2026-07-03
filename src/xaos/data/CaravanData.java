@@ -13,6 +13,7 @@ import xaos.caravans.PricesManager;
 import xaos.main.Game;
 import xaos.main.World;
 import xaos.panels.MessagesPanel;
+import xaos.panels.TradeUIPanel;
 import xaos.panels.UIPanel;
 import xaos.panels.menus.SmartMenu;
 import xaos.tasks.HotPoint;
@@ -150,7 +151,7 @@ public class CaravanData implements Externalizable {
                                 if (zone != null && cmi != null && cmi.getZone() != null && zone.getIniHeader().equals(cmi.getZone())) {
                                     setStatus(STATUS_IN_PLACE);
                                     setTurnsToLeave(World.TIME_MODIFIER_DAY * 2);
-                                    UIPanel.createTradePanelContent(this);
+                                    TradeUIPanel.createTradePanelContent(this);
                                 }
                             } else {
                                 // No está en una zona y no tiene path. A buscar zona o a pirarse
@@ -371,7 +372,7 @@ public class CaravanData implements Externalizable {
                         if (p3dInfo.y <= 0) {
                             // Se borra de la lista
                             getMenuCaravanToBuy().getItems().remove(iIndexItem);
-                            UIPanel.createTradePanelContent(this);
+                            TradeUIPanel.createTradePanelContent(this);
                         } else {
                             smItem.setDirectCoordinates(p3dInfo);
                             smItem.setParameter2("x" + p3dInfo.y); //$NON-NLS-1$
@@ -436,7 +437,7 @@ public class CaravanData implements Externalizable {
             p3dInfo.y = p3dInfo.y - 1;
             if (p3dInfo.y <= 0) {
                 getMenuTownToSell().getItems().remove(iIndexItem);
-                UIPanel.createTradePanelContent(this);
+                TradeUIPanel.createTradePanelContent(this);
             } else {
                 getMenuTownToSell().getItems().get(iIndexItem).setDirectCoordinates(p3dInfo);
                 getMenuTownToSell().getItems().get(iIndexItem).setParameter2("x" + p3dInfo.y); //$NON-NLS-1$

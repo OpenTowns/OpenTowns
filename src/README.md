@@ -72,7 +72,7 @@ Input rules: game hotkeys match physical keys (layout-independent, as in the ori
 
 ### Presentation
 
-- `xaos.panels`: the entire UI, hand-rolled in immediate-mode OpenGL; no toolkit. `MainMenuPanel` and `MainPanel` are the two top-level screens. `UIPanel` (9,800 lines, some 580 static fields and methods, the largest file in the game) is the in-game HUD: it multiplexes about a dozen logical sub-panels (livings, materials, piles, production, professions, priorities, trade, messages, bottom menu, tutorial, typing, images) as static state, each with its own active/locked flags and create/resize/render/mouse handlers. The seams between sub-panels are visible and consistent; splitting them out one at a time into their own classes, without behavior changes, is the intended next step of the modernization push. Also trade, command, minimap, messages and typing panels as separate files, plus the context/smart menus in `menus/`. Text entry goes through `TypingPanel`, which appends layout-aware characters from the keyboard shim and falls back to a physical-key table for presses that produce no character. The AWT `MainFrame` that once hosted the LWJGL 2 display was dead code (never instantiated) and was deleted during the port.
+- `xaos.panels`: the entire UI, hand-rolled in immediate-mode OpenGL; no toolkit. `MainMenuPanel` and `MainPanel` are the two top-level screens. `UIPanel` (the largest file in the game) is the in-game HUD: it multiplexes about a dozen logical sub-panels (livings, materials, piles, production, professions, priorities, trade, messages, bottom menu, tutorial, typing, images) as static state, each with its own active/locked flags and create/resize/render/mouse handlers. The ten sub-panels were split out into their own all-static `XyzUIPanel` classes by mechanical split (verbatim bodies, no behavior change), the same method used for the Utils decouple: `BottomMenuUIPanel` (build menu bar), `LivingsUIPanel` (citizens/soldiers/heroes roster and groups), `MatsUIPanel` (materials), `MessagesUIPanel` (message log HUD), `PileUIPanel` (stockpile config), `PrioritiesUIPanel` (job priorities), `ProductionUIPanel` (workshop production queue), `ProfessionsUIPanel` (professions/job groups), `RightMenuUIPanel` (right-edge menu), `TradeUIPanel` (caravan/town trading, including the headless guard in `createTradePanelContent`). UIPanel (down from 9,800 to ~5,200 lines) keeps the shared core: the big dispatchers (`render`, `mousePressed`, `isMouseOnAPanel`, `renderTooltip`, `initialize`, `generateTiles`), the `MOUSE_*` dispatch codes, shared tiles and geometry, the top-bar/info/date chrome, and the thin glue for the tutorial button and the typing/images/minimap panels (whose real implementations already live in their own classes). One rule the golden pins enforce here: `Tile(String)` consumes one `Utils.random` draw, so `new Tile(...)` field initializers never move out of `UIPanel.<clinit>`; the extracted classes keep their own class-init free of RNG draws. Also trade, command, minimap, messages and typing panels as separate files, plus the context/smart menus in `menus/`. Text entry goes through `TypingPanel`, which appends layout-aware characters from the keyboard shim and falls back to a physical-key table for presses that produce no character. The AWT `MainFrame` that once hosted the LWJGL 2 display was dead code (never instantiated) and was deleted during the port.
 - `xaos.utils`: 32 files of everything else. `Utils` used to be a 2,200-line grab-bag; it was decoupled mechanically (verbatim code motion, no behavior change) into: `UtilsGeometry` (map bounds, distances, Bezier, integer sqrt), `UtilsDice` (dice rolls and dice-string parsing), `UtilsLineOfSight` (Bresenham line-of-sight, cell discovery, light propagation), `UtilsString` (number/list/color parsing, dynamic option strings), `UtilsFiles` (user folder creation, options saving, mod path resolution, language discovery), and `UtilsSavegame` (savegame zip save/load, bury towns, savegame listing). `Utils` itself keeps only the single game RNG (`Utils.random`, which every random draw funnels through) plus dice wrappers delegating to `UtilsDice`, so the ~350 dice call sites kept their form. `UtilsGL`: texture loading and immediate-mode draw helpers. `UtilsAL`: audio, OpenAL + STB Vorbis since the port; all 16 OGGs are decoded into buffers at load, one looping music source plus a pool of FX sources. `UtilsXML` (DOM helpers), `UtilsKeyboard` (keybind and function-key mapping), A* pathfinding (`AStar*`, binary-heap based), `Log`, `Messages` (i18n via `data/languages/messages*.properties`), `UtilsServer` (HTTP to the townsmods.net community server, which no longer responds; connection error at boot, which fails gracefully), `JNASteamAPI`.
 
 
@@ -107,74 +107,31 @@ Still vendored in `lib/` (from a Steam Towns install):
 
 ## Headless deterministic test mode
 
-`xaos.TownsHeadless` runs worldgen and the simulation without a window, GL
-context, audio device, or any proprietary asset. Run it with:
+`xaos.TownsHeadless` runs worldgen and the simulation without a window, GL context, audio device, or any proprietary asset. Run it with:
 
 ```
 .\gradlew runHeadless -Pseed=42 -Pticks=3000            # deterministic
 .\gradlew runHeadless -Pticks=3000                      # headless, unseeded
 ```
 
-Plus optional `-Pmap=normal|desert|jungle|mixed|snow|mountains` and
-`-PuserFolder=path`. A windowed "New game" is campaign `c1` with the map type
-as the mission id; `-Pmap` picks the same thing. The user folder defaults to
-a sandbox under the system temp dir, so test runs never touch `~/.towns`.
+Plus optional `-Pmap=normal|desert|jungle|mixed|snow|mountains` and `-PuserFolder=path`. A windowed "New game" is campaign `c1` with the map type as the mission id; `-Pmap` picks the same thing. The user folder defaults to a sandbox under the system temp dir, so test runs never touch `~/.towns`.
 
-With a seed, the run is deterministic: the single game RNG (`Utils.random`,
-which every random draw funnels through) is seeded before worldgen, and
-pathfinding runs synchronously each tick (`AStarQueue.drainSynchronously`)
-instead of on the worker thread. Same seed + same tick count = identical
-world state; the runner prints a state hash over terrain, livings and items
-to compare runs. Without a seed the RNG and async A* worker behave exactly
-like the shipped game.
+With a seed, the run is deterministic: the single game RNG (`Utils.random`, which every random draw funnels through) is seeded before worldgen, and pathfinding runs synchronously each tick (`AStarQueue.drainSynchronously`) instead of on the worker thread. Same seed + same tick count = identical world state; the runner prints a state hash over terrain, livings and items to compare runs. Without a seed the RNG and async A* worker behave exactly like the shipped game.
 
-How it works: `Game.initHeadless()` reads the same config as the windowed
-constructor and forces audio, autosave, pause-at-start and bury off. A
-handful of `Game.isHeadless()` guards give the sim no-op paths where it
-brushes against presentation: texture loads return 1x1 stubs with unique
-IDs, font metrics are zero-width, message-log adds and the caravan trade
-panel return early, and alpha masks (mouse hit-testing) come back empty.
-The bury feature is excluded from the deterministic surface on purpose
-(`Point3DShort`-keyed HashMaps iterate by identity hash). Vanilla behavior
-is untouched: every guard is behind the headless flag, which only
-`TownsHeadless` sets.
+How it works: `Game.initHeadless()` reads the same config as the windowed constructor and forces audio, autosave, pause-at-start and bury off. A handful of `Game.isHeadless()` guards give the sim no-op paths where it brushes against presentation: texture loads return 1x1 stubs with unique IDs, font metrics are zero-width, message-log adds and the caravan trade panel return early, and alpha masks (mouse hit-testing) come back empty. The bury feature is excluded from the deterministic surface on purpose (`Point3DShort`-keyed HashMaps iterate by identity hash). Vanilla behavior is untouched: every guard is behind the headless flag, which only `TownsHeadless` sets.
 
 ## Testing
 
-`.\gradlew test` runs the JUnit 5 suite in `test/` (a top-level directory;
-test sources cannot live under `src/`, the main sourceSet would compile
-them). The Gradle `test` task sets the working directory to `src/` and forks
-one JVM per test class (`forkEvery = 1`): the static god-objects do not
-support a second new game in the same JVM (`World.maxEntityID` keeps
-counting across games, shifting entity IDs and HashMap iteration order), so
-every test class that boots a game gets a fresh JVM.
+`.\gradlew test` runs the JUnit 5 suite in `test/` (a top-level directory; test sources cannot live under `src/`, the main sourceSet would compile them). The Gradle `test` task sets the working directory to `src/` and forks one JVM per test class (`forkEvery = 1`): the static god-objects do not support a second new game in the same JVM (`World.maxEntityID` keeps counting across games, shifting entity IDs and HashMap iteration order), so every test class that boots a game gets a fresh JVM.
 
 Two kinds of tests, both built on headless mode:
 
-- **Process-level** (`HeadlessRunner`): forks `xaos.TownsHeadless` as a
-  child JVM and parses the printed state hashes. Used where two independent
-  full runs must be compared: determinism regression (`DeterminismTest`,
-  same seed = same hash) and the save/load round-trip
-  (`SaveLoadRoundTripTest`, hash before save equals hash after load).
-- **In-JVM** (`Worldgen*Test`, `LongRunSmokeTest`): boots the game once per
-  class via `Game.initHeadless` + `Game.startGame` and asserts invariants
-  directly on the `World` objects.
+- **Process-level** (`HeadlessRunner`): forks `xaos.TownsHeadless` as a child JVM and parses the printed state hashes. Used where two independent full runs must be compared: determinism regression (`DeterminismTest`, same seed = same hash) and the save/load round-trip (`SaveLoadRoundTripTest`, hash before save equals hash after load).
+- **In-JVM** (`Worldgen*Test`, `LongRunSmokeTest`): boots the game once per class via `Game.initHeadless` + `Game.startGame` and asserts invariants directly on the `World` objects.
 
-Every run sandboxes its user folder under the system temp dir. Repo assets
-suffice (no proprietary files needed), so the suite also runs in CI
-(`.github/workflows/test.yml`, `windows-latest`). The seeded tests are fully
-deterministic: a failure always means a real behavior change, never a flake.
-The bury feature stays outside the tested deterministic surface.
+Every run sandboxes its user folder under the system temp dir. Repo assets suffice (no proprietary files needed), so the suite also runs in CI (`.github/workflows/test.yml`, `windows-latest`). The seeded tests are fully deterministic: a failure always means a real behavior change, never a flake. The bury feature stays outside the tested deterministic surface.
 
-**Golden pins** (`test/xaos/test/Golden.java`) freeze vanilla behavior
-itself, not just run-to-run determinism: they record the expected state
-hashes and counters for fixed seed/map/tick scenarios (worldgen at tick 0
-for all six map types, plus three simulated scenarios and the 20k-tick
-in-JVM run), captured while the source was at its original pre-refactor
-behavior. The hash definition lives in `TownsHeadless.computeStateHash` and
-is frozen along with them. A pin mismatch means worldgen or the sim changed
-behavior; updating a pin is a deliberate act that must be explained in the
-same commit (take the new value from the failing assertion message).
+**Golden pins** (`test/xaos/test/Golden.java`) freeze vanilla behavior itself, not just run-to-run determinism: they record the expected state hashes and counters for fixed seed/map/tick scenarios (worldgen at tick 0 for all six map types, plus three simulated scenarios and the 20k-tick in-JVM run), captured while the source was at its original pre-refactor behavior. The hash definition lives in `TownsHeadless.computeStateHash` and is frozen along with them. A pin mismatch means worldgen or the sim changed behavior; updating a pin is a deliberate act that must be explained in the same commit (take the new value from the failing assertion message).
 
 ## Next intended steps
 - Decouple `UIPanel`. Extraction of one sub-panel at a time, retaining original behavior.
