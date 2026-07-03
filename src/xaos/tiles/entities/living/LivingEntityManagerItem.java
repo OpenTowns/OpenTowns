@@ -12,6 +12,7 @@ import xaos.tiles.terrain.TerrainManager;
 import xaos.tiles.terrain.TerrainManagerItem;
 import xaos.utils.Messages;
 import xaos.utils.Utils;
+import xaos.utils.UtilsString;
 import xaos.utils.UtilsAL;
 import xaos.utils.UtilsIniHeaders;
 
@@ -286,7 +287,7 @@ public class LivingEntityManagerItem {
     }
 
     public void setLevel(String sLevel) {
-        setLevel(Utils.getInteger(sLevel, 0));
+        setLevel(UtilsString.getInteger(sLevel, 0));
     }
 
     public int getLevel() {
@@ -435,7 +436,7 @@ public class LivingEntityManagerItem {
     }
 
     public void setHPRegeneration(String sHPR) {
-        setHPRegeneration(Utils.getInteger(sHPR, 0));
+        setHPRegeneration(UtilsString.getInteger(sHPR, 0));
     }
 
     public int getHPRegeneration() {
@@ -471,7 +472,7 @@ public class LivingEntityManagerItem {
     }
 
     public void setEquipAllowed(String sEquipAllowed) {
-        setEquipAllowed(Utils.getArray(sEquipAllowed));
+        setEquipAllowed(UtilsString.getArray(sEquipAllowed));
     }
 
     public ArrayList<String> getEquipAllowed() {
@@ -506,7 +507,7 @@ public class LivingEntityManagerItem {
     }
 
     public void setHabitatHeightMin(String sHabitatHeightMin) {
-        setHabitatHeightMin(Utils.getInteger(sHabitatHeightMin, -1));
+        setHabitatHeightMin(UtilsString.getInteger(sHabitatHeightMin, -1));
     }
 
     public void setHabitatHeightMin(int habitatHeightMin) {
@@ -522,7 +523,7 @@ public class LivingEntityManagerItem {
     }
 
     public void setHabitatHeightMax(String sHabitatHeightMax) {
-        setHabitatHeightMax(Utils.getInteger(sHabitatHeightMax, -1));
+        setHabitatHeightMax(UtilsString.getInteger(sHabitatHeightMax, -1));
     }
 
     /**
@@ -677,7 +678,7 @@ public class LivingEntityManagerItem {
     }
 
     public void setFollowEntity(String followEntity) {
-        ArrayList<String> alFollows = Utils.getArray(followEntity);
+        ArrayList<String> alFollows = UtilsString.getArray(followEntity);
         if (alFollows == null) {
             this.followEntity = null;
         } else {
@@ -710,7 +711,7 @@ public class LivingEntityManagerItem {
     }
 
     public void setEffects(String sEffects) throws Exception {
-        setEffects(Utils.getArray(sEffects));
+        setEffects(UtilsString.getArray(sEffects));
     }
 
     public ArrayList<String> getEffects() {
@@ -730,7 +731,7 @@ public class LivingEntityManagerItem {
     }
 
     public void setEffectsImmune(String sEffectsImmune) throws Exception {
-        setEffectsImmune(Utils.getArray(sEffectsImmune));
+        setEffectsImmune(UtilsString.getArray(sEffectsImmune));
     }
 
     public ArrayList<String> getEffectsImmune() {
@@ -804,7 +805,7 @@ public class LivingEntityManagerItem {
     }
 
     public void setSteal(String sSteal) throws Exception {
-        setSteal(Utils.getArray(sSteal));
+        setSteal(UtilsString.getArray(sSteal));
     }
 
     public int[] getSteal() {
@@ -823,7 +824,7 @@ public class LivingEntityManagerItem {
     }
 
     public void setStealLivings(String sStealLivings) {
-        setStealLivings(Utils.getArray(sStealLivings));
+        setStealLivings(UtilsString.getArray(sStealLivings));
     }
 
     public int[] getStealLivings() {
@@ -857,7 +858,7 @@ public class LivingEntityManagerItem {
     }
 
     public void setFoodNeeded(String foodNeeded) {
-        setFoodNeeded(Utils.getArray(foodNeeded));
+        setFoodNeeded(UtilsString.getArray(foodNeeded));
     }
 
     public void setFoodNeeded(int[] foodNeeded) {

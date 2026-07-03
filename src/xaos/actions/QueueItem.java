@@ -10,7 +10,7 @@ import xaos.main.Game;
 import xaos.tiles.entities.items.ItemManager;
 import xaos.tiles.entities.living.LivingEntityManager;
 import xaos.utils.Messages;
-import xaos.utils.Utils;
+import xaos.utils.UtilsString;
 import xaos.utils.UtilsAL;
 
 public class QueueItem implements Externalizable {
@@ -140,7 +140,7 @@ public class QueueItem implements Externalizable {
                     throw new Exception(Messages.getString("QueueItem.0") + value + "]"); //$NON-NLS-1$ //$NON-NLS-2$
                 }
             } else if (getType() == TYPE_MOVE || getType() == TYPE_PICK || getType() == TYPE_PICK_FRIENDLY || getType() == TYPE_LOCK) {
-                ArrayList<String> alTokens = Utils.getArray(value);
+                ArrayList<String> alTokens = UtilsString.getArray(value);
 
                 if (alTokens != null) {
                     for (int i = 0; i < alTokens.size(); i++) {

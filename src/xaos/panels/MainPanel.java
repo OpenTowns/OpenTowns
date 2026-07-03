@@ -53,7 +53,7 @@ import xaos.utils.Messages;
 import xaos.utils.Point3D;
 import xaos.utils.Point3DShort;
 import xaos.utils.UtilFont;
-import xaos.utils.Utils;
+import xaos.utils.UtilsGeometry;
 import xaos.utils.UtilsGL;
 import xaos.zones.Zone;
 import xaos.zones.ZoneBarracks;
@@ -1057,7 +1057,7 @@ public final class MainPanel {
 										foriteming: for (int itemX = (i - 1); itemX <= (i + 1); itemX++) {
 											for (int itemY = (j - 1); itemY <= (j + 1); itemY++) {
 												for (int itemZ = (z3D - 1); itemZ <= (z3D + 1); itemZ++) {
-													if (Utils.isInsideMap (itemX, itemY, itemZ)) {
+													if (UtilsGeometry.isInsideMap (itemX, itemY, itemZ)) {
 														if (World.getCell (itemX, itemY, itemZ).getAstarZoneID () != -1) {
 															bAllUnavailable = false;
 															break foriteming;

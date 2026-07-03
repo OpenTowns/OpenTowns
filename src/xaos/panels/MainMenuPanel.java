@@ -25,7 +25,8 @@ import xaos.utils.Messages;
 import xaos.utils.Point3D;
 import xaos.utils.TextureData;
 import xaos.utils.UtilFont;
-import xaos.utils.Utils;
+import xaos.utils.UtilsFiles;
+import xaos.utils.UtilsSavegame;
 import xaos.utils.UtilsGL;
 import xaos.utils.UtilsKeyboard;
 
@@ -276,7 +277,7 @@ public final class MainMenuPanel implements Runnable {
 
         // Load game
         // Si no hay saves no creamos este menu
-        ArrayList<File> alSavegames = Utils.getSaveFiles();
+        ArrayList<File> alSavegames = UtilsSavegame.getSaveFiles();
         if (alSavegames != null && alSavegames.size() > 0) {
             SmartMenu menuLoad = new SmartMenu(SmartMenu.TYPE_MENU, Messages.getString("MainMenuPanel.38"), mainMenu, null, null, null, null, textColor); //$NON-NLS-1$
             menuLoad.setTrasparency(mainMenu.isTrasparency());
@@ -303,16 +304,16 @@ public final class MainMenuPanel implements Runnable {
                 sDate += " " + ((cal.get(Calendar.HOUR_OF_DAY) < 10) ? "0" : "") + cal.get(Calendar.HOUR_OF_DAY) + ":" + (cal.get(Calendar.MINUTE) < 10 ? "0" : "") + cal.get(Calendar.MINUTE) + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
 
                 // Load game
-                menuLoad.addItem(new SmartMenu(SmartMenu.TYPE_ITEM, Messages.getString("MainMenuPanel.40") + Utils.removeExtension(fAux.getName()) + sDate, null, CommandPanel.COMMAND_MM_CONTINUEGAME, fAux.getName(), null, null, textColor)); //$NON-NLS-1$
+                menuLoad.addItem(new SmartMenu(SmartMenu.TYPE_ITEM, Messages.getString("MainMenuPanel.40") + UtilsSavegame.removeExtension(fAux.getName()) + sDate, null, CommandPanel.COMMAND_MM_CONTINUEGAME, fAux.getName(), null, null, textColor)); //$NON-NLS-1$
                 // Delete game (con su submenú de confirmación)
-                SmartMenu menuDelete = new SmartMenu(SmartMenu.TYPE_MENU, Messages.getString("MainMenuPanel.49") + Utils.removeExtension(fAux.getName()) + sDate, menuLoad, null, null, null, null, Color.RED); //$NON-NLS-1$
+                SmartMenu menuDelete = new SmartMenu(SmartMenu.TYPE_MENU, Messages.getString("MainMenuPanel.49") + UtilsSavegame.removeExtension(fAux.getName()) + sDate, menuLoad, null, null, null, null, Color.RED); //$NON-NLS-1$
                 menuDelete.setTrasparency(mainMenu.isTrasparency());
                 menuDelete.setBorderColor(borderColor);
 
-                menuDelete.addItem(new SmartMenu(SmartMenu.TYPE_TEXT, Messages.getString("MainMenuPanel.49") + Utils.removeExtension(fAux.getName()) + sDate, null, null, null)); //$NON-NLS-1$
+                menuDelete.addItem(new SmartMenu(SmartMenu.TYPE_TEXT, Messages.getString("MainMenuPanel.49") + UtilsSavegame.removeExtension(fAux.getName()) + sDate, null, null, null)); //$NON-NLS-1$
                 menuDelete.addItem(new SmartMenu(SmartMenu.TYPE_TEXT, null, null, null, null));
                 menuDelete.addItem(new SmartMenu(SmartMenu.TYPE_TEXT, Messages.getString("MainMenuPanel.54"), null, null, null, null, null, Color.RED)); //$NON-NLS-1$
-                menuDelete.addItem(new SmartMenu(SmartMenu.TYPE_ITEM, Messages.getString("MainMenuPanel.55") + Utils.removeExtension(fAux.getName()) + sDate, null, CommandPanel.COMMAND_MM_DELETEGAME, fAux.getName(), null, null, textColor)); //$NON-NLS-1$
+                menuDelete.addItem(new SmartMenu(SmartMenu.TYPE_ITEM, Messages.getString("MainMenuPanel.55") + UtilsSavegame.removeExtension(fAux.getName()) + sDate, null, CommandPanel.COMMAND_MM_DELETEGAME, fAux.getName(), null, null, textColor)); //$NON-NLS-1$
                 menuDelete.addItem(new SmartMenu(SmartMenu.TYPE_TEXT, null, null, null, null));
                 menuDelete.addItem(new SmartMenu(SmartMenu.TYPE_ITEM, Messages.getString("MainMenuPanel.7"), null, CommandPanel.COMMAND_BACK, null, null, null, textColor)); //$NON-NLS-1$
                 menuLoad.addItem(menuDelete);
@@ -342,7 +343,7 @@ public final class MainMenuPanel implements Runnable {
         smMods.addItem(new SmartMenu(SmartMenu.TYPE_ITEM, Messages.getString("MainMenuPanel.70") + " [" + sModsFolder + "]", null, CommandPanel.COMMAND_OPEN_FOLDER, sModsFolder, null)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         smMods.addItem(new SmartMenu(SmartMenu.TYPE_TEXT, null, null, null, null, null));
 
-        ArrayList<File> alMods = Utils.getModsFolders();
+        ArrayList<File> alMods = UtilsFiles.getModsFolders();
 
         if (alMods != null && alMods.size() > 0) {
             for (int i = 0; i < alMods.size(); i++) {
@@ -596,7 +597,7 @@ public final class MainMenuPanel implements Runnable {
         menuOptionsPerformance.addItem(menuAux);
 
         // Options - Language
-        ArrayList<LanguageData> alLanguages = Utils.getLanguages();
+        ArrayList<LanguageData> alLanguages = UtilsFiles.getLanguages();
         SmartMenu menuOptionsLanguage = null;
         if (alLanguages != null && alLanguages.size() > 1) {
             menuOptionsLanguage = new SmartMenu(SmartMenu.TYPE_MENU, Messages.getString("MainMenuPanel.14"), menuOptions, null, null, null, null, textColor); //$NON-NLS-1$
@@ -915,7 +916,7 @@ public final class MainMenuPanel implements Runnable {
                     } else if (iMousePanel == UIPanel.MOUSE_TYPING_PANEL_CONFIRM) {
                         if (TypingPanel.getNewText() != null && TypingPanel.getNewText().length() > 0) {
                             // Confirmamos y empieza la partida
-                            if (!Utils.existsSavegame(TypingPanel.getNewText())) { // Sólo si no existe en disco previamente
+                            if (!UtilsSavegame.existsSavegame(TypingPanel.getNewText())) { // Sólo si no existe en disco previamente
                                 startGame(TypingPanel.getNewText());
                             }
                         }
@@ -937,7 +938,7 @@ public final class MainMenuPanel implements Runnable {
                         if (TypingPanel.getNewText() != null && TypingPanel.getNewText().length() > 0) {
                             // Confirmamos
                             Game.addServer(TypingPanel.getNewText());
-                            Utils.saveOptions();
+                            UtilsFiles.saveOptions();
 
                             setSettingNewServer(false);
                             createMenu();
@@ -961,7 +962,7 @@ public final class MainMenuPanel implements Runnable {
                 // Ya ha acabado (o ha pulsado ESC)
                 if (TypingPanel.getNewText() != null && TypingPanel.getNewText().length() > 0) {
                     // Todo ok, toca empezar la partida (sólo si la partida no existe previamente en disco)
-                    if (!Utils.existsSavegame(TypingPanel.getNewText())) {
+                    if (!UtilsSavegame.existsSavegame(TypingPanel.getNewText())) {
                         startGame(TypingPanel.getNewText());
                     }
                 } else {
@@ -1001,7 +1002,7 @@ public final class MainMenuPanel implements Runnable {
                 // Ya ha acabado (o ha pulsado ESC)
                 if (TypingPanel.getNewText() != null && TypingPanel.getNewText().length() > 0) {
                     Game.addServer(TypingPanel.getNewText());
-                    Utils.saveOptions();
+                    UtilsFiles.saveOptions();
 
                     createMenu();
                 }

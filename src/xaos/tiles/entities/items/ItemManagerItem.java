@@ -9,6 +9,7 @@ import xaos.tiles.entities.items.military.MilitaryItem;
 import xaos.utils.Log;
 import xaos.utils.Messages;
 import xaos.utils.Utils;
+import xaos.utils.UtilsString;
 import xaos.utils.UtilsIniHeaders;
 
 public class ItemManagerItem {
@@ -220,7 +221,7 @@ public class ItemManagerItem {
     }
 
     public void setLevel(String sLevel) {
-        setLevel(Utils.getInteger(sLevel, 0));
+        setLevel(UtilsString.getInteger(sLevel, 0));
     }
 
     public int getLevel() {
@@ -343,7 +344,7 @@ public class ItemManagerItem {
     }
 
     public void setHabitatHeightMin(String sHabitatHeightMin) {
-        setHabitatHeightMin(Utils.getInteger(sHabitatHeightMin, -1));
+        setHabitatHeightMin(UtilsString.getInteger(sHabitatHeightMin, -1));
     }
 
     public void setHabitatHeightMin(int habitatHeightMin) {
@@ -359,7 +360,7 @@ public class ItemManagerItem {
     }
 
     public void setHabitatHeightMax(String sHabitatHeightMax) {
-        setHabitatHeightMax(Utils.getInteger(sHabitatHeightMax, -1));
+        setHabitatHeightMax(UtilsString.getInteger(sHabitatHeightMax, -1));
     }
 
     public String getMaxAge() {
@@ -428,7 +429,7 @@ public class ItemManagerItem {
     }
 
     public void setMaxAgeNeedsItems(String sMaxAgeNeedsItems) {
-        setMaxAgeNeedsItems(Utils.getArray(sMaxAgeNeedsItems));
+        setMaxAgeNeedsItems(UtilsString.getArray(sMaxAgeNeedsItems));
     }
 
     public ArrayList<String> getMaxAgeNeedsItems() {
@@ -485,7 +486,7 @@ public class ItemManagerItem {
     }
 
     public void setSpawnMaxItems(String sSpawnMax) {
-        setSpawnMaxItems(Utils.getInteger(sSpawnMax, 0));
+        setSpawnMaxItems(UtilsString.getInteger(sSpawnMax, 0));
     }
 
     public String getSpawnTurns() {
@@ -980,7 +981,7 @@ public class ItemManagerItem {
     }
 
     public void setWearEffects(String sWearEffects) {
-        setWearEffects(Utils.getArray(sWearEffects));
+        setWearEffects(UtilsString.getArray(sWearEffects));
     }
 
     public ArrayList<String> getWearEffects() {
@@ -992,7 +993,7 @@ public class ItemManagerItem {
     }
 
     public void setTags(String sTags) {
-        setTags(Utils.getArray(sTags));
+        setTags(UtilsString.getArray(sTags));
     }
 
     public ArrayList<String> getTags() {
@@ -1040,7 +1041,7 @@ public class ItemManagerItem {
     }
 
     public void setTrapEffects(String sTrapEffects) throws Exception {
-        setTrapEffects(Utils.getArray(sTrapEffects));
+        setTrapEffects(UtilsString.getArray(sTrapEffects));
     }
 
     public ArrayList<String> getTrapEffects() {
@@ -1146,7 +1147,7 @@ public class ItemManagerItem {
     }
 
     public void setBuryItem(String buryItem) {
-        setBuryItem(Utils.getArray(buryItem));
+        setBuryItem(UtilsString.getArray(buryItem));
     }
 
     public ArrayList<String> getBuryItem() {
@@ -1175,7 +1176,7 @@ public class ItemManagerItem {
     }
 
     public void setBuryItemPCT(String sBuryItemPCT) throws Exception {
-        setBuryItemPCT(Utils.getArrayIntegers(sBuryItemPCT));
+        setBuryItemPCT(UtilsString.getArrayIntegers(sBuryItemPCT));
     }
 
     public ArrayList<Integer> getBuryItemPCT() {
@@ -1199,7 +1200,7 @@ public class ItemManagerItem {
     }
 
     public void setBuryLivings(String sBuryLivings) {
-        setBuryLivings(Utils.getArray(sBuryLivings));
+        setBuryLivings(UtilsString.getArray(sBuryLivings));
     }
 
     public ArrayList<String> getBuryLivings() {
@@ -1219,7 +1220,7 @@ public class ItemManagerItem {
     }
 
     public void setBuryLivingsPCT(String sBuryLivingsPCT) throws Exception {
-        setBuryLivingsPCT(Utils.getArrayIntegers(sBuryLivingsPCT));
+        setBuryLivingsPCT(UtilsString.getArrayIntegers(sBuryLivingsPCT));
     }
 
     public ArrayList<Integer> getBuryLivingsPCT() {
@@ -1434,7 +1435,7 @@ public class ItemManagerItem {
     }
 
     public void setFoodEffects(String sFoodEffects) throws Exception {
-        setFoodEffects(Utils.getArray(sFoodEffects));
+        setFoodEffects(UtilsString.getArray(sFoodEffects));
     }
 
     public ArrayList<String> getFoodEffects() {

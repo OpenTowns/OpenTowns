@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import xaos.skills.SkillManager;
 import xaos.utils.Messages;
-import xaos.utils.Utils;
+import xaos.utils.UtilsString;
 
 public class HeroSkills {
 
@@ -12,8 +12,8 @@ public class HeroSkills {
     private ArrayList<Integer> levels;
 
     public HeroSkills(String sSkills, String sLevels) throws Exception {
-        this.skills = Utils.getArray(sSkills);
-        ArrayList<String> alLevels = Utils.getArray(sLevels);
+        this.skills = UtilsString.getArray(sSkills);
+        ArrayList<String> alLevels = UtilsString.getArray(sLevels);
 
         if (this.skills == null || alLevels == null || this.skills.size() == 0) {
             throw new Exception(Messages.getString("HeroSkills.0")); //$NON-NLS-1$

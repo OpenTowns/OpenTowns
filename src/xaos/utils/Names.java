@@ -17,7 +17,7 @@ public final class Names {
         if (namesHash == null) {
             namesHash = new HashMap<String, ArrayList<String>>();
 
-            ArrayList<String> alPaths = Utils.getPathToFile("names.xml", sCampaignID, sMissionID); //$NON-NLS-1$
+            ArrayList<String> alPaths = UtilsFiles.getPathToFile("names.xml", sCampaignID, sMissionID); //$NON-NLS-1$
             for (int i = 0; i < alPaths.size(); i++) {
                 loadXMLNames(alPaths.get(i));
             }

@@ -8,6 +8,7 @@ import xaos.skills.SkillManagerItem;
 import xaos.tiles.Tile;
 import xaos.utils.Messages;
 import xaos.utils.Utils;
+import xaos.utils.UtilsString;
 
 /**
  * Clase de tipo "managerItem", no es la que se añade a las livings.
@@ -285,7 +286,7 @@ public class EffectManagerItem {
     }
 
     public void setOnHitEffects(String sOnHitEffects) {
-        setOnHitEffects(Utils.getArray(sOnHitEffects));
+        setOnHitEffects(UtilsString.getArray(sOnHitEffects));
     }
 
     public void setOnHitEffects(ArrayList<String> onHitEffects) {
@@ -309,7 +310,7 @@ public class EffectManagerItem {
     }
 
     public void setOnRangedHitEffects(String sOnRangedHitEffects) {
-        setOnRangedHitEffects(Utils.getArray(sOnRangedHitEffects));
+        setOnRangedHitEffects(UtilsString.getArray(sOnRangedHitEffects));
     }
 
     public void setOnRangedHitEffects(ArrayList<String> onRangedHitEffects) {
@@ -325,7 +326,7 @@ public class EffectManagerItem {
     }
 
     public void setAfterEffects(String sAfterEffects) {
-        setAfterEffects(Utils.getArray(sAfterEffects));
+        setAfterEffects(UtilsString.getArray(sAfterEffects));
     }
 
     public ArrayList<String> getAfterEffects() {
@@ -337,7 +338,7 @@ public class EffectManagerItem {
     }
 
     public void setCastEffects(String sCastEffects) {
-        setCastEffects(Utils.getArray(sCastEffects));
+        setCastEffects(UtilsString.getArray(sCastEffects));
     }
 
     public ArrayList<String> getCastEffects() {
@@ -393,7 +394,7 @@ public class EffectManagerItem {
     }
 
     public void setEffectsImmune(String sEffectsImmune) throws Exception {
-        setEffectsImmune(Utils.getArray(sEffectsImmune));
+        setEffectsImmune(UtilsString.getArray(sEffectsImmune));
     }
 
     public ArrayList<String> getEffectsImmune() {
@@ -405,7 +406,7 @@ public class EffectManagerItem {
     }
 
     public void setEffectsPrerequisite(String sEffectsPrerequisite) throws Exception {
-        setEffectsPrerequisite(Utils.getArray(sEffectsPrerequisite));
+        setEffectsPrerequisite(UtilsString.getArray(sEffectsPrerequisite));
     }
 
     public ArrayList<String> getEffectsPrerequisite() {

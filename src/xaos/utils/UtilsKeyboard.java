@@ -243,7 +243,7 @@ public final class UtilsKeyboard {
             checkDuplicates(iIndex, iFN, iKey);
         }
 
-        Utils.saveOptions();
+        UtilsFiles.saveOptions();
     }
 
     /**

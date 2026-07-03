@@ -17,6 +17,7 @@ import xaos.generator.SeedData;
 import xaos.tiles.Tile;
 import xaos.utils.Messages;
 import xaos.utils.Utils;
+import xaos.utils.UtilsString;
 
 /**
  * Clase de tipo "managerItem", no es la que se añade a la lista de eventos
@@ -381,7 +382,7 @@ public class EventManagerItem {
     }
 
     public void setTargets(String targets) {
-        this.targets = Utils.getArray(targets);
+        this.targets = UtilsString.getArray(targets);
 
         if (this.targets != null && this.targets.size() > 0) {
             this.targetsHateData = new HateData(targets);

@@ -9,6 +9,7 @@ import xaos.tiles.entities.items.Item;
 import xaos.tiles.entities.living.LivingEntity;
 import xaos.utils.AStarQueue;
 import xaos.utils.Utils;
+import xaos.utils.UtilsSavegame;
 
 /**
  * Headless test entry point: runs worldgen and the per-frame simulation
@@ -122,7 +123,7 @@ public final class TownsHeadless {
         if (saveName != null) {
             try {
                 Game.setSavegameName(saveName);
-                Utils.save(true);
+                UtilsSavegame.save(true);
                 System.out.println("[TownsHeadless] saved " + saveName + ".zip");
             } catch (Exception e) {
                 System.err.println("[TownsHeadless] save failed: " + e);

@@ -2,13 +2,13 @@ package xaos.data;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import xaos.utils.Utils;
+import xaos.utils.UtilsFiles;
 
 public class Messages {
 
     private static final String BUNDLE_NAME = "xaos.data.messages"; //$NON-NLS-1$
 
-    private static final ResourceBundle RESOURCE_BUNDLE = Utils.getResourceBundle(BUNDLE_NAME);
+    private static final ResourceBundle RESOURCE_BUNDLE = UtilsFiles.getResourceBundle(BUNDLE_NAME);
 
     private Messages() {
     }

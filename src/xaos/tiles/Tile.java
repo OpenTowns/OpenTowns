@@ -15,6 +15,7 @@ import xaos.utils.Log;
 import xaos.utils.Messages;
 import xaos.utils.TextureData;
 import xaos.utils.Utils;
+import xaos.utils.UtilsString;
 import xaos.utils.UtilsGL;
 import xaos.utils.UtilsIniHeaders;
 
@@ -134,7 +135,7 @@ public class Tile implements Externalizable {
 
     public void setColorMiniMap(String sColor) {
         if (sColor != null) {
-            colorMiniMap = Utils.getColorFromString(sColor);
+            colorMiniMap = UtilsString.getColorFromString(sColor);
         } else {
             colorMiniMap = null;
         }

@@ -6,7 +6,7 @@ import xaos.tiles.entities.items.ItemManager;
 import xaos.tiles.entities.items.ItemManagerItem;
 import xaos.tiles.terrain.TerrainManager;
 import xaos.utils.Messages;
-import xaos.utils.Utils;
+import xaos.utils.UtilsString;
 
 public class ActionManagerItem {
 
@@ -57,7 +57,7 @@ public class ActionManagerItem {
     }
 
     public void setTurns(String turns) {
-        setTurns(Utils.getInteger(turns, 0));
+        setTurns(UtilsString.getInteger(turns, 0));
     }
 
     public int getTurns() {

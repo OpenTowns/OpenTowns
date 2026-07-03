@@ -46,6 +46,7 @@ import xaos.utils.Messages;
 import xaos.utils.Point3D;
 import xaos.utils.Point3DShort;
 import xaos.utils.Utils;
+import xaos.utils.UtilsGeometry;
 import xaos.utils.UtilsIniHeaders;
 import xaos.zones.Zone;
 import xaos.zones.ZoneBarracks;
@@ -1133,7 +1134,7 @@ public final class Task implements Externalizable {
                         for (short itemX = (short) (x0 - 1); itemX <= (x0 + 1); itemX++) {
                             for (short itemY = (short) (y0 - 1); itemY <= (y0 + 1); itemY++) {
                                 for (short itemZ = (short) (z - 1); itemZ <= (z + 1); itemZ++) {
-                                    if (Utils.isInsideMap(itemX, itemY, itemZ)) {
+                                    if (UtilsGeometry.isInsideMap(itemX, itemY, itemZ)) {
                                         if (World.getCell(itemX, itemY, itemZ).getAstarZoneID() != -1) {
                                             bAllUnavailable = false;
                                             break foriteming;
@@ -1253,8 +1254,8 @@ public final class Task implements Externalizable {
                             int iBuildingCercano = -1;
                             int iBuildingCercanoSinCola = -1;
                             Point3DShort p3dBuildingAux = null;
-                            int iDistance = Utils.MAX_DISTANCE;
-                            int iDistanceSinCola = Utils.MAX_DISTANCE;
+                            int iDistance = UtilsGeometry.MAX_DISTANCE;
+                            int iDistanceSinCola = UtilsGeometry.MAX_DISTANCE;
 
                             // Buscamos la cola de items más pequeña
                             int iMinCola = 1000;
@@ -1286,7 +1287,7 @@ public final class Task implements Externalizable {
                                         ArrayList<Point3DShort> alPoints = getAccesingPointsMatchingASZI(x0, y0, z, iBuildingASZID, getTask());
                                         if (alPoints.size() > 0) {
                                             // Edificio de guais y en la zona del item, miramos la distancia
-                                            int iDistanceAux = Utils.getDistance(x0, y0, z, p3dBuildingAux);
+                                            int iDistanceAux = UtilsGeometry.getDistance(x0, y0, z, p3dBuildingAux);
                                             if (iDistanceAux < iDistance) {
                                                 iDistance = iDistanceAux;
                                                 iBuildingCercano = i;
@@ -1301,7 +1302,7 @@ public final class Task implements Externalizable {
                                     } else {
                                         if (World.getCell(p3dBuildingAux).getAstarZoneID() == World.getCell(x0, y0, z).getAstarZoneID()) {
                                             // Edificio de guais y en la zona, miramos la distancia
-                                            int iDistanceAux = Utils.getDistance(x0, y0, z, p3dBuildingAux);
+                                            int iDistanceAux = UtilsGeometry.getDistance(x0, y0, z, p3dBuildingAux);
                                             if (iDistanceAux < iDistance) {
                                                 iDistance = iDistanceAux;
                                                 iBuildingCercano = i;

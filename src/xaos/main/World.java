@@ -84,6 +84,8 @@ import xaos.utils.Point3D;
 import xaos.utils.Point3DShort;
 import xaos.utils.UtilFont;
 import xaos.utils.Utils;
+import xaos.utils.UtilsGeometry;
+import xaos.utils.UtilsLineOfSight;
 import xaos.utils.UtilsAL;
 import xaos.utils.UtilsGL;
 import xaos.utils.UtilsIniHeaders;
@@ -1884,14 +1886,14 @@ public final class World implements Externalizable {
 			// Llenamos la lista con los valores de happiness que encontramos en LOS, quitando los que tienen happiness = 0
 			for (short x = (short) (citizen.getX () - citizen.getLivingEntityData ().getLOSCurrent ()); x <= (citizen.getX () + citizen.getLivingEntityData ().getLOSCurrent ()); x++) {
 				for (short y = (short) (citizen.getY () - citizen.getLivingEntityData ().getLOSCurrent ()); y <= (citizen.getY () + citizen.getLivingEntityData ().getLOSCurrent ()); y++) {
-					if (Utils.isInsideMap (x, y, citizen.getZ ())) {
+					if (UtilsGeometry.isInsideMap (x, y, citizen.getZ ())) {
 						cell = getCell (x, y, citizen.getZ ());
 						if (cell.hasEntity ()) {
 							ItemManagerItem imi = ItemManager.getItem (cell.getEntity ().getIniHeader ());
 							if (imi != null && imi.getHappiness () != 0) {
 								// Evitamos la infravisión (teniendo en cuenta que si que hay camino hasta la misma casilla donde está)
-								// if ((x == citizen.getX () && y == citizen.getY ()) || Utils.bresenhamLineExists (citizen.getX (), citizen.getY (), x, y, citizen.getZ (), LivingEntity.TYPE_CITIZEN) || Utils.bresenhamLineExists (x, y, citizen.getX (), citizen.getY (), citizen.getZ (), LivingEntity.TYPE_CITIZEN)) {
-								if ((x == citizen.getX () && y == citizen.getY ()) || Utils.bresenhamLineExists (citizen.getX (), citizen.getY (), x, y, citizen.getZ ()) || Utils.bresenhamLineExists (x, y, citizen.getX (), citizen.getY (), citizen.getZ ())) {
+								// if ((x == citizen.getX () && y == citizen.getY ()) || UtilsLineOfSight.bresenhamLineExists (citizen.getX (), citizen.getY (), x, y, citizen.getZ (), LivingEntity.TYPE_CITIZEN) || UtilsLineOfSight.bresenhamLineExists (x, y, citizen.getX (), citizen.getY (), citizen.getZ (), LivingEntity.TYPE_CITIZEN)) {
+								if ((x == citizen.getX () && y == citizen.getY ()) || UtilsLineOfSight.bresenhamLineExists (citizen.getX (), citizen.getY (), x, y, citizen.getZ ()) || UtilsLineOfSight.bresenhamLineExists (x, y, citizen.getX (), citizen.getY (), citizen.getZ ())) {
 									alItemsHappy.add (new Integer (imi.getHappiness ()));
 								}
 							}
@@ -2175,7 +2177,7 @@ public final class World implements Externalizable {
 
 		// Antes de nada miramos si tenemos el máximo de héroes, nos basamos en el número de aldeanos
 		// De momento 1 hero por cada 2 aldeanos
-		int iMaxHeros = Utils.sqrt (getNumCitizens () + getNumSoldiers ());
+		int iMaxHeros = UtilsGeometry.sqrt (getNumCitizens () + getNumSoldiers ());
 
 		if (World.getHeroIDs ().size () >= iMaxHeros) {
 			return;
@@ -3539,7 +3541,7 @@ public final class World implements Externalizable {
 			p3dSource = fluidCellsToProcess.remove (Utils.getRandomBetween (0, (fluidCellsToProcess.size () - 1) / 4)); // Random del primer 25% de tiles
 
 			// Miramos si está dentro del mapa
-			// if (!Utils.isInsideMap (p3dSource)) {
+			// if (!UtilsGeometry.isInsideMap (p3dSource)) {
 			// continue;
 			// }
 			cellSource = cells[p3dSource.x][p3dSource.y][p3dSource.z];
@@ -3663,7 +3665,7 @@ public final class World implements Externalizable {
 			for (int j = -1; j <= 1; j++) {
 				if (i != 0 || j != 0) {
 					p3dTemp = Point3DShort.getPoolInstance (p3dSource.x + i, p3dSource.y + j, p3dSource.z);
-					if (Utils.isInsideMap (p3dTemp) && !alNewPoints.contains (p3dTemp)) {
+					if (UtilsGeometry.isInsideMap (p3dTemp) && !alNewPoints.contains (p3dTemp)) {
 						alNewPoints.add (p3dTemp);
 					}
 				}
@@ -3671,7 +3673,7 @@ public final class World implements Externalizable {
 		}
 		if (p3dSource.z > 0) {
 			p3dTemp = Point3DShort.getPoolInstance (p3dSource.x, p3dSource.y, p3dSource.z - 1);
-			if (Utils.isInsideMap (p3dTemp) && !alNewPoints.contains (p3dTemp)) {
+			if (UtilsGeometry.isInsideMap (p3dTemp) && !alNewPoints.contains (p3dTemp)) {
 				alNewPoints.add (p3dTemp);
 			}
 		}
@@ -3715,7 +3717,7 @@ public final class World implements Externalizable {
 					forvecinas: for (int x = -1; x <= 1; x++) {
 						for (int y = -1; y <= 1; y++) {
 							if (x != 0 || y != 0) {
-								if (Utils.isInsideMap (cell.getCoordinates ().x + x, cell.getCoordinates ().y + y, cell.getCoordinates ().z)) {
+								if (UtilsGeometry.isInsideMap (cell.getCoordinates ().x + x, cell.getCoordinates ().y + y, cell.getCoordinates ().z)) {
 									int iStr = World.getCell (cell.getCoordinates ().x + x, cell.getCoordinates ().y + y, cell.getCoordinates ().z).getTerrain ().getFluidCount ();
 									if (iStr == 1) {
 										bMasFuerza = false;
@@ -3938,7 +3940,7 @@ public final class World implements Externalizable {
 
 
 	private short checkFluidMovementCells (Cell cellSource, int x, int y, int z, boolean bElevatorOnSource) {
-		if (!Utils.isInsideMap (x, y, z)) {
+		if (!UtilsGeometry.isInsideMap (x, y, z)) {
 			return 0;
 		}
 
@@ -4119,7 +4121,7 @@ public final class World implements Externalizable {
 		if (bNeighbours) {
 			for (int fx = -1; fx <= 1; fx++) {
 				for (int fy = -1; fy <= 1; fy++) {
-					if (Utils.isInsideMap (x + fx, y + fy, z)) {
+					if (UtilsGeometry.isInsideMap (x + fx, y + fy, z)) {
 						if (!cells[x + fx][y + fy][z].isFluidCheckList () && cells[x + fx][y + fy][z].getTerrain ().hasFluids ()) {
 							fluidCellsToProcess.add (Point3DShort.getPoolInstance (x + fx, y + fy, z));
 							cells[x + fx][y + fy][z].setFluidCheckList (true);
@@ -4129,7 +4131,7 @@ public final class World implements Externalizable {
 			}
 			// Arriba
 			if (z > 0) {
-				if (Utils.isInsideMap (x, y, z - 1)) {
+				if (UtilsGeometry.isInsideMap (x, y, z - 1)) {
 					if (!cells[x][y][z - 1].isFluidCheckList () && cells[x][y][z - 1].getTerrain ().hasFluids ()) {
 						fluidCellsToProcess.add (Point3DShort.getPoolInstance (x, y, z - 1));
 						cells[x][y][z - 1].setFluidCheckList (true);
@@ -4139,7 +4141,7 @@ public final class World implements Externalizable {
 
 			// Abajo
 			if ((z + 1) < World.MAP_DEPTH) {
-				if (Utils.isInsideMap (x, y, z + 1)) {
+				if (UtilsGeometry.isInsideMap (x, y, z + 1)) {
 					if (!cells[x][y][z + 1].isFluidCheckList () && cells[x][y][z + 1].getTerrain ().hasFluids ()) {
 						fluidCellsToProcess.add (Point3DShort.getPoolInstance (x, y, z + 1));
 						cells[x][y][z + 1].setFluidCheckList (true);
@@ -4147,7 +4149,7 @@ public final class World implements Externalizable {
 				}
 			}
 		} else {
-			if (Utils.isInsideMap (x, y, z)) {
+			if (UtilsGeometry.isInsideMap (x, y, z)) {
 				if (!cells[x][y][z].isFluidCheckList () && cells[x][y][z].getTerrain ().hasFluids ()) {
 					fluidCellsToProcess.add (Point3DShort.getPoolInstance (x, y, z));
 					cells[x][y][z].setFluidCheckList (true);
@@ -4520,7 +4522,7 @@ public final class World implements Externalizable {
 				bucle: for (short x = -1; x <= 1; x++) {
 					for (short y = -1; y <= 1; y++) {
 						if (x != 0 || y != 0) {
-							if (Utils.isInsideMap ((short) (cellX + x), (short) (cellY + y), cellZ)) {
+							if (UtilsGeometry.isInsideMap ((short) (cellX + x), (short) (cellY + y), cellZ)) {
 								if (!getCell (cellX + x, cellY + y, cellZ).isDiscovered ()) {
 									bCasillaBuena = true;
 									break bucle;

@@ -11,7 +11,7 @@ import xaos.Towns;
 import xaos.main.Game;
 import xaos.utils.Log;
 import xaos.utils.Messages;
-import xaos.utils.Utils;
+import xaos.utils.UtilsString;
 import xaos.utils.UtilsXML;
 
 
@@ -224,14 +224,14 @@ public class CampaignManager {
 							flow.setTexts (UtilsXML.getChildValues (nodeFlow.getChildNodes (), "text")); //$NON-NLS-1$
 							flow.setImage (UtilsXML.getChildValue (nodeFlow.getChildNodes (), "image")); //$NON-NLS-1$
 							flow.setTile (UtilsXML.getChildValue (nodeFlow.getChildNodes (), "tile")); //$NON-NLS-1$
-							flow.setStartEvents (Utils.getArray (UtilsXML.getChildValue (nodeFlow.getChildNodes (), "startEvents"))); //$NON-NLS-1$
+							flow.setStartEvents (UtilsString.getArray (UtilsXML.getChildValue (nodeFlow.getChildNodes (), "startEvents"))); //$NON-NLS-1$
 							flow.setNextMission (UtilsXML.getChildValue (nodeFlow.getChildNodes (), "nextMission")); //$NON-NLS-1$
 							flow.setBlinkItems (UtilsXML.getChildValue (nodeFlow.getChildNodes (), "blinkItems")); //$NON-NLS-1$
-							flow.setBlinkPiles (Utils.getArray (UtilsXML.getChildValue (nodeFlow.getChildNodes (), "blinkPiles"))); //$NON-NLS-1$
-							flow.setBlinkBottom (Utils.getArray (UtilsXML.getChildValue (nodeFlow.getChildNodes (), "blinkBottom"))); //$NON-NLS-1$
-							flow.setBlinkRight (Utils.getArray (UtilsXML.getChildValue (nodeFlow.getChildNodes (), "blinkRight"))); //$NON-NLS-1$
+							flow.setBlinkPiles (UtilsString.getArray (UtilsXML.getChildValue (nodeFlow.getChildNodes (), "blinkPiles"))); //$NON-NLS-1$
+							flow.setBlinkBottom (UtilsString.getArray (UtilsXML.getChildValue (nodeFlow.getChildNodes (), "blinkBottom"))); //$NON-NLS-1$
+							flow.setBlinkRight (UtilsString.getArray (UtilsXML.getChildValue (nodeFlow.getChildNodes (), "blinkRight"))); //$NON-NLS-1$
 							loadBlinkProduction (flow, nodeFlow.getChildNodes ());
-							flow.setBlinkMinis (Utils.getArray (UtilsXML.getChildValue (nodeFlow.getChildNodes (), "blinkMinis"))); //$NON-NLS-1$
+							flow.setBlinkMinis (UtilsString.getArray (UtilsXML.getChildValue (nodeFlow.getChildNodes (), "blinkMinis"))); //$NON-NLS-1$
 
 							// Cargamos los triggers
 							flow.setOrderedTriggers (UtilsXML.getChildValue (nodeFlow.getChildNodes (), "orderedTriggers")); //$NON-NLS-1$
@@ -272,7 +272,7 @@ public class CampaignManager {
 		
 
 	private static void loadBlinkProduction (TutorialFlow flow, NodeList nodelist) throws Exception {
-		ArrayList<String> alBlinks = Utils.getArray (UtilsXML.getChildValue (nodelist, "blinkProduction")); //$NON-NLS-1$
+		ArrayList<String> alBlinks = UtilsString.getArray (UtilsXML.getChildValue (nodelist, "blinkProduction")); //$NON-NLS-1$
 
 		if (alBlinks != null) {
 //			// Pillamos los parámetros

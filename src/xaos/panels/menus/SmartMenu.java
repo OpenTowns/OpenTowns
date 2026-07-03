@@ -40,7 +40,8 @@ import xaos.utils.Log;
 import xaos.utils.Messages;
 import xaos.utils.Point3D;
 import xaos.utils.UtilFont;
-import xaos.utils.Utils;
+import xaos.utils.UtilsFiles;
+import xaos.utils.UtilsString;
 import xaos.utils.UtilsAL;
 import xaos.utils.UtilsGL;
 import xaos.utils.UtilsIniHeaders;
@@ -327,7 +328,7 @@ public class SmartMenu implements Externalizable {
             item = getItems().get(i);
             iY = y + (i * UtilFont.MAX_HEIGHT) + 1;
             if (item.isDynamic()) {
-                sTexto = Utils.getDynamicString(item.getName());
+                sTexto = UtilsString.getDynamicString(item.getName());
             } else {
                 sTexto = item.getName();
             }
@@ -379,7 +380,7 @@ public class SmartMenu implements Externalizable {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
 
-            ArrayList<String> alPaths = Utils.getPathToFile(sFilename, sCampaignID, sMissionID);
+            ArrayList<String> alPaths = UtilsFiles.getPathToFile(sFilename, sCampaignID, sMissionID);
             for (int i = 0; i < alPaths.size(); i++) {
                 File f = new File(alPaths.get(i));
                 Document doc = db.parse(f);
@@ -656,7 +657,7 @@ public class SmartMenu implements Externalizable {
                     String sName;
                     for (int i = 0; i < alQueue.size(); i++) {
                         if (alQueue.get(i).getType() == QueueItem.TYPE_MOVE || alQueue.get(i).getType() == QueueItem.TYPE_PICK) {
-                            ArrayList<String> alList = Utils.getArray(alQueue.get(i).getValue());
+                            ArrayList<String> alList = UtilsString.getArray(alQueue.get(i).getValue());
                             ArrayList<String> alListNames = new ArrayList<String>();
                             sName = null;
                             if (alList != null) {
@@ -691,7 +692,7 @@ public class SmartMenu implements Externalizable {
                                 }
                             }
                         } else if (alQueue.get(i).getType() == QueueItem.TYPE_PICK_FRIENDLY) {
-                            ArrayList<String> alList = Utils.getArray(alQueue.get(i).getValue());
+                            ArrayList<String> alList = UtilsString.getArray(alQueue.get(i).getValue());
                             ArrayList<String> alListNames = new ArrayList<String>();
                             sName = null;
                             if (alList != null) {

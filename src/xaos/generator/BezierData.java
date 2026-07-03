@@ -1,6 +1,7 @@
 package xaos.generator;
 
 import xaos.utils.Utils;
+import xaos.utils.UtilsString;
 
 public class BezierData extends ParentMapData {
 
@@ -36,37 +37,37 @@ public class BezierData extends ParentMapData {
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_BEZIER_WIDE)) {
                 wide = item.getList().get(i).getValue();
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_BEZIER_POINT1XMIN)) {
-                point1xmin = Utils.getInteger(item.getList().get(i).getValue(), -1);
+                point1xmin = UtilsString.getInteger(item.getList().get(i).getValue(), -1);
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_BEZIER_POINT1XMAX)) {
-                point1xmax = Utils.getInteger(item.getList().get(i).getValue(), -1);
+                point1xmax = UtilsString.getInteger(item.getList().get(i).getValue(), -1);
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_BEZIER_POINT1YMIN)) {
-                point1ymin = Utils.getInteger(item.getList().get(i).getValue(), -1);
+                point1ymin = UtilsString.getInteger(item.getList().get(i).getValue(), -1);
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_BEZIER_POINT1YMAX)) {
-                point1ymax = Utils.getInteger(item.getList().get(i).getValue(), -1);
+                point1ymax = UtilsString.getInteger(item.getList().get(i).getValue(), -1);
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_BEZIER_POINT2XMIN)) {
-                point2xmin = Utils.getInteger(item.getList().get(i).getValue(), -1);
+                point2xmin = UtilsString.getInteger(item.getList().get(i).getValue(), -1);
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_BEZIER_POINT2XMAX)) {
-                point2xmax = Utils.getInteger(item.getList().get(i).getValue(), -1);
+                point2xmax = UtilsString.getInteger(item.getList().get(i).getValue(), -1);
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_BEZIER_POINT2YMIN)) {
-                point2ymin = Utils.getInteger(item.getList().get(i).getValue(), -1);
+                point2ymin = UtilsString.getInteger(item.getList().get(i).getValue(), -1);
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_BEZIER_POINT2YMAX)) {
-                point2ymax = Utils.getInteger(item.getList().get(i).getValue(), -1);
+                point2ymax = UtilsString.getInteger(item.getList().get(i).getValue(), -1);
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_BEZIER_CONTROLPOINT1XMIN)) {
-                controlpoint1xmin = Utils.getInteger(item.getList().get(i).getValue(), -1);
+                controlpoint1xmin = UtilsString.getInteger(item.getList().get(i).getValue(), -1);
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_BEZIER_CONTROLPOINT1XMAX)) {
-                controlpoint1xmax = Utils.getInteger(item.getList().get(i).getValue(), -1);
+                controlpoint1xmax = UtilsString.getInteger(item.getList().get(i).getValue(), -1);
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_BEZIER_CONTROLPOINT1YMIN)) {
-                controlpoint1ymin = Utils.getInteger(item.getList().get(i).getValue(), -1);
+                controlpoint1ymin = UtilsString.getInteger(item.getList().get(i).getValue(), -1);
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_BEZIER_CONTROLPOINT1YMAX)) {
-                controlpoint1ymax = Utils.getInteger(item.getList().get(i).getValue(), -1);
+                controlpoint1ymax = UtilsString.getInteger(item.getList().get(i).getValue(), -1);
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_BEZIER_CONTROLPOINT2XMIN)) {
-                controlpoint2xmin = Utils.getInteger(item.getList().get(i).getValue(), -1);
+                controlpoint2xmin = UtilsString.getInteger(item.getList().get(i).getValue(), -1);
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_BEZIER_CONTROLPOINT2XMAX)) {
-                controlpoint2xmax = Utils.getInteger(item.getList().get(i).getValue(), -1);
+                controlpoint2xmax = UtilsString.getInteger(item.getList().get(i).getValue(), -1);
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_BEZIER_CONTROLPOINT2YMIN)) {
-                controlpoint2ymin = Utils.getInteger(item.getList().get(i).getValue(), -1);
+                controlpoint2ymin = UtilsString.getInteger(item.getList().get(i).getValue(), -1);
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_BEZIER_CONTROLPOINT2YMAX)) {
-                controlpoint2ymax = Utils.getInteger(item.getList().get(i).getValue(), -1);
+                controlpoint2ymax = UtilsString.getInteger(item.getList().get(i).getValue(), -1);
             }
         }
     }

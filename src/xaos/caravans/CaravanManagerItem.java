@@ -12,6 +12,7 @@ import xaos.tiles.entities.items.military.MilitaryItem;
 import xaos.utils.Messages;
 import xaos.utils.Point3DShort;
 import xaos.utils.Utils;
+import xaos.utils.UtilsString;
 import xaos.zones.ZoneManager;
 
 public class CaravanManagerItem {
@@ -146,7 +147,7 @@ public class CaravanManagerItem {
     }
 
     public void setBuysString(String sBuys) {
-        setBuys(Utils.getArray(sBuys));
+        setBuys(UtilsString.getArray(sBuys));
     }
 
     public ArrayList<String> getBuys() {

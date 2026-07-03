@@ -52,6 +52,8 @@ import xaos.utils.Messages;
 import xaos.utils.Point3D;
 import xaos.utils.Point3DShort;
 import xaos.utils.Utils;
+import xaos.utils.UtilsGeometry;
+import xaos.utils.UtilsString;
 import xaos.utils.UtilsAL;
 import xaos.utils.UtilsIniHeaders;
 import xaos.zones.Zone;
@@ -279,7 +281,7 @@ public class Citizen extends LivingEntity implements Externalizable {
                             ArrayList<Zone> alZones = Game.getWorld().getZones();
                             int iCurrentASZID = World.getCell(getCoordinates()).getAstarZoneID();
                             Point3DShort p3dClosest = null, p3dTemp;
-                            int iMaxDistance = Utils.MAX_DISTANCE;
+                            int iMaxDistance = UtilsGeometry.MAX_DISTANCE;
                             for (int i = 0; i < alZones.size(); i++) {
                                 zone = alZones.get(i);
                                 if (ZoneManager.getItem(zone.getIniHeader()).getType() == ZoneManagerItem.TYPE_SOCIAL) {
@@ -292,9 +294,9 @@ public class Citizen extends LivingEntity implements Externalizable {
                                         // Tenemos un punto, calculamos distancia
                                         if (p3dClosest == null) {
                                             p3dClosest = Point3DShort.getPoolInstance(p3dTemp);
-                                            iMaxDistance = Utils.getDistance(getCoordinates(), p3dTemp);
+                                            iMaxDistance = UtilsGeometry.getDistance(getCoordinates(), p3dTemp);
                                         } else {
-                                            int iTmp = Utils.getDistance(getCoordinates(), p3dTemp);
+                                            int iTmp = UtilsGeometry.getDistance(getCoordinates(), p3dTemp);
                                             if (iTmp < iMaxDistance) {
                                                 p3dClosest.setPoint(p3dTemp);
                                                 iMaxDistance = iTmp;
@@ -1241,7 +1243,7 @@ public class Citizen extends LivingEntity implements Externalizable {
             for (int x = (getX() - distancia); x <= (getX() + distancia); x++) {
                 for (int y = (getY() - distancia); y <= (getY() + distancia); y++) {
                     if (Math.abs((getX() - x)) == distancia || Math.abs((getY() - y)) == distancia) { // Para que sólo mire puntos exteriores del radio
-                        if (Utils.isInsideMap(x, y, getZ())) {
+                        if (UtilsGeometry.isInsideMap(x, y, getZ())) {
                             cell = World.getCell(x, y, getZ());
                             if (cell.isEmpty() && !cell.isFlagOrders() && cell.getAstarZoneID() == World.getCell(getCoordinates()).getAstarZoneID() && isCellAllowed(cell)) {
                                 if (!cell.hasStockPile() || (cell.hasStockPile() && Stockpile.getStockpile(cell.getCoordinates()).itemAllowed(getCarrying().getIniHeader()))) {
@@ -1278,7 +1280,7 @@ public class Citizen extends LivingEntity implements Externalizable {
                         for (int x = (le.getX() - distancia); x <= (le.getX() + distancia); x++) {
                             for (int y = (le.getY() - distancia); y <= (le.getY() + distancia); y++) {
                                 if (Math.abs((le.getX() - x)) == distancia || Math.abs((le.getY() - y)) == distancia) { // Para que sólo mire puntos exteriores del radio
-                                    if (Utils.isInsideMap(x, y, le.getZ())) {
+                                    if (UtilsGeometry.isInsideMap(x, y, le.getZ())) {
                                         cell = World.getCell(x, y, le.getZ());
                                         if (cell.isEmpty() && !cell.isFlagOrders() && cell.getAstarZoneID() == iASZID && LivingEntity.isCellAllowed(cell)) {
                                             if (!cell.hasStockPile() || (Stockpile.getStockpile(cell.getCoordinates()).itemAllowed(getCarrying().getIniHeader()))) {
@@ -1380,7 +1382,7 @@ public class Citizen extends LivingEntity implements Externalizable {
                         // No estamos en comedor, buscamos uno y vamos hacia allí, si lo encontramos
                         Point3DShort p3d = null;
                         Point3DShort p3dMinDistance = null;
-                        int iMinDistance = Utils.MAX_DISTANCE;
+                        int iMinDistance = UtilsGeometry.MAX_DISTANCE;
                         Zone zone;
                         for (int i = 0; i < zones.size(); i++) {
                             zone = zones.get(i);
@@ -1393,9 +1395,9 @@ public class Citizen extends LivingEntity implements Externalizable {
                                     // Tenemos una celda, miramos la distancia
                                     if (p3dMinDistance == null) {
                                         p3dMinDistance = Point3DShort.getPoolInstance(p3d);
-                                        iMinDistance = Utils.getDistance(getCoordinates(), p3d);
+                                        iMinDistance = UtilsGeometry.getDistance(getCoordinates(), p3d);
                                     } else {
-                                        int iAuxDistance = Utils.getDistance(getCoordinates(), p3d);
+                                        int iAuxDistance = UtilsGeometry.getDistance(getCoordinates(), p3d);
                                         if (iAuxDistance < iMinDistance) {
                                             p3dMinDistance.setPoint(p3d);
                                             iMinDistance = iAuxDistance;
@@ -1418,9 +1420,9 @@ public class Citizen extends LivingEntity implements Externalizable {
                                         // Tenemos una celda, miramos la distancia
                                         if (p3dMinDistance == null) {
                                             p3dMinDistance = Point3DShort.getPoolInstance(p3d);
-                                            iMinDistance = Utils.getDistance(getCoordinates(), p3d);
+                                            iMinDistance = UtilsGeometry.getDistance(getCoordinates(), p3d);
                                         } else {
-                                            int iAuxDistance = Utils.getDistance(getCoordinates(), p3d);
+                                            int iAuxDistance = UtilsGeometry.getDistance(getCoordinates(), p3d);
                                             if (iAuxDistance < iMinDistance) {
                                                 p3dMinDistance.setPoint(p3d);
                                                 iMinDistance = iAuxDistance;
@@ -1576,7 +1578,7 @@ public class Citizen extends LivingEntity implements Externalizable {
         // No está en un hospital, buscamos uno
         Point3DShort p3d = null;
         Point3DShort p3dNearest = null;
-        int iDistanceNearest = Utils.MAX_DISTANCE;
+        int iDistanceNearest = UtilsGeometry.MAX_DISTANCE;
 
         for (int i = 0; i < alZones.size(); i++) {
             zone = alZones.get(i);
@@ -1595,7 +1597,7 @@ public class Citizen extends LivingEntity implements Externalizable {
                 }
 
                 // Tenemos una casilla, miramos distancia
-                int iDistanceAux = Utils.getDistance(getCoordinates(), p3d);
+                int iDistanceAux = UtilsGeometry.getDistance(getCoordinates(), p3d);
                 if (p3dNearest == null) {
                     p3dNearest = Point3DShort.getPoolInstance(p3d.x, p3d.y, p3d.z);
                     iDistanceNearest = iDistanceAux;
@@ -2014,7 +2016,7 @@ public class Citizen extends LivingEntity implements Externalizable {
         // Alrrededor
         for (x = (getX() - radius); x <= (getX() + radius); x++) {
             for (y = (getY() - radius); y <= (getY() + radius); y++) {
-                if (Utils.isInsideMap(x, y, z)) {
+                if (UtilsGeometry.isInsideMap(x, y, z)) {
                     if (Item.isCellAvailableForItem(imi, x, y, z, false, true)) {
                         item.init(x, y, z);
                         item.setOperative(imi.isAlwaysOperative());
@@ -2880,7 +2882,7 @@ public class Citizen extends LivingEntity implements Externalizable {
             // Miramos si en la celda actual tenemos el item
             Cell cell = World.getCell(getCoordinates());
             Entity entity = cell.getEntity();
-            ArrayList<String> alPicks = Utils.getArray(qi.getValue());
+            ArrayList<String> alPicks = UtilsString.getArray(qi.getValue());
             if (entity != null && entity instanceof Item && alPicks.contains(entity.getIniHeader())) {
                 boolean todoOK = false;
                 // Pick
@@ -2950,7 +2952,7 @@ public class Citizen extends LivingEntity implements Externalizable {
             // Move
             Cell cell = World.getCell(getCoordinates());
             Entity entity = cell.getEntity();
-            ArrayList<String> alMoves = Utils.getArray(qi.getValue());
+            ArrayList<String> alMoves = UtilsString.getArray(qi.getValue());
             if (qi.isUseSource() && getCurrentCustomAction().getEntityID() != -1) {
                 // En caso de tarea sobre un entity sustituimos los <move>loquesea por <move>alEntity
                 if (entity != null && entity instanceof Item && entity.getID() == getCurrentCustomAction().getEntityID()) {
@@ -3020,7 +3022,7 @@ public class Citizen extends LivingEntity implements Externalizable {
             setDestination(p3dCoordenadas);
         } else if (qi.getType() == QueueItem.TYPE_LOCK) {
             // Lock
-            ArrayList<String> alMoves = Utils.getArray(qi.getValue());
+            ArrayList<String> alMoves = UtilsString.getArray(qi.getValue());
 
             // Antes de buscar miramos si tenemos algo bloqueado, en ese caso ya estamos
             if (getCurrentCustomAction().getQueueData().getItemIDCurrentPlace() != -1) {
@@ -3077,7 +3079,7 @@ public class Citizen extends LivingEntity implements Externalizable {
 
             // Miramos si está en la celda actual
             LivingEntity le = null;
-            ArrayList<String> alPicks = Utils.getArray(qi.getValue());
+            ArrayList<String> alPicks = UtilsString.getArray(qi.getValue());
             if (qi.isUseSource() && getCurrentCustomAction().getEntityID() != -1) {
                 le = World.getLivingEntityByID(getCurrentCustomAction().getEntityID());
                 if (le == null || !le.getCoordinates().equals(getCoordinates())) {
@@ -3342,11 +3344,11 @@ public class Citizen extends LivingEntity implements Externalizable {
             if (alPlaces.size() > 1) {
                 int iIndexMenor = 0;
                 Point3DShort p3d = alPlaces.get(0);
-                int iDistanciaMenor = Utils.getDistance(x, y, z, p3d);
+                int iDistanciaMenor = UtilsGeometry.getDistance(x, y, z, p3d);
                 int iDistanciaAux;
                 for (int i = 1; i < alPlaces.size(); i++) {
                     p3d = alPlaces.get(i);
-                    iDistanciaAux = Utils.getDistance(x, y, z, p3d);
+                    iDistanciaAux = UtilsGeometry.getDistance(x, y, z, p3d);
                     if (iDistanciaAux < iDistanciaMenor) {
                         iIndexMenor = i;
                         iDistanciaMenor = iDistanciaAux;

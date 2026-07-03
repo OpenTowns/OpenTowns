@@ -40,6 +40,7 @@ import xaos.utils.Messages;
 import xaos.utils.Point3D;
 import xaos.utils.Point3DShort;
 import xaos.utils.Utils;
+import xaos.utils.UtilsGeometry;
 import xaos.utils.UtilsIniHeaders;
 import xaos.zones.Zone;
 
@@ -1354,7 +1355,7 @@ public class Item extends Entity implements Externalizable {
 		if (bCheckContainers) {
 			ArrayList<Container> containers = Game.getWorld ().getContainers ();
 			Container container;
-			int distanciaMin = Utils.MAX_DISTANCE;
+			int distanciaMin = UtilsGeometry.MAX_DISTANCE;
 			for (int i = 0; i < containers.size (); i++) {
 				container = containers.get (i);
 				Item containerItem = Item.getItemByID (container.getItemID ());
@@ -1364,9 +1365,9 @@ public class Item extends Entity implements Externalizable {
 							p3d = containerItem.getCoordinates ();
 							if (p3dMin == null) {
 								p3dMin = p3d;
-								distanciaMin = Utils.getDistance (p3dCurrentPoint, p3d);
+								distanciaMin = UtilsGeometry.getDistance (p3dCurrentPoint, p3d);
 							} else {
-								int distAux = Utils.getDistance (p3dCurrentPoint, p3d);
+								int distAux = UtilsGeometry.getDistance (p3dCurrentPoint, p3d);
 								if (distAux < distanciaMin) {
 									p3dMin = p3d;
 									distanciaMin = distAux;
@@ -1387,7 +1388,7 @@ public class Item extends Entity implements Externalizable {
 
 		// Si llegamos aquí es que no hay material en nuestra casilla ni containers, vamos a buscar uno en stockpiles
 		Stockpile stockPile;
-		int distanciaMin = Utils.MAX_DISTANCE;
+		int distanciaMin = UtilsGeometry.MAX_DISTANCE;
 		boolean bAllowed;
 		stockpiles1: for (int i = 0; i < Game.getWorld ().getStockpiles ().size (); i++) {
 			stockPile = Game.getWorld ().getStockpiles ().get (i);
@@ -1434,9 +1435,9 @@ public class Item extends Entity implements Externalizable {
 							// Tenemos item, miramos distancia y nos vamos a la siguiente stockpile
 							if (p3dMin == null) {
 								p3dMin = p3d;
-								distanciaMin = Utils.getDistance (p3dCurrentPoint, p3d);
+								distanciaMin = UtilsGeometry.getDistance (p3dCurrentPoint, p3d);
 							} else {
-								int distAux = Utils.getDistance (p3dCurrentPoint, p3d);
+								int distAux = UtilsGeometry.getDistance (p3dCurrentPoint, p3d);
 								if (distAux < distanciaMin) {
 									p3dMin = p3d;
 									distanciaMin = distAux;
@@ -1471,9 +1472,9 @@ public class Item extends Entity implements Externalizable {
 									if (near) {
 										if (p3dMin == null) {
 											p3dMin = p3d;
-											distanciaMin = Utils.getDistance (p3dCurrentPoint, p3d);
+											distanciaMin = UtilsGeometry.getDistance (p3dCurrentPoint, p3d);
 										} else {
-											int distAux = Utils.getDistance (p3dCurrentPoint, p3d);
+											int distAux = UtilsGeometry.getDistance (p3dCurrentPoint, p3d);
 											if (distAux < distanciaMin) {
 												p3dMin = p3d;
 												distanciaMin = distAux;
@@ -1502,9 +1503,9 @@ public class Item extends Entity implements Externalizable {
 									if (near) {
 										if (p3dMin == null) {
 											p3dMin = p3d;
-											distanciaMin = Utils.getDistance (p3dCurrentPoint, p3d);
+											distanciaMin = UtilsGeometry.getDistance (p3dCurrentPoint, p3d);
 										} else {
-											int distAux = Utils.getDistance (p3dCurrentPoint, p3d);
+											int distAux = UtilsGeometry.getDistance (p3dCurrentPoint, p3d);
 											if (distAux < distanciaMin) {
 												p3dMin = p3d;
 												distanciaMin = distAux;
@@ -1539,9 +1540,9 @@ public class Item extends Entity implements Externalizable {
 		// if (near) {
 		// if (p3dMin == null) {
 		// p3dMin = p3d;
-		// distanciaMin = Utils.getDistance (p3dCurrentPoint, p3d);
+		// distanciaMin = UtilsGeometry.getDistance (p3dCurrentPoint, p3d);
 		// } else {
-		// int distAux = Utils.getDistance (p3dCurrentPoint, p3d);
+		// int distAux = UtilsGeometry.getDistance (p3dCurrentPoint, p3d);
 		// if (distAux < distanciaMin) {
 		// p3dMin = p3d;
 		// distanciaMin = distAux;
@@ -1584,7 +1585,7 @@ public class Item extends Entity implements Externalizable {
 
 		ArrayList<Item> alItemsMaxFood = new ArrayList<Item> ();
 		int iMaxFoodValue = 0;
-		int distanciaMin = Utils.MAX_DISTANCE;
+		int distanciaMin = UtilsGeometry.MAX_DISTANCE;
 		int itemIndex = -1;
 		Point3DShort p3d;
 		Item foodItem;
@@ -1621,11 +1622,11 @@ public class Item extends Entity implements Externalizable {
 							if (imi.getFoodValue () > iMaxFoodValue) {
 								iMaxFoodValue = imi.getFoodValue ();
 								alItemsMaxFood.clear ();
-								distanciaMin = Utils.MAX_DISTANCE;
+								distanciaMin = UtilsGeometry.MAX_DISTANCE;
 								itemIndex = -1;
 							}
 							alItemsMaxFood.add (foodItem);
-							int distAux = Utils.getDistance (p3dCurrentPoint, p3d);
+							int distAux = UtilsGeometry.getDistance (p3dCurrentPoint, p3d);
 							if (distAux < distanciaMin) {
 								distanciaMin = distAux;
 								itemIndex = alItemsMaxFood.size () - 1;
@@ -1672,11 +1673,11 @@ public class Item extends Entity implements Externalizable {
 									if (imi.getFoodValue () > iMaxFoodValue) {
 										iMaxFoodValue = imi.getFoodValue ();
 										alItemsMaxFood.clear ();
-										distanciaMin = Utils.MAX_DISTANCE;
+										distanciaMin = UtilsGeometry.MAX_DISTANCE;
 										itemIndex = -1;
 									}
 									alItemsMaxFood.add (foodItem);
-									int distAux = Utils.getDistance (p3dCurrentPoint, p3d);
+									int distAux = UtilsGeometry.getDistance (p3dCurrentPoint, p3d);
 									if (distAux < distanciaMin) {
 										distanciaMin = distAux;
 										itemIndex = alItemsMaxFood.size () - 1;
@@ -1710,11 +1711,11 @@ public class Item extends Entity implements Externalizable {
 						if (imi.getFoodValue () > iMaxFoodValue) {
 							iMaxFoodValue = imi.getFoodValue ();
 							alItemsMaxFood.clear ();
-							distanciaMin = Utils.MAX_DISTANCE;
+							distanciaMin = UtilsGeometry.MAX_DISTANCE;
 							itemIndex = -1;
 						}
 						alItemsMaxFood.add (foodItem);
-						int distAux = Utils.getDistance (p3dCurrentPoint, p3d);
+						int distAux = UtilsGeometry.getDistance (p3dCurrentPoint, p3d);
 						if (distAux < distanciaMin) {
 							distanciaMin = distAux;
 							itemIndex = alItemsMaxFood.size () - 1;
@@ -1865,7 +1866,7 @@ public class Item extends Entity implements Externalizable {
 					forWater: for (int x = -iRadius; x <= iRadius; x++) {
 						for (int y = -iRadius; y <= iRadius; y++) {
 							for (int z = 0; z <= 1; z++) {
-								if (Utils.isInsideMap (x + getX (), y + getY (), getZ () + z)) {
+								if (UtilsGeometry.isInsideMap (x + getX (), y + getY (), getZ () + z)) {
 									Terrain terrain = World.getCell (x + getX (), y + getY (), getZ () + z).getTerrain ();
 									if (terrain.getFluidType () == Terrain.FLUIDS_WATER && terrain.getFluidCount () > 0) {
 										bWaterNear = true;
@@ -1899,7 +1900,7 @@ public class Item extends Entity implements Externalizable {
 								for (int y = -iRadius; y <= iRadius; y++) {
 									for (int z = 0; z <= 1; z++) {
 										if (x != 0 || y != 0 || z != 0) {
-											if (Utils.isInsideMap (x + getX (), y + getY (), getZ () + z)) {
+											if (UtilsGeometry.isInsideMap (x + getX (), y + getY (), getZ () + z)) {
 												Item it = World.getCell (x + getX (), y + getY (), getZ () + z).getItem ();
 												if (it != null && it.getNumericIniHeader () == iItemIniHeader) {
 													// Tengui, pasamos al siguiente
@@ -2066,7 +2067,7 @@ public class Item extends Entity implements Externalizable {
 	 * @param bItem Indica si es item o living
 	 */
 	private void newChild (short x, short y, short z, String sIniHeader, boolean bItem) {
-		if (!Utils.isInsideMap (x, y, z)) {
+		if (!UtilsGeometry.isInsideMap (x, y, z)) {
 			return;
 		}
 

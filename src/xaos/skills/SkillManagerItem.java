@@ -3,7 +3,7 @@ package xaos.skills;
 import java.util.ArrayList;
 
 import xaos.utils.Messages;
-import xaos.utils.Utils;
+import xaos.utils.UtilsString;
 
 public class SkillManagerItem {
 
@@ -109,7 +109,7 @@ public class SkillManagerItem {
     }
 
     public void setMaxRaised(String sMaxRaised) {
-        setMaxRaised(Utils.getInteger(sMaxRaised, 0));
+        setMaxRaised(UtilsString.getInteger(sMaxRaised, 0));
     }
 
     public int getMaxRaised() {

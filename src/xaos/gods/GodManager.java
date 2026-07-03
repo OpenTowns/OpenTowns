@@ -16,6 +16,7 @@ import xaos.tiles.entities.items.ItemManager;
 import xaos.utils.Log;
 import xaos.utils.Messages;
 import xaos.utils.Utils;
+import xaos.utils.UtilsString;
 import xaos.utils.UtilsXML;
 
 public class GodManager {
@@ -197,47 +198,47 @@ public class GodManager {
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "itemsLike"); //$NON-NLS-1$
                         if (sAux != null) {
-                            gmi.setItemsLike(Utils.getArray(sAux));
+                            gmi.setItemsLike(UtilsString.getArray(sAux));
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "itemsLikePCT"); //$NON-NLS-1$
                         if (sAux != null) {
-                            gmi.setItemsLikePCT(Utils.getArray(sAux));
+                            gmi.setItemsLikePCT(UtilsString.getArray(sAux));
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "itemsDislike"); //$NON-NLS-1$
                         if (sAux != null) {
-                            gmi.setItemsDislike(Utils.getArray(sAux));
+                            gmi.setItemsDislike(UtilsString.getArray(sAux));
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "itemsDislikePCT"); //$NON-NLS-1$
                         if (sAux != null) {
-                            gmi.setItemsDislikePCT(Utils.getArray(sAux));
+                            gmi.setItemsDislikePCT(UtilsString.getArray(sAux));
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "eventsWhenHappy"); //$NON-NLS-1$
                         if (sAux != null) {
-                            gmi.setEventsWhenHappy(Utils.getArray(sAux));
+                            gmi.setEventsWhenHappy(UtilsString.getArray(sAux));
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "eventsWhenReallyHappy"); //$NON-NLS-1$
                         if (sAux != null) {
-                            gmi.setEventsWhenReallyHappy(Utils.getArray(sAux));
+                            gmi.setEventsWhenReallyHappy(UtilsString.getArray(sAux));
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "eventsWhenAngry"); //$NON-NLS-1$
                         if (sAux != null) {
-                            gmi.setEventsWhenAngry(Utils.getArray(sAux));
+                            gmi.setEventsWhenAngry(UtilsString.getArray(sAux));
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "eventsWhenReallyAngry"); //$NON-NLS-1$
                         if (sAux != null) {
-                            gmi.setEventsWhenReallyAngry(Utils.getArray(sAux));
+                            gmi.setEventsWhenReallyAngry(UtilsString.getArray(sAux));
                         }
                     } else {
                         gmi.setNamePool(UtilsXML.getChildValue(node.getChildNodes(), "namePool")); //$NON-NLS-1$
                         gmi.setSurName(UtilsXML.getChildValue(node.getChildNodes(), "surName")); //$NON-NLS-1$
-                        gmi.setItemsLike(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "itemsLike"))); //$NON-NLS-1$
-                        gmi.setItemsLikePCT(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "itemsLikePCT"))); //$NON-NLS-1$
-                        gmi.setItemsDislike(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "itemsDislike"))); //$NON-NLS-1$
-                        gmi.setItemsDislikePCT(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "itemsDislikePCT"))); //$NON-NLS-1$
-                        gmi.setEventsWhenHappy(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "eventsWhenHappy"))); //$NON-NLS-1$
-                        gmi.setEventsWhenReallyHappy(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "eventsWhenReallyHappy"))); //$NON-NLS-1$
-                        gmi.setEventsWhenAngry(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "eventsWhenAngry"))); //$NON-NLS-1$
-                        gmi.setEventsWhenReallyAngry(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "eventsWhenReallyAngry"))); //$NON-NLS-1$
+                        gmi.setItemsLike(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "itemsLike"))); //$NON-NLS-1$
+                        gmi.setItemsLikePCT(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "itemsLikePCT"))); //$NON-NLS-1$
+                        gmi.setItemsDislike(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "itemsDislike"))); //$NON-NLS-1$
+                        gmi.setItemsDislikePCT(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "itemsDislikePCT"))); //$NON-NLS-1$
+                        gmi.setEventsWhenHappy(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "eventsWhenHappy"))); //$NON-NLS-1$
+                        gmi.setEventsWhenReallyHappy(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "eventsWhenReallyHappy"))); //$NON-NLS-1$
+                        gmi.setEventsWhenAngry(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "eventsWhenAngry"))); //$NON-NLS-1$
+                        gmi.setEventsWhenReallyAngry(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "eventsWhenReallyAngry"))); //$NON-NLS-1$
                     }
 
                     // Lo añadimos a la hash

@@ -13,7 +13,7 @@ import xaos.tiles.Tile;
 import xaos.tiles.entities.items.ItemManager;
 import xaos.utils.Log;
 import xaos.utils.Messages;
-import xaos.utils.Utils;
+import xaos.utils.UtilsString;
 import xaos.utils.UtilsXML;
 
 public class MatsPanelData {
@@ -143,7 +143,7 @@ public class MatsPanelData {
                     }
 
                     // Types
-                    ArrayList<String> alTypes = Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "types")); //$NON-NLS-1$
+                    ArrayList<String> alTypes = UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "types")); //$NON-NLS-1$
                     if (alTypes == null || alTypes.size() == 0) {
                         if (!bModChangingValues) {
                             Log.log(Log.LEVEL_ERROR, Messages.getString("MatsPanelData.4"), "MatsPanelData"); //$NON-NLS-1$ //$NON-NLS-2$

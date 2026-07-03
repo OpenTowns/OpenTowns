@@ -34,6 +34,7 @@ import xaos.utils.Messages;
 import xaos.utils.Point3D;
 import xaos.utils.Point3DShort;
 import xaos.utils.Utils;
+import xaos.utils.UtilsGeometry;
 import xaos.utils.UtilsAL;
 import xaos.zones.Zone;
 
@@ -806,7 +807,7 @@ public class Terrain implements Externalizable {
     }
 
     public static void checkSlope(Cell[][][] cells, short x, short y, short z) {
-        if (!Utils.isInsideMap(x, y, z)) {
+        if (!UtilsGeometry.isInsideMap(x, y, z)) {
             return;
         }
 

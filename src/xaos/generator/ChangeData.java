@@ -1,6 +1,6 @@
 package xaos.generator;
 
-import xaos.utils.Utils;
+import xaos.utils.UtilsString;
 
 public class ChangeData extends ParentMapData {
 
@@ -21,13 +21,13 @@ public class ChangeData extends ParentMapData {
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_CHANGE_TERRAIN)) {
                 terrain = item.getList().get(i).getValue();
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_CHANGE_PCT)) {
-                pct = Utils.getInteger(item.getList().get(i).getValue(), 0);
+                pct = UtilsString.getInteger(item.getList().get(i).getValue(), 0);
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_CHANGE_RADIUS)) {
-                radius = Utils.getInteger(item.getList().get(i).getValue(), 1);
+                radius = UtilsString.getInteger(item.getList().get(i).getValue(), 1);
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_CHANGE_HEIGHT_MIN)) {
-                iHeightMin = Utils.getInteger(item.getList().get(i).getValue(), -1);
+                iHeightMin = UtilsString.getInteger(item.getList().get(i).getValue(), -1);
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_CHANGE_HEIGHT_MAX)) {
-                iHeightMax = Utils.getInteger(item.getList().get(i).getValue(), -1);
+                iHeightMax = UtilsString.getInteger(item.getList().get(i).getValue(), -1);
             }
         }
     }

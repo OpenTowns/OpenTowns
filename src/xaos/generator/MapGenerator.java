@@ -18,6 +18,9 @@ import xaos.utils.Messages;
 import xaos.utils.Point3D;
 import xaos.utils.Point3DShort;
 import xaos.utils.Utils;
+import xaos.utils.UtilsFiles;
+import xaos.utils.UtilsGeometry;
+import xaos.utils.UtilsString;
 
 
 public class MapGenerator extends Generator {
@@ -51,7 +54,7 @@ public class MapGenerator extends Generator {
 
 		// Leemos el gen_map.xml (si está en una misión se carga de otro sitio)
 		Generator generator = new Generator ();
-		ArrayList<String> alPaths = Utils.getPathToFile (XML_FILE, sCampaignID, sMissionID);
+		ArrayList<String> alPaths = UtilsFiles.getPathToFile (XML_FILE, sCampaignID, sMissionID);
 
 		for (int i = 0; i < alPaths.size (); i++) {
 			Generator.read (alPaths.get (i), generator, i == 0);
@@ -124,9 +127,9 @@ public class MapGenerator extends Generator {
 			} else if (item.getList ().get (i).getName ().equalsIgnoreCase (MapGeneratorItem.ITEM_INIT_ALLOW_BURY)) {
 				ALLOW_BURY = Boolean.parseBoolean (item.getList ().get (i).getValue ());
 			} else if (item.getList ().get (i).getName ().equalsIgnoreCase (MapGeneratorItem.ITEM_INIT_STARTING_EVENTS)) {
-				STARTING_EVENTS = Utils.getArray (item.getList ().get (i).getValue ());
+				STARTING_EVENTS = UtilsString.getArray (item.getList ().get (i).getValue ());
 			} else if (item.getList ().get (i).getName ().equalsIgnoreCase (MapGeneratorItem.ITEM_INIT_STARTING_EVENTS_PCT)) {
-				alStartingEventsPCT = Utils.getArray (item.getList ().get (i).getValue ());
+				alStartingEventsPCT = UtilsString.getArray (item.getList ().get (i).getValue ());
 			} else if (item.getList ().get (i).getName ().equalsIgnoreCase (MapGeneratorItem.ITEM_INIT_NUM_GODS)) {
 				NUM_GODS = Utils.launchDice (item.getList ().get (i).getValue ());
 			}
@@ -416,7 +419,7 @@ public class MapGenerator extends Generator {
 			for (int j = -1; j <= 1; j++) {
 				if (i != x || j != y) {
 					if ((i != 0 && j == 0) || (i == 0 && j != 0)) {
-						if (Utils.isInsideMap (i + x, j + y, z)) {
+						if (UtilsGeometry.isInsideMap (i + x, j + y, z)) {
 							if (cells[i + x][j + y][z].getTerrain ().getTerrainID () == TerrainManagerItem.TERRAIN_AIR_ID) {
 								return true;
 							}
@@ -856,10 +859,10 @@ public class MapGenerator extends Generator {
 			}
 			Point pointPuntoBezier;
 			for (int i = 0; i < ((World.MAP_WIDTH + World.MAP_HEIGHT) * 10); i++) {
-				pointPuntoBezier = Utils.getBezierPoint (pointPuntoInicial, pointPuntoFinal, pointPuntoControlA, pointPuntoControlB, (((double) i) / (double) ((World.MAP_WIDTH + World.MAP_HEIGHT) * 10)));
+				pointPuntoBezier = UtilsGeometry.getBezierPoint (pointPuntoInicial, pointPuntoFinal, pointPuntoControlA, pointPuntoControlB, (((double) i) / (double) ((World.MAP_WIDTH + World.MAP_HEIGHT) * 10)));
 				for (int x = 0; x < iGrosor; x++) {
 					for (int y = 0; y < iGrosor; y++) {
-						if (Utils.isValidPoint (pointPuntoBezier.x + x, pointPuntoBezier.y + y, World.MAP_WIDTH, World.MAP_HEIGHT)) {
+						if (UtilsGeometry.isValidPoint (pointPuntoBezier.x + x, pointPuntoBezier.y + y, World.MAP_WIDTH, World.MAP_HEIGHT)) {
 							// Metemos el tipo (o special type)
 							if (iSpecialType != MapGeneratorItem.SPECIAL_INT_NONE) {
 								for (int d = 0; d < bd.depth; d++) {
@@ -982,7 +985,7 @@ public class MapGenerator extends Generator {
 			for (int j = -radius; j <= radius; j++) {
 				for (int n = -radius; n <= radius; n++) {
 					if (i != 0 || j != 0 || n != 0) {
-						if (Utils.isInsideMap (x + i, y + j, n + z)) {
+						if (UtilsGeometry.isInsideMap (x + i, y + j, n + z)) {
 							// Miramos si tiene el terrain
 							if (asMap[x + i][y + j][n + z].getTerrainID () == iTerrainID) {
 								return true;
@@ -1011,7 +1014,7 @@ public class MapGenerator extends Generator {
 			for (int j = -radius; j <= radius; j++) {
 				for (int n = -radius; n <= radius; n++) {
 					if (i != 0 || j != 0 || n != 0) {
-						if (Utils.isInsideMap (x + i, y + j, n + z)) {
+						if (UtilsGeometry.isInsideMap (x + i, y + j, n + z)) {
 							// Miramos si tiene el terrain
 							if (asMap[x + i][y + j][n + z].hasSpecial () && asMap[x + i][y + j][n + z].getSpecial () == iSpecialTerrain) {
 								return true;

@@ -39,6 +39,7 @@ import xaos.utils.Log;
 import xaos.utils.Messages;
 import xaos.utils.Point3DShort;
 import xaos.utils.Utils;
+import xaos.utils.UtilsGeometry;
 import xaos.utils.UtilsAL;
 import xaos.zones.Zone;
 import xaos.zones.ZoneManager;
@@ -385,7 +386,7 @@ public class Hero extends LivingEntity implements Externalizable {
                         Zone zone;
                         ArrayList<Zone> alZones = Game.getWorld().getZones();
                         Point3DShort p3dZoneNear = null;
-                        int iMinDistance = Utils.MAX_DISTANCE;
+                        int iMinDistance = UtilsGeometry.MAX_DISTANCE;
                         for (int i = 0; i < alZones.size(); i++) {
                             zone = alZones.get(i);
                             if (ZoneManager.getItem(zone.getIniHeader()).getType() == ZoneManagerItem.TYPE_SOCIAL) {
@@ -399,9 +400,9 @@ public class Hero extends LivingEntity implements Externalizable {
                                     // Punto de la zona libre encontrado, miramos distancia
                                     if (p3dZoneNear == null) {
                                         p3dZoneNear = Point3DShort.getPoolInstance(p3d);
-                                        iMinDistance = Utils.getDistance(getCoordinates(), p3d);
+                                        iMinDistance = UtilsGeometry.getDistance(getCoordinates(), p3d);
                                     } else {
-                                        int iDistance = Utils.getDistance(getCoordinates(), p3d);
+                                        int iDistance = UtilsGeometry.getDistance(getCoordinates(), p3d);
                                         if (iDistance < iMinDistance) {
                                             p3dZoneNear.setPoint(p3d);
                                             iMinDistance = iDistance;
@@ -495,7 +496,7 @@ public class Hero extends LivingEntity implements Externalizable {
                         // No estamos en comedor, buscamos uno y vamos hacia allí, si lo encontramos
                         Point3DShort p3d = null;
                         Point3DShort p3dMinDistance = null;
-                        int iMinDistance = Utils.MAX_DISTANCE;
+                        int iMinDistance = UtilsGeometry.MAX_DISTANCE;
                         Zone zone;
                         for (int i = 0; i < zones.size(); i++) {
                             zone = zones.get(i);
@@ -508,9 +509,9 @@ public class Hero extends LivingEntity implements Externalizable {
                                     // Tenemos una celda, miramos la distancia
                                     if (p3dMinDistance == null) {
                                         p3dMinDistance = Point3DShort.getPoolInstance(p3d);
-                                        iMinDistance = Utils.getDistance(getCoordinates(), p3d);
+                                        iMinDistance = UtilsGeometry.getDistance(getCoordinates(), p3d);
                                     } else {
-                                        int iAuxDistance = Utils.getDistance(getCoordinates(), p3d);
+                                        int iAuxDistance = UtilsGeometry.getDistance(getCoordinates(), p3d);
                                         if (iAuxDistance < iMinDistance) {
                                             p3dMinDistance.setPoint(p3d);
                                             iMinDistance = iAuxDistance;
@@ -533,9 +534,9 @@ public class Hero extends LivingEntity implements Externalizable {
                                         // Tenemos una celda, miramos la distancia
                                         if (p3dMinDistance == null) {
                                             p3dMinDistance = Point3DShort.getPoolInstance(p3d);
-                                            iMinDistance = Utils.getDistance(getCoordinates(), p3d);
+                                            iMinDistance = UtilsGeometry.getDistance(getCoordinates(), p3d);
                                         } else {
-                                            int iAuxDistance = Utils.getDistance(getCoordinates(), p3d);
+                                            int iAuxDistance = UtilsGeometry.getDistance(getCoordinates(), p3d);
                                             if (iAuxDistance < iMinDistance) {
                                                 p3dMinDistance.setPoint(p3d);
                                                 iMinDistance = iAuxDistance;
@@ -1197,7 +1198,7 @@ public class Hero extends LivingEntity implements Externalizable {
                         // No tiene zona ni está en una DINING, buscamos la DINING zone más cercana
                         ArrayList<Zone> zones = Game.getWorld().getZones();
                         Zone zone;
-                        int iMaxDistance = Utils.MAX_DISTANCE;
+                        int iMaxDistance = UtilsGeometry.MAX_DISTANCE;
                         Point3DShort p3dNear = null;
                         for (int i = 0; i < zones.size(); i++) {
                             zone = (Zone) zones.get(i);
@@ -1214,9 +1215,9 @@ public class Hero extends LivingEntity implements Externalizable {
                                     // Encontrada, miramos distancia
                                     if (p3dNear == null) {
                                         p3dNear = Point3DShort.getPoolInstance(p3d);
-                                        iMaxDistance = Utils.getDistance(getCoordinates(), p3d);
+                                        iMaxDistance = UtilsGeometry.getDistance(getCoordinates(), p3d);
                                     } else {
-                                        int iDistance = Utils.getDistance(getCoordinates(), p3d);
+                                        int iDistance = UtilsGeometry.getDistance(getCoordinates(), p3d);
                                         if (iDistance < iMaxDistance) {
                                             p3dNear.setPoint(p3d);
                                             iMaxDistance = iDistance;

@@ -63,6 +63,8 @@ import xaos.utils.Point3D;
 import xaos.utils.Point3DShort;
 import xaos.utils.UtilFont;
 import xaos.utils.Utils;
+import xaos.utils.UtilsGeometry;
+import xaos.utils.UtilsLineOfSight;
 import xaos.utils.UtilsAL;
 import xaos.utils.UtilsIniHeaders;
 import xaos.zones.Zone;
@@ -1109,7 +1111,7 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 		for (int i = -1; i <= 1; i++) {
 			nextcell: for (int j = -1; j <= 1; j++) {
 				if (i != 0 || j != 0) {
-					if (Utils.isInsideMap (currentX + i, currentY + j, currentZ)) {
+					if (UtilsGeometry.isInsideMap (currentX + i, currentY + j, currentZ)) {
 						if (isCellAllowed (currentX + i, currentY + j, currentZ)) {
 							// Miramos el hate
 
@@ -1148,7 +1150,7 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 			for (int i = -1; i <= 1; i++) {
 				nextcell: for (int j = -1; j <= 1; j++) {
 					if (i != 0 || j != 0) {
-						if (Utils.isInsideMap (currentX + i, currentY + j, currentZ - 1)) {
+						if (UtilsGeometry.isInsideMap (currentX + i, currentY + j, currentZ - 1)) {
 							if (isCellAllowed (currentX + i, currentY + j, currentZ - 1)) {
 								// Miramos el hate
 
@@ -1179,7 +1181,7 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 			for (int i = -1; i <= 1; i++) {
 				nextcell: for (int j = -1; j <= 1; j++) {
 					if (i != 0 || j != 0) {
-						if (Utils.isInsideMap (currentX + i, currentY + j, currentZ + 1)) {
+						if (UtilsGeometry.isInsideMap (currentX + i, currentY + j, currentZ + 1)) {
 							if (isCellAllowed (currentX + i, currentY + j, currentZ + 1)) {
 								// Miramos el hate
 
@@ -1303,7 +1305,7 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 
 		// Si hay visión disparamos
 		if (attacker.getCoordinates ().z == victim.getCoordinates ().z) {
-			ArrayList<Point3DShort> path = Utils.bresenhamLine (attacker.getCoordinates (), victim.getCoordinates (), attacker.getZ ()); // , attackerType);
+			ArrayList<Point3DShort> path = UtilsLineOfSight.bresenhamLine (attacker.getCoordinates (), victim.getCoordinates (), attacker.getZ ()); // , attackerType);
 			if (path != null) {
 				ItemManagerItem imi = ItemManager.getItem (imiWeapon.getRangedAmmo ());
 				Projectile projectile = new Projectile (imi.getIniHeader ());
@@ -1715,7 +1717,7 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 					}
 
 					if (bItemOK) {
-						if (Utils.bresenhamLineExists (x, y, getX (), getY (), z) /* , TYPE_HERO) */|| Utils.bresenhamLineExists (getX (), getY (), x, y, z)) { // , TYPE_HERO)) {
+						if (UtilsLineOfSight.bresenhamLineExists (x, y, getX (), getY (), z) /* , TYPE_HERO) */|| UtilsLineOfSight.bresenhamLineExists (getX (), getY (), x, y, z)) { // , TYPE_HERO)) {
 							return (MilitaryItem) item;
 						}
 					}
@@ -1749,8 +1751,8 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 					if (i >= 0 && i < World.MAP_WIDTH) {
 						cell = World.getCell (i, iTmp, z);
 						if (cell.getAstarZoneID () == iASZID && cell.containsSpecificLiving (iEntityToCheck) != null) {
-							// if (Utils.bresenhamLineExists (x, y, i, iTmp, z, iEntitySource) || Utils.bresenhamLineExists (i, iTmp, x, y, z, iEntitySource)) {
-							if (Utils.bresenhamLineExists (x, y, i, iTmp, z) || Utils.bresenhamLineExists (i, iTmp, x, y, z)) {
+							// if (UtilsLineOfSight.bresenhamLineExists (x, y, i, iTmp, z, iEntitySource) || UtilsLineOfSight.bresenhamLineExists (i, iTmp, x, y, z, iEntitySource)) {
+							if (UtilsLineOfSight.bresenhamLineExists (x, y, i, iTmp, z) || UtilsLineOfSight.bresenhamLineExists (i, iTmp, x, y, z)) {
 								return true;
 							}
 						}
@@ -1765,8 +1767,8 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 					if (i >= 0 && i < World.MAP_WIDTH) {
 						cell = World.getCell (i, iTmp, z);
 						if (cell.getAstarZoneID () == iASZID && cell.containsSpecificLiving (iEntityToCheck) != null) {
-							// if (Utils.bresenhamLineExists (x, y, i, iTmp, z, iEntitySource) || Utils.bresenhamLineExists (i, iTmp, x, y, z, iEntitySource)) {
-							if (Utils.bresenhamLineExists (x, y, i, iTmp, z) || Utils.bresenhamLineExists (i, iTmp, x, y, z)) {
+							// if (UtilsLineOfSight.bresenhamLineExists (x, y, i, iTmp, z, iEntitySource) || UtilsLineOfSight.bresenhamLineExists (i, iTmp, x, y, z, iEntitySource)) {
+							if (UtilsLineOfSight.bresenhamLineExists (x, y, i, iTmp, z) || UtilsLineOfSight.bresenhamLineExists (i, iTmp, x, y, z)) {
 								return true;
 							}
 						}
@@ -1781,8 +1783,8 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 					if (i >= 0 && i < World.MAP_HEIGHT) {
 						cell = World.getCell (iTmp, i, z);
 						if (cell.getAstarZoneID () == iASZID && cell.containsSpecificLiving (iEntityToCheck) != null) {
-							// if (Utils.bresenhamLineExists (x, y, iTmp, i, z, iEntitySource) || Utils.bresenhamLineExists (iTmp, i, x, y, z, iEntitySource)) {
-							if (Utils.bresenhamLineExists (x, y, iTmp, i, z) || Utils.bresenhamLineExists (iTmp, i, x, y, z)) {
+							// if (UtilsLineOfSight.bresenhamLineExists (x, y, iTmp, i, z, iEntitySource) || UtilsLineOfSight.bresenhamLineExists (iTmp, i, x, y, z, iEntitySource)) {
+							if (UtilsLineOfSight.bresenhamLineExists (x, y, iTmp, i, z) || UtilsLineOfSight.bresenhamLineExists (iTmp, i, x, y, z)) {
 								return true;
 
 							}
@@ -1798,8 +1800,8 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 					if (i >= 0 && i < World.MAP_HEIGHT) {
 						cell = World.getCell (iTmp, i, z);
 						if (cell.getAstarZoneID () == iASZID && cell.containsSpecificLiving (iEntityToCheck) != null) {
-							// if (Utils.bresenhamLineExists (x, y, iTmp, i, z, iEntitySource) || Utils.bresenhamLineExists (iTmp, i, x, y, z, iEntitySource)) {
-							if (Utils.bresenhamLineExists (x, y, iTmp, i, z) || Utils.bresenhamLineExists (iTmp, i, x, y, z)) {
+							// if (UtilsLineOfSight.bresenhamLineExists (x, y, iTmp, i, z, iEntitySource) || UtilsLineOfSight.bresenhamLineExists (iTmp, i, x, y, z, iEntitySource)) {
+							if (UtilsLineOfSight.bresenhamLineExists (x, y, iTmp, i, z) || UtilsLineOfSight.bresenhamLineExists (iTmp, i, x, y, z)) {
 								return true;
 							}
 						}
@@ -1914,7 +1916,7 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 			if (iTmp >= 0) {
 				for (int i = (x - radio); i <= (x + radio); i++) {
 					if (i >= 0 && i < World.MAP_WIDTH) {
-						Utils.bresenhamLineDiscover (x, y, i, iTmp, z);
+						UtilsLineOfSight.bresenhamLineDiscover (x, y, i, iTmp, z);
 					}
 				}
 
@@ -1924,7 +1926,7 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 			if (iTmp < World.MAP_HEIGHT) {
 				for (int i = (x - radio); i <= (x + radio); i++) {
 					if (i >= 0 && i < World.MAP_WIDTH) {
-						Utils.bresenhamLineDiscover (x, y, i, iTmp, z);
+						UtilsLineOfSight.bresenhamLineDiscover (x, y, i, iTmp, z);
 					}
 				}
 
@@ -1934,7 +1936,7 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 			if (iTmp >= 0) {
 				for (int i = (y - radio); i <= (y + radio); i++) {
 					if (i >= 0 && i < World.MAP_HEIGHT) {
-						Utils.bresenhamLineDiscover (x, y, iTmp, i, z);
+						UtilsLineOfSight.bresenhamLineDiscover (x, y, iTmp, i, z);
 					}
 				}
 
@@ -1944,7 +1946,7 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 			if (iTmp < World.MAP_WIDTH) {
 				for (int i = (y - radio); i <= (y + radio); i++) {
 					if (i >= 0 && i < World.MAP_HEIGHT) {
-						Utils.bresenhamLineDiscover (x, y, iTmp, i, z);
+						UtilsLineOfSight.bresenhamLineDiscover (x, y, iTmp, i, z);
 					}
 				}
 			}
@@ -1972,8 +1974,8 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 			if (iTmp >= 0) {
 				for (short i = (short) (x - radio); i <= (x + radio); i++) {
 					if (i >= 0 && i < World.MAP_WIDTH) {
-						// if (Utils.bresenhamLineExists (x, y, i, iTmp, z, iLivingType) && Utils.bresenhamLineExists (i, iTmp, x, y, z, iLivingType)) {
-						if (Utils.bresenhamLineExists (x, y, i, iTmp, z) && Utils.bresenhamLineExists (i, iTmp, x, y, z)) {
+						// if (UtilsLineOfSight.bresenhamLineExists (x, y, i, iTmp, z, iLivingType) && UtilsLineOfSight.bresenhamLineExists (i, iTmp, x, y, z, iLivingType)) {
+						if (UtilsLineOfSight.bresenhamLineExists (x, y, i, iTmp, z) && UtilsLineOfSight.bresenhamLineExists (i, iTmp, x, y, z)) {
 							cell = World.getCell (i, iTmp, z);
 							if (cell.isDiscovered () && cell.getLivings () != null) {
 								for (int l = 0; l < cell.getLivings ().size (); l++) {
@@ -1998,8 +2000,8 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 			if (iTmp < World.MAP_HEIGHT) {
 				for (short i = (short) (x - radio); i <= (x + radio); i++) {
 					if (i >= 0 && i < World.MAP_WIDTH) {
-						// if (Utils.bresenhamLineExists (x, y, i, iTmp, z, iLivingType) && Utils.bresenhamLineExists (i, iTmp, x, y, z, iLivingType)) {
-						if (Utils.bresenhamLineExists (x, y, i, iTmp, z) && Utils.bresenhamLineExists (i, iTmp, x, y, z)) {
+						// if (UtilsLineOfSight.bresenhamLineExists (x, y, i, iTmp, z, iLivingType) && UtilsLineOfSight.bresenhamLineExists (i, iTmp, x, y, z, iLivingType)) {
+						if (UtilsLineOfSight.bresenhamLineExists (x, y, i, iTmp, z) && UtilsLineOfSight.bresenhamLineExists (i, iTmp, x, y, z)) {
 							cell = World.getCell (i, iTmp, z);
 							if (cell.isDiscovered () && cell.getLivings () != null) {
 								for (int l = 0; l < cell.getLivings ().size (); l++) {
@@ -2024,8 +2026,8 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 			if (iTmp >= 0) {
 				for (short i = (short) (y - radio); i <= (y + radio); i++) {
 					if (i >= 0 && i < World.MAP_HEIGHT) {
-						// if (Utils.bresenhamLineExists (x, y, iTmp, i, z, iLivingType) && Utils.bresenhamLineExists (iTmp, i, x, y, z, iLivingType)) {
-						if (Utils.bresenhamLineExists (x, y, iTmp, i, z) && Utils.bresenhamLineExists (iTmp, i, x, y, z)) {
+						// if (UtilsLineOfSight.bresenhamLineExists (x, y, iTmp, i, z, iLivingType) && UtilsLineOfSight.bresenhamLineExists (iTmp, i, x, y, z, iLivingType)) {
+						if (UtilsLineOfSight.bresenhamLineExists (x, y, iTmp, i, z) && UtilsLineOfSight.bresenhamLineExists (iTmp, i, x, y, z)) {
 							cell = World.getCell (iTmp, i, z);
 							if (cell.isDiscovered () && cell.getLivings () != null) {
 								for (int l = 0; l < cell.getLivings ().size (); l++) {
@@ -2050,8 +2052,8 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 			if (iTmp < World.MAP_WIDTH) {
 				for (short i = (short) (y - radio); i <= (y + radio); i++) {
 					if (i >= 0 && i < World.MAP_HEIGHT) {
-						// if (Utils.bresenhamLineExists (x, y, iTmp, i, z, iLivingType) && Utils.bresenhamLineExists (iTmp, i, x, y, z, iLivingType)) {
-						if (Utils.bresenhamLineExists (x, y, iTmp, i, z) && Utils.bresenhamLineExists (iTmp, i, x, y, z)) {
+						// if (UtilsLineOfSight.bresenhamLineExists (x, y, iTmp, i, z, iLivingType) && UtilsLineOfSight.bresenhamLineExists (iTmp, i, x, y, z, iLivingType)) {
+						if (UtilsLineOfSight.bresenhamLineExists (x, y, iTmp, i, z) && UtilsLineOfSight.bresenhamLineExists (iTmp, i, x, y, z)) {
 							cell = World.getCell (iTmp, i, z);
 							if (cell.isDiscovered () && cell.getLivings () != null) {
 								for (int l = 0; l < cell.getLivings ().size (); l++) {
@@ -2173,8 +2175,8 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 			// Misma zona
 			// int sourceType = LivingEntityManager.getItem (sLivingSource).getType ();
 			// Miramos que haya vista "directa", teniendo en cuenta muros y demás panochadas
-			// if (Utils.bresenhamLineExists (sourceX, sourceY, pointX, pointY, sourceZ, sourceType) || Utils.bresenhamLineExists (pointX, pointY, sourceX, sourceY, sourceZ, sourceType)) {
-			if (Utils.bresenhamLineExists (sourceX, sourceY, pointX, pointY, sourceZ) || Utils.bresenhamLineExists (pointX, pointY, sourceX, sourceY, sourceZ)) {
+			// if (UtilsLineOfSight.bresenhamLineExists (sourceX, sourceY, pointX, pointY, sourceZ, sourceType) || UtilsLineOfSight.bresenhamLineExists (pointX, pointY, sourceX, sourceY, sourceZ, sourceType)) {
+			if (UtilsLineOfSight.bresenhamLineExists (sourceX, sourceY, pointX, pointY, sourceZ) || UtilsLineOfSight.bresenhamLineExists (pointX, pointY, sourceX, sourceY, sourceZ)) {
 				// Hay linea, pasamos el focusData
 				int iTypeEnemy = LivingEntityManager.getItem (livingHated.getIniHeader ()).getType ();
 				return new FocusData (livingHated.getID (), iTypeEnemy);
@@ -2272,7 +2274,7 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 			return null;
 		}
 
-		int iNearest = Utils.MAX_DISTANCE;
+		int iNearest = UtilsGeometry.MAX_DISTANCE;
 		int iASZID = World.getCell (p3dIni).getAstarZoneID ();
 		Point3DShort p3dNearest = null;
 		int iLivingNearest = -1;
@@ -2289,7 +2291,7 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 						if (!near) {
 							return le;
 						} else {
-							int iDistancia = Utils.getDistance (le.getCoordinates (), p3dIni);
+							int iDistancia = UtilsGeometry.getDistance (le.getCoordinates (), p3dIni);
 							if (p3dNearest == null || iDistancia < iNearest) {
 								iNearest = iDistancia;
 								iLivingNearest = le.getID ();
@@ -2338,7 +2340,7 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 			return null;
 		}
 
-		int iNearest = Utils.MAX_DISTANCE;
+		int iNearest = UtilsGeometry.MAX_DISTANCE;
 		Point3DShort p3dNearest = null;
 		int iLivingNearest = -1;
 
@@ -2354,7 +2356,7 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 						if (!near) {
 							return le;
 						} else {
-							int iDistancia = Utils.getDistance (le.getCoordinates (), p3dIni);
+							int iDistancia = UtilsGeometry.getDistance (le.getCoordinates (), p3dIni);
 							if (p3dNearest == null || iDistancia < iNearest) {
 								iNearest = iDistancia;
 								iLivingNearest = le.getID ();
@@ -2439,7 +2441,7 @@ public abstract class LivingEntity extends Entity implements Externalizable {
 		// Buscamos camino
 		// Bresenham para empezar (linea recta) (si está en el mismo nivel)
 		// if (getZ () == z) {
-		// setPath (Utils.bresenhamLine (getX (), getY (), x, y, z, livingType));
+		// setPath (UtilsLineOfSight.bresenhamLine (getX (), getY (), x, y, z, livingType));
 		// }
 		// Camino vacío, eso es que en linea recta topa con algo (o está en distintos niveles), usamos A* para buscar la ruta
 		// if (getPath ().isEmpty ()) {

@@ -2,7 +2,7 @@ package xaos.tiles.terrain;
 
 import java.util.ArrayList;
 
-import xaos.utils.Utils;
+import xaos.utils.UtilsString;
 
 public class TerrainManagerItem {
 
@@ -72,7 +72,7 @@ public class TerrainManagerItem {
     }
 
     public void setMineTurns(String sMineTurns) {
-        setMineTurns(Utils.getInteger(sMineTurns, 0));
+        setMineTurns(UtilsString.getInteger(sMineTurns, 0));
     }
 
     public String getDrop() {
@@ -92,7 +92,7 @@ public class TerrainManagerItem {
     }
 
     public void setDropPCT(String sDropPCT) {
-        setDropPCT(Utils.getInteger(sDropPCT, 0));
+        setDropPCT(UtilsString.getInteger(sDropPCT, 0));
     }
 
     public void setLadderItem(String ladderItem) {

@@ -40,7 +40,8 @@ import xaos.utils.ColorGL;
 import xaos.utils.Log;
 import xaos.utils.Messages;
 import xaos.utils.Point3D;
-import xaos.utils.Utils;
+import xaos.utils.UtilsFiles;
+import xaos.utils.UtilsSavegame;
 import xaos.utils.UtilsAL;
 import xaos.utils.UtilsGL;
 
@@ -929,14 +930,14 @@ public final class CommandPanel {
                 UIPanel.setTradePanelActive(true);
             } else if (sCommand.equals(COMMAND_SAVE)) {
                 try {
-                    Utils.save (true);
+                    UtilsSavegame.save (true);
                 } catch (Exception ex) {
                     Log.log(Log.LEVEL_ERROR, Messages.getString("CommandPanel.38") + ex.toString() + "]", "CommandPanel"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                     MessagesPanel.addMessage(MessagesPanel.TYPE_SYSTEM, Messages.getString("CommandPanel.38") + ex.toString() + "]", ColorGL.RED); //$NON-NLS-1$ //$NON-NLS-2$
                 }
             } else if (sCommand.equals(COMMAND_SAVE_NO_MISSIONDATA)) {
                 try {
-                    Utils.save (false);
+                    UtilsSavegame.save (false);
                 } catch (Exception ex) {
                     Log.log(Log.LEVEL_ERROR, Messages.getString("CommandPanel.38") + ex.toString() + "]", "CommandPanel"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                     MessagesPanel.addMessage(MessagesPanel.TYPE_SYSTEM, Messages.getString("CommandPanel.38") + ex.toString() + "]", ColorGL.RED); //$NON-NLS-1$ //$NON-NLS-2$
@@ -970,7 +971,7 @@ public final class CommandPanel {
             } else if (sCommand.equals(COMMAND_BURY)) {
                 // Enterramos
                 try {
-                    Utils.saveBury();
+                    UtilsSavegame.saveBury();
                     MessagesPanel.addMessage(MessagesPanel.TYPE_SYSTEM, Messages.getString("CommandPanel.9")); //$NON-NLS-1$
                 } catch (Exception ex) {
                     Log.log(Log.LEVEL_ERROR, Messages.getString("CommandPanel.8") + " [" + ex.toString() + "]", "CommandPanel"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
@@ -1021,7 +1022,7 @@ public final class CommandPanel {
                 UtilsAL.play(UtilsAL.SOURCE_MUSIC_MAINMENU);
                 Game.exitToMainMenu();
 //			} else if (sCommand.equals (COMMAND_SAVE_OPTIONS)) {
-//				Utils.saveOptions ();
+//				UtilsFiles.saveOptions ();
             } else if (sCommand.equals(COMMAND_MM_NEWGAME_SET_SAVE_NAME)) {
                 MainMenuPanel.useBuryTemporary = true;
                 // Si tiene el parámetro del point, ahí indica el número de servidor a usar
@@ -1036,7 +1037,7 @@ public final class CommandPanel {
                 MainMenuPanel.useBuryTemporary = false;
             } else if (sCommand.equals(COMMAND_MM_NEWGAME)) {
             	// If the campaign/mission folder contains a "save.zip", then we will just load that one and set the missionData on campaigns.xml
-            	ArrayList<String> alPaths = Utils.getPathToFile ("save.zip", sParameter, sParameter2); //$NON-NLS-1$
+            	ArrayList<String> alPaths = UtilsFiles.getPathToFile ("save.zip", sParameter, sParameter2); //$NON-NLS-1$
             	if (alPaths.size () > 0) {
             		executeCommand (COMMAND_MM_CONTINUEGAME, "save.zip", sParameter + "," + sParameter2 + "," + alPaths.get (0), null, null, 0); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             	} else {
@@ -1057,11 +1058,11 @@ public final class CommandPanel {
                     Game.continueGame(sParameter, null);
                 }
             } else if (sCommand.equals(COMMAND_MM_DELETEGAME)) {
-                Utils.deleteSavegame(sParameter);
+                UtilsSavegame.deleteSavegame(sParameter);
                 Game.getPanelMainMenu().createMenu();
             } else if (sCommand.equals(COMMAND_MM_SWITCH_MUSIC)) {
                 Game.setMusicON(!Game.isMusicON());
-                Utils.saveOptions();
+                UtilsFiles.saveOptions();
                 if (!Game.isMusicON()) {
                     UtilsAL.stopMusic();
                 } else {
@@ -1074,10 +1075,10 @@ public final class CommandPanel {
                 }
             } else if (sCommand.equals(COMMAND_MM_ADD_MUSIC_VOLUME)) {
                 Game.addMusicVolume();
-                Utils.saveOptions();
+                UtilsFiles.saveOptions();
             } else if (sCommand.equals(COMMAND_MM_SWITCH_FX)) {
                 Game.setFXON(!Game.isFXON());
-                Utils.saveOptions();
+                UtilsFiles.saveOptions();
                 if (!Game.isFXON()) {
                     UtilsAL.stopFX();
                 } else {
@@ -1086,7 +1087,7 @@ public final class CommandPanel {
                 }
             } else if (sCommand.equals(COMMAND_MM_ADD_FX_VOLUME)) {
                 Game.addFXVolume();
-                Utils.saveOptions();
+                UtilsFiles.saveOptions();
             } else if (sCommand.equals(COMMAND_CHANGE_LANGUAGE)) {
                 if (p3dDirect == null) {
                     Messages.changeLanguage(sParameter, sParameter2, null);
@@ -1097,52 +1098,52 @@ public final class CommandPanel {
                         Messages.changeLanguage(sParameter, sParameter2, null);
                     }
                 }
-                Utils.saveOptions();
+                UtilsFiles.saveOptions();
                 Game.getPanelMainMenu().createMenu();
             } else if (sCommand.equals(COMMAND_MM_TOGGLE_FULL_SCREEN)) {
                 UtilsGL.toggleFullScreen();
-                Utils.saveOptions();
+                UtilsFiles.saveOptions();
             } else if (sCommand.equals(COMMAND_MM_SWITCH_MOUSE_SCROLL)) {
                 Game.setMouseScrollON(!Game.isMouseScrollON());
-                Utils.saveOptions();
+                UtilsFiles.saveOptions();
             } else if (sCommand.equals(COMMAND_MM_SWITCH_MOUSE_SCROLL_EARS)) {
                 Game.setMouseScrollEarsON(!Game.isMouseScrollEarsON());
-                Utils.saveOptions();
+                UtilsFiles.saveOptions();
             } else if (sCommand.equals(COMMAND_MM_SWITCH_MOUSE_2D_CUBES)) {
                 Game.setMouse2DCubesON(!Game.isMouse2DCubesON());
-                Utils.saveOptions();
+                UtilsFiles.saveOptions();
             } else if (sCommand.equals(COMMAND_MM_SWITCH_DISABLE_ITEMS)) {
                 Game.setDisabledItemsON(!Game.isDisabledItemsON());
-                Utils.saveOptions();
+                UtilsFiles.saveOptions();
             } else if (sCommand.equals(COMMAND_MM_SWITCH_DISABLE_GODS)) {
                 Game.setDisabledGodsON(!Game.isDisabledGodsON());
-                Utils.saveOptions();
+                UtilsFiles.saveOptions();
             } else if (sCommand.equals(COMMAND_MM_SWITCH_PAUSE)) {
                 Game.setPauseStartON(!Game.isPauseStartON());
-                Utils.saveOptions();
+                UtilsFiles.saveOptions();
             } else if (sCommand.equals(COMMAND_MM_SWITCH_AUTOSAVE_DAYS)) {
                 Game.setAutosaveDays(Game.getAutosaveDays() + 1);
-                Utils.saveOptions();
+                UtilsFiles.saveOptions();
             } else if (sCommand.equals(COMMAND_MM_SWITCH_SIEGES)) {
                 Game.setSiegeDifficulty(Game.getSiegeDifficulty() + 1);
                 if (Game.getSiegeDifficulty() > Game.SIEGE_DIFFICULTY_INSANE) {
                     Game.setSiegeDifficulty(Game.SIEGE_DIFFICULTY_OFF);
                 }
-                Utils.saveOptions();
+                UtilsFiles.saveOptions();
             } else if (sCommand.equals(COMMAND_MM_SWITCH_SIEGE_PAUSE)) {
                 Game.setSiegePause(!Game.isSiegePause());
-                Utils.saveOptions();
+                UtilsFiles.saveOptions();
             } else if (sCommand.equals(COMMAND_MM_SWITCH_CARAVAN_PAUSE)) {
                 Game.setCaravanPause(!Game.isCaravanPause());
-                Utils.saveOptions();
+                UtilsFiles.saveOptions();
             } else if (sCommand.equals(COMMAND_MM_SWITCH_BURY)) {
                 Game.setAllowBury(!Game.isAllowBury());
-                Utils.saveOptions();
+                UtilsFiles.saveOptions();
                 Game.exitToMainMenu();
                 Game.getPanelMainMenu().createMenu();
             } else if (sCommand.equals(COMMAND_MM_SWITCH_PATHFINDING_LEVEL)) {
                 Game.setPathfindingCPULevel(Game.getPathfindingCPULevel() + 1);
-                Utils.saveOptions();
+                UtilsFiles.saveOptions();
             } else if (sCommand.equals(COMMAND_MM_DELETE_ERROR)) {
                 Game.getPanelMainMenu().setErrorToShow(null);
                 Game.getPanelMainMenu().createMenu();
@@ -1162,7 +1163,7 @@ public final class CommandPanel {
                     UtilsAL.play(UtilsAL.SOURCE_MUSIC_INGAME);
                 }
 
-                Utils.saveOptions();
+                UtilsFiles.saveOptions();
                 Game.exitToMainMenu();
                 Game.getPanelMainMenu().loadMenuTexture(true);
                 Game.getPanelMainMenu().createMenu();
@@ -1170,7 +1171,7 @@ public final class CommandPanel {
                 Game.getPanelMainMenu().setSettingNewServer(true);
             } else if (sCommand.equals(COMMAND_SERVER_REMOVE)) {
                 Game.removeServer(sParameter);
-                Utils.saveOptions();
+                UtilsFiles.saveOptions();
                 Game.exitToMainMenu();
                 Game.getPanelMainMenu().createMenu();
             } else if (sCommand.equals(COMMAND_OPEN_FOLDER)) {

@@ -10,7 +10,7 @@ import xaos.tiles.Tile;
 import xaos.utils.ColorGL;
 import xaos.utils.Messages;
 import xaos.utils.UtilFont;
-import xaos.utils.Utils;
+import xaos.utils.UtilsSavegame;
 import xaos.utils.UtilsGL;
 
 public class TypingPanel {
@@ -427,7 +427,7 @@ public class TypingPanel {
 
         // En el caso de que esté pòniendo el nombre de una partida, miraremos que no exista en disco
         if (TYPING_TYPE == TYPE_SAVEGAME_NAME) {
-            if (Utils.existsSavegame(getNewText())) {
+            if (UtilsSavegame.existsSavegame(getNewText())) {
                 setSubTitle(Messages.getString("TypingPanel.1")); //$NON-NLS-1$
             } else {
                 setSubTitle(null);

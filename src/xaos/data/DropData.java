@@ -1,6 +1,6 @@
 package xaos.data;
 
-import xaos.utils.Utils;
+import xaos.utils.UtilsString;
 
 public class DropData {
 
@@ -36,7 +36,7 @@ public class DropData {
     }
 
     public void setLevelMin(String sLevelMin) {
-        setLevelMin(Utils.getInteger(sLevelMin, 0));
+        setLevelMin(UtilsString.getInteger(sLevelMin, 0));
     }
 
     public int getLevelMax() {
@@ -48,6 +48,6 @@ public class DropData {
     }
 
     public void setLevelMax(String sLevelMax) {
-        setLevelMax(Utils.getInteger(sLevelMax, 0));
+        setLevelMax(UtilsString.getInteger(sLevelMax, 0));
     }
 }

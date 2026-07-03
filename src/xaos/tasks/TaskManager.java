@@ -45,6 +45,8 @@ import xaos.utils.Messages;
 import xaos.utils.Point3D;
 import xaos.utils.Point3DShort;
 import xaos.utils.Utils;
+import xaos.utils.UtilsGeometry;
+import xaos.utils.UtilsString;
 import xaos.utils.UtilsIniHeaders;
 import xaos.zones.Zone;
 import xaos.zones.ZoneBarracks;
@@ -432,7 +434,7 @@ public final class TaskManager implements Externalizable {
                     for (int i = 0; i < actionQueue.size(); i++) {
                         qi = actionQueue.get(i);
                         if (qi.getType() == QueueItem.TYPE_MOVE) {
-                            alList = Utils.getArray(qi.getValue());
+                            alList = UtilsString.getArray(qi.getValue());
                             if (alList != null && alList.size() > 0) {
                                 boolean bAnyItem = false;
                                 int iTmp = 0;
@@ -453,7 +455,7 @@ public final class TaskManager implements Externalizable {
                                 }
                             }
                         } else if (qi.getType() == QueueItem.TYPE_PICK) {
-                            alList = Utils.getArray(qi.getValue());
+                            alList = UtilsString.getArray(qi.getValue());
                             if (alList != null && alList.size() > 0) {
                                 boolean bAnyItem = false;
                                 int iTmp = 0;
@@ -474,7 +476,7 @@ public final class TaskManager implements Externalizable {
                                 }
                             }
                         } else if (qi.getType() == QueueItem.TYPE_PICK_FRIENDLY) {
-                            alList = Utils.getArray(qi.getValue());
+                            alList = UtilsString.getArray(qi.getValue());
                             if (alList != null && alList.size() > 0) {
                                 boolean bAnyLiving = false;
                                 int iTmp = 0;
@@ -512,7 +514,7 @@ public final class TaskManager implements Externalizable {
                     for (int i = 0; i < actionQueue.size(); i++) {
                         qi = actionQueue.get(i);
                         if (qi.getType() == QueueItem.TYPE_MOVE) {
-                            alList = Utils.getArray(qi.getValue());
+                            alList = UtilsString.getArray(qi.getValue());
                             if (alList != null && alList.size() > 0) {
                                 boolean bAnyItem = false;
                                 int iTmp = 0;
@@ -534,7 +536,7 @@ public final class TaskManager implements Externalizable {
                                 }
                             }
                         } else if (qi.getType() == QueueItem.TYPE_PICK) {
-                            alList = Utils.getArray(qi.getValue());
+                            alList = UtilsString.getArray(qi.getValue());
                             if (alList != null && alList.size() > 0) {
                                 boolean bAnyItem = false;
                                 int iTmp = 0;
@@ -556,7 +558,7 @@ public final class TaskManager implements Externalizable {
                                 }
                             }
                         } else if (qi.getType() == QueueItem.TYPE_PICK_FRIENDLY) {
-                            alList = Utils.getArray(qi.getValue());
+                            alList = UtilsString.getArray(qi.getValue());
                             if (alList != null && alList.size() > 0) {
                                 boolean bAnyLiving = false;
                                 int iTmp = 0;
@@ -2172,7 +2174,7 @@ public final class TaskManager implements Externalizable {
                         sMoveMissing = null;
                         p3d = alASZIDAMirarCoordinates.remove(0);
                         for (int i = 0; i < alMoveITem.size(); i++) {
-                            ArrayList<String> itemToSearch = Utils.getArray(alMoveITem.get(i));
+                            ArrayList<String> itemToSearch = UtilsString.getArray(alMoveITem.get(i));
 
                             // Point3D puntoMoveItem = Item.searchItem (p3d, itemToSearch, false, Item.SEARCH_TRUE, Item.SEARCH_TRUE, null, true); // Buscamos ordenadamente (el último true)
                             Point3DShort puntoMoveItem = Item.searchItem(false, p3d, UtilsIniHeaders.getIntsArray(itemToSearch), false, Item.SEARCH_DOESNTMATTER, Item.SEARCH_TRUE, null, true, false, Game.getWorld ().getRestrictHaulEquippingLevel ()); // Buscamos ordenadamente, evitamos containers
@@ -2190,7 +2192,7 @@ public final class TaskManager implements Externalizable {
                     }
                     if (sMoveMissing != null) {
                         if (!action.isSilent()) {
-                            ArrayList<String> moveItems = Utils.getArray(sMoveMissing);
+                            ArrayList<String> moveItems = UtilsString.getArray(sMoveMissing);
                             if (moveItems.size() > 0) {
                                 String sName = ItemManager.getItem(moveItems.get(0)).getName();
                                 for (int i = 1; i < moveItems.size(); i++) {
@@ -2211,7 +2213,7 @@ public final class TaskManager implements Externalizable {
                 // Si llega aquí es que los moves están OK, miramos que el primero de la lista no esté en uso, en ese caso saltamos la tarea por el momento
                 if (alMoveITem.size() > 0) {
                     // Miraremos según los aldeanos libres
-                    ArrayList<String> itemsToSearch = Utils.getArray(alMoveITem.get(0));
+                    ArrayList<String> itemsToSearch = UtilsString.getArray(alMoveITem.get(0));
 
                     // Obtenemos una lista de items "en uso" para que al buscarlos no nos de esos
                     ArrayList<Integer> alItemsInUse = Item.searchItemInUse(-1);
@@ -2239,7 +2241,7 @@ public final class TaskManager implements Externalizable {
 
                 // Moves OK, toca el pick
                 if (sPickItemLiving != null) {
-                    ArrayList<String> alPicks = Utils.getArray(sPickItemLiving);
+                    ArrayList<String> alPicks = UtilsString.getArray(sPickItemLiving);
                     int[] aiPicks = UtilsIniHeaders.getIntsArray(alPicks);
 
                     // Perfomance improvement
@@ -2383,7 +2385,7 @@ public final class TaskManager implements Externalizable {
                                 for (int y = -1; y <= 1; y++) {
                                     for (int z = -1; z <= 1; z++) {
                                         p3dNeighbour = Point3DShort.getPoolInstance(action.getDestinationPoint().x + x, action.getDestinationPoint().y + y, action.getDestinationPoint().z + z);
-                                        if (Utils.isInsideMap(p3dNeighbour)) {
+                                        if (UtilsGeometry.isInsideMap(p3dNeighbour)) {
                                             iASZIDNeighbour = World.getCell(p3dNeighbour).getAstarZoneID();
 
                                             if (iASZIDNeighbour != -1) {
@@ -2986,7 +2988,7 @@ public final class TaskManager implements Externalizable {
                             for (int x = (item.getX() - distancia); x <= (item.getX() + distancia); x++) {
                                 for (int y = (item.getY() - distancia); y <= (item.getY() + distancia); y++) {
                                     if (Math.abs((item.getX() - x)) == distancia || Math.abs((item.getY() - y)) == distancia) { // Para que sólo mire puntos exteriores del radio
-                                        if (Utils.isInsideMap(x, y, item.getZ())) {
+                                        if (UtilsGeometry.isInsideMap(x, y, item.getZ())) {
                                             cell = World.getCell(x, y, item.getZ());
                                             if (cell.isEmpty() && !cell.isFlagOrders() && cell.getAstarZoneID() == iMatZoneID && LivingEntity.isCellAllowed(cell)) {
                                                 if (!cell.hasStockPile() || (Stockpile.getStockpile(cell.getCoordinates()).itemAllowed(item.getIniHeader()))) {
@@ -3047,7 +3049,7 @@ public final class TaskManager implements Externalizable {
                                             for (int x = (le.getX() - distancia); x <= (le.getX() + distancia); x++) {
                                                 for (int y = (le.getY() - distancia); y <= (le.getY() + distancia); y++) {
                                                     if (Math.abs((le.getX() - x)) == distancia || Math.abs((le.getY() - y)) == distancia) { // Para que sólo mire puntos exteriores del radio
-                                                        if (Utils.isInsideMap(x, y, le.getZ())) {
+                                                        if (UtilsGeometry.isInsideMap(x, y, le.getZ())) {
                                                             cell = World.getCell(x, y, le.getZ());
                                                             if (cell.isEmpty() && !cell.isFlagOrders() && cell.getAstarZoneID() == iMatZoneID && LivingEntity.isCellAllowed(cell)) {
                                                                 if (!cell.hasStockPile() || (Stockpile.getStockpile(cell.getCoordinates()).itemAllowed(item.getIniHeader()))) {
@@ -3194,11 +3196,11 @@ public final class TaskManager implements Externalizable {
         if (sPriorityID == null) {
             Game.iError = 866;
             // Pillamos el primer aldeano como base
-            int iHeur = Utils.getDistance(alCits.get(0).getCoordinates(), p3d);
+            int iHeur = UtilsGeometry.getDistance(alCits.get(0).getCoordinates(), p3d);
             int iHeurTemp;
             int iIndex = 0;
             for (int c = 1; c < alCits.size(); c++) {
-                iHeurTemp = Utils.getDistance(alCits.get(c).getCoordinates(), p3d);
+                iHeurTemp = UtilsGeometry.getDistance(alCits.get(c).getCoordinates(), p3d);
                 if (iHeurTemp < iHeur) {
                     iIndex = c;
                     iHeur = iHeurTemp;
@@ -3224,12 +3226,12 @@ public final class TaskManager implements Externalizable {
             }
 
             // Tenemos el primer aldeano que puede hacer el job
-            int iHeur = Utils.getDistance(alCits.get(iIndexConJob).getCoordinates(), p3d);
+            int iHeur = UtilsGeometry.getDistance(alCits.get(iIndexConJob).getCoordinates(), p3d);
             int iHeurTemp;
             int iIndex = iIndexConJob;
             for (int c = (iIndexConJob + 1); c < alCits.size(); c++) {
                 if (!alCits.get(c).getCitizenData().containsDeniedJob(iIniHeaderJob)) {
-                    iHeurTemp = Utils.getDistance(alCits.get(c).getCoordinates(), p3d);
+                    iHeurTemp = UtilsGeometry.getDistance(alCits.get(c).getCoordinates(), p3d);
                     if (iHeurTemp < iHeur) {
                         iIndex = c;
                         iHeur = iHeurTemp;

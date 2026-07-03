@@ -14,17 +14,17 @@ public final class Messages {
 
     public static final String BUNDLE_NAME = "data.languages.messages"; //$NON-NLS-1$
 
-    private static ResourceBundle RESOURCE_BUNDLE = Utils.getResourceBundle(BUNDLE_NAME);
+    private static ResourceBundle RESOURCE_BUNDLE = UtilsFiles.getResourceBundle(BUNDLE_NAME);
 
     public static void changeLanguage(String sLanguage, String sCountry, String sModName) {
         Locale.setDefault(new Locale(sLanguage, sCountry));
 
         if (sModName == null) {
-            RESOURCE_BUNDLE = Utils.getResourceBundle(BUNDLE_NAME);
+            RESOURCE_BUNDLE = UtilsFiles.getResourceBundle(BUNDLE_NAME);
         } else {
             File fUserFolder = new File(Game.getUserFolder());
             if (!fUserFolder.exists() || !fUserFolder.isDirectory()) {
-                RESOURCE_BUNDLE = Utils.getResourceBundle(BUNDLE_NAME);
+                RESOURCE_BUNDLE = UtilsFiles.getResourceBundle(BUNDLE_NAME);
             } else {
                 String sModLanguagePath;
                 if (sLanguage.equals("en") && sCountry.equals("US")) {
@@ -39,7 +39,7 @@ public final class Messages {
                         fis = new FileInputStream(f);
                         RESOURCE_BUNDLE = new PropertyResourceBundle(fis);
                     } catch (Exception e) {
-                        RESOURCE_BUNDLE = Utils.getResourceBundle(BUNDLE_NAME);
+                        RESOURCE_BUNDLE = UtilsFiles.getResourceBundle(BUNDLE_NAME);
                     } finally {
                         try {
                             if (fis != null) {
@@ -49,7 +49,7 @@ public final class Messages {
                         }
                     }
                 } else {
-                    RESOURCE_BUNDLE = Utils.getResourceBundle(BUNDLE_NAME);
+                    RESOURCE_BUNDLE = UtilsFiles.getResourceBundle(BUNDLE_NAME);
                 }
 
             }

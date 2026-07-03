@@ -39,6 +39,7 @@ import xaos.utils.Log;
 import xaos.utils.Messages;
 import xaos.utils.Point3D;
 import xaos.utils.Utils;
+import xaos.utils.UtilsGeometry;
 import xaos.utils.UtilsAL;
 import xaos.utils.UtilsIniHeaders;
 
@@ -707,10 +708,10 @@ public class EventData implements Externalizable {
             }
             Point pointPuntoBezier;
             for (int i = 0; i < ((World.MAP_WIDTH + World.MAP_HEIGHT) * 10); i++) {
-                pointPuntoBezier = Utils.getBezierPoint(pointPuntoInicial, pointPuntoFinal, pointPuntoControlA, pointPuntoControlB, (((double) i) / (double) ((World.MAP_WIDTH + World.MAP_HEIGHT) * 10)));
+                pointPuntoBezier = UtilsGeometry.getBezierPoint(pointPuntoInicial, pointPuntoFinal, pointPuntoControlA, pointPuntoControlB, (((double) i) / (double) ((World.MAP_WIDTH + World.MAP_HEIGHT) * 10)));
                 for (int x = 0; x < iGrosor; x++) {
                     for (int y = 0; y < iGrosor; y++) {
-                        if (Utils.isValidPoint(pointPuntoBezier.x + x, pointPuntoBezier.y + y, World.MAP_WIDTH, World.MAP_HEIGHT)) {
+                        if (UtilsGeometry.isValidPoint(pointPuntoBezier.x + x, pointPuntoBezier.y + y, World.MAP_WIDTH, World.MAP_HEIGHT)) {
                             // Metemos el tipo (o special type)
                             if (iSpecialType != MapGeneratorItem.SPECIAL_INT_NONE) {
                                 for (int d = 0; d < bd.depth; d++) {
@@ -1318,7 +1319,7 @@ public class EventData implements Externalizable {
             for (int j = -radius; j <= radius; j++) {
                 for (int n = -radius; n <= radius; n++) {
                     if (i != 0 || j != 0 || n != 0) {
-                        if (Utils.isInsideMap(x + i, y + j, n + z)) {
+                        if (UtilsGeometry.isInsideMap(x + i, y + j, n + z)) {
                             // Miramos si tiene el terrain
                             if (World.getCell(x + i, y + j, n + z).getTerrain().getTerrainID() == iTerrainID) {
                                 return true;
@@ -1348,7 +1349,7 @@ public class EventData implements Externalizable {
             for (int j = -radius; j <= radius; j++) {
                 for (int n = -radius; n <= radius; n++) {
                     if (i != 0 || j != 0 || n != 0) {
-                        if (Utils.isInsideMap(x + i, y + j, n + z)) {
+                        if (UtilsGeometry.isInsideMap(x + i, y + j, n + z)) {
                             // Miramos si tiene el terrain
                             cell = World.getCell(x + i, y + j, n + z);
                             if (cell.getTerrain().hasFluids()) {

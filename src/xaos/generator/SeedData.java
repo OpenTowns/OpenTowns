@@ -1,6 +1,7 @@
 package xaos.generator;
 
 import xaos.utils.Utils;
+import xaos.utils.UtilsString;
 
 public class SeedData extends ParentMapData {
 
@@ -52,9 +53,9 @@ public class SeedData extends ParentMapData {
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_SEED_DOWNPCT)) {
                 downPCT = Utils.launchDice(item.getList().get(i).getValue());
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_SEED_HEIGHT_MIN)) {
-                heightMin = Utils.getInteger(item.getList().get(i).getValue(), -1);
+                heightMin = UtilsString.getInteger(item.getList().get(i).getValue(), -1);
             } else if (item.getList().get(i).getName().equalsIgnoreCase(MapGeneratorItem.ITEM_SEED_HEIGHT_MAX)) {
-                heightMax = Utils.getInteger(item.getList().get(i).getValue(), -1);
+                heightMax = UtilsString.getInteger(item.getList().get(i).getValue(), -1);
             }
         }
 

@@ -74,6 +74,8 @@ import xaos.utils.Names;
 import xaos.utils.Point3D;
 import xaos.utils.Point3DShort;
 import xaos.utils.Utils;
+import xaos.utils.UtilsFiles;
+import xaos.utils.UtilsSavegame;
 import xaos.utils.UtilsAL;
 import xaos.utils.UtilsGL;
 import xaos.utils.UtilsIniHeaders;
@@ -187,9 +189,9 @@ public final class Game {
 		Towns.propertiesMain = null;
 		File fUserFolder;
 		if (sUserFolder != null && sUserFolder.length () > 0) {
-			fUserFolder = Utils.createUserFolder (sUserFolder);
+			fUserFolder = UtilsFiles.createUserFolder (sUserFolder);
 		} else {
-			fUserFolder = Utils.createUserFolder (System.getProperty ("user.home")); //$NON-NLS-1$
+			fUserFolder = UtilsFiles.createUserFolder (System.getProperty ("user.home")); //$NON-NLS-1$
 		}
 		if (fUserFolder == null) {
 			Log.log (Log.LEVEL_ERROR, Messages.getString ("Game.7"), getClass ().toString ()); //$NON-NLS-1$
@@ -323,7 +325,7 @@ public final class Game {
 	public static void initHeadless (String sUserFolderBase) {
 		headless = true;
 
-		File fUserFolder = Utils.createUserFolder (sUserFolderBase);
+		File fUserFolder = UtilsFiles.createUserFolder (sUserFolderBase);
 		if (fUserFolder == null) {
 			Log.log (Log.LEVEL_ERROR, Messages.getString ("Game.7"), "Game"); //$NON-NLS-1$ //$NON-NLS-2$
 			exit ();
@@ -441,11 +443,11 @@ public final class Game {
 			getPanelMainMenu ().setLoadingText (Messages.getString ("Game.13")); //$NON-NLS-1$
 			try {
 				if (bForzedZip) {
-					Utils.load (sForcedZipPath.substring (0, iIndex), "save.zip"); //$NON-NLS-1$
+					UtilsSavegame.load (sForcedZipPath.substring (0, iIndex), "save.zip"); //$NON-NLS-1$
 					getWorld ().setCampaignID (sForcedCampaign);
 					getWorld ().setMissionID (sForcedMission);
 				} else {
-					Utils.load (Game.getUserFolder () + Game.getFileSeparator () + Game.SAVE_FOLDER1 + Game.getFileSeparator (), fMapa.getName ()); //$NON-NLS-1$
+					UtilsSavegame.load (Game.getUserFolder () + Game.getFileSeparator () + Game.SAVE_FOLDER1 + Game.getFileSeparator (), fMapa.getName ()); //$NON-NLS-1$
 				}
 
 				setupGame (bNewGame, getWorld ().getCampaignID (), getWorld ().getMissionID (), bForzedZip);
@@ -759,7 +761,7 @@ public final class Game {
 		boolean bContinue = iBuryStartingZ < (World.MAP_DEPTH - 1);
 		while (bContinue) { // Nada de burying en el último nivel
 			// Obtenemos un bury al azar y cargamos los datos
-			BuryData bd = Utils.getRandomBuryData (sServerName);
+			BuryData bd = UtilsSavegame.getRandomBuryData (sServerName);
 
 			// Flags
 			if (bd.getHash () != null) {
@@ -1815,7 +1817,7 @@ public final class Game {
 
 			UtilsGL.initGLModes ();
 			UtilsGL.onResize (iWidth, iHeight, Display.isFullscreen ());
-			Utils.saveOptions ();
+			UtilsFiles.saveOptions ();
 
 			displayFullscreen = Display.isFullscreen ();
 		}

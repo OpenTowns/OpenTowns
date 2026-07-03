@@ -29,6 +29,7 @@ import xaos.tiles.terrain.TerrainManager;
 import xaos.tiles.terrain.TerrainManagerItem;
 import xaos.utils.Point3DShort;
 import xaos.utils.Utils;
+import xaos.utils.UtilsLineOfSight;
 import xaos.utils.UtilsIniHeaders;
 
 
@@ -266,7 +267,7 @@ public class Cell implements Externalizable {
 				// Lights
 				if (imi.getLightRadius () > 0) {
 					iLightRadiusItemRemoved = imi.getLightRadius ();
-				} else if (Utils.isCellBlockingLightItem (imi, cellItem)) {
+				} else if (UtilsLineOfSight.isCellBlockingLightItem (imi, cellItem)) {
 					// Habia un item que bloquea luz
 					iLightRadiusItemRemoved = 0;
 				}
@@ -356,7 +357,7 @@ public class Cell implements Externalizable {
 				generateLights (World.getCells (), coord.x, coord.y, coord.z);
 			} else {
 				// Nuevo item no produce luz, pero quizá es un lightblocker
-				if (Utils.isCellBlockingLightItem (imi, newCellItem)) {
+				if (UtilsLineOfSight.isCellBlockingLightItem (imi, newCellItem)) {
 					generateLightsItemRemovedCellMined (coord.x, coord.y, coord.z, ItemManagerItem.MAX_LIGHT_RADIUS);
 				}
 			}
@@ -1976,7 +1977,7 @@ public class Cell implements Externalizable {
 				for (iX = (x - iRadius + 1); iX <= (x + iRadius - 1); iX++) {
 					if (iX >= 0 && iX < World.MAP_WIDTH) {
 						// Linea recta
-						Utils.bresenhamLineLight (x, y, iX, iY, z, iRadius, imi);
+						UtilsLineOfSight.bresenhamLineLight (x, y, iX, iY, z, iRadius, imi);
 					}
 				}
 
@@ -1989,7 +1990,7 @@ public class Cell implements Externalizable {
 				for (iX = (x - iRadius + 1); iX <= (x + iRadius - 1); iX++) {
 					if (iX >= 0 && iX < World.MAP_WIDTH) {
 						// Linea recta
-						Utils.bresenhamLineLight (x, y, iX, iY, z, iRadius, imi);
+						UtilsLineOfSight.bresenhamLineLight (x, y, iX, iY, z, iRadius, imi);
 					}
 				}
 
@@ -2002,7 +2003,7 @@ public class Cell implements Externalizable {
 				for (iY = (y - iRadius + 1); iY <= (y + iRadius - 1); iY++) {
 					if (iY >= 0 && iY < World.MAP_HEIGHT) {
 						// Linea recta
-						Utils.bresenhamLineLight (x, y, iX, iY, z, iRadius, imi);
+						UtilsLineOfSight.bresenhamLineLight (x, y, iX, iY, z, iRadius, imi);
 					}
 				}
 
@@ -2015,7 +2016,7 @@ public class Cell implements Externalizable {
 				for (iY = (y - iRadius + 1); iY <= (y + iRadius - 1); iY++) {
 					if (iY >= 0 && iY < World.MAP_HEIGHT) {
 						// Linea recta
-						Utils.bresenhamLineLight (x, y, iX, iY, z, iRadius, imi);
+						UtilsLineOfSight.bresenhamLineLight (x, y, iX, iY, z, iRadius, imi);
 					}
 				}
 
@@ -2027,7 +2028,7 @@ public class Cell implements Externalizable {
 					iX++;
 					iY++;
 				}
-				Utils.bresenhamLineLight (x, y, iX, iY, z, iRadius, imi);
+				UtilsLineOfSight.bresenhamLineLight (x, y, iX, iY, z, iRadius, imi);
 
 				// Noreste
 				iX = x + iRadius - 1;
@@ -2036,7 +2037,7 @@ public class Cell implements Externalizable {
 					iX--;
 					iY++;
 				}
-				Utils.bresenhamLineLight (x, y, iX, iY, z, iRadius, imi);
+				UtilsLineOfSight.bresenhamLineLight (x, y, iX, iY, z, iRadius, imi);
 
 				// Suroeste
 				iX = x - iRadius + 1;
@@ -2045,7 +2046,7 @@ public class Cell implements Externalizable {
 					iX++;
 					iY--;
 				}
-				Utils.bresenhamLineLight (x, y, iX, iY, z, iRadius, imi);
+				UtilsLineOfSight.bresenhamLineLight (x, y, iX, iY, z, iRadius, imi);
 
 				// Sureste
 				iX = x + iRadius - 1;
@@ -2054,7 +2055,7 @@ public class Cell implements Externalizable {
 					iX--;
 					iY--;
 				}
-				Utils.bresenhamLineLight (x, y, iX, iY, z, iRadius, imi);
+				UtilsLineOfSight.bresenhamLineLight (x, y, iX, iY, z, iRadius, imi);
 			}
 		}
 	}

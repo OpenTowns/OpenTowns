@@ -11,7 +11,7 @@ import xaos.main.Game;
 import xaos.main.World;
 import xaos.utils.Log;
 import xaos.utils.Messages;
-import xaos.utils.Utils;
+import xaos.utils.UtilsFiles;
 import xaos.utils.UtilsXML;
 
 /**
@@ -27,7 +27,7 @@ public class DungeonManager {
 
         try {
             Document doc = null;
-            ArrayList<String> alPathToFiles = Utils.getPathToFile("gen_dungeons.xml", sCampaignID, sMissionID); //$NON-NLS-1$
+            ArrayList<String> alPathToFiles = UtilsFiles.getPathToFile("gen_dungeons.xml", sCampaignID, sMissionID); //$NON-NLS-1$
             for (int p = 0; p < alPathToFiles.size(); p++) {
                 doc = UtilsXML.loadXMLFile(alPathToFiles.get(p));
 

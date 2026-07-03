@@ -10,6 +10,7 @@ import xaos.tiles.entities.items.ItemManagerItem;
 import xaos.utils.Log;
 import xaos.utils.Messages;
 import xaos.utils.Utils;
+import xaos.utils.UtilsFiles;
 
 public class ItemGenerator extends Generator {
 
@@ -21,7 +22,7 @@ public class ItemGenerator extends Generator {
     public static void generateItems(Cell[][][] cells, String sCampaignID, String sMissionID) {
         // Leemos el gen_items.xml (si está en una misión se carga de otro sitio)
         Generator generator = new Generator();
-        ArrayList<String> alPaths = Utils.getPathToFile(XML_FILE, sCampaignID, sMissionID);
+        ArrayList<String> alPaths = UtilsFiles.getPathToFile(XML_FILE, sCampaignID, sMissionID);
 
         for (int i = 0; i < alPaths.size(); i++) {
             Generator.read(alPaths.get(i), generator, i == 0);

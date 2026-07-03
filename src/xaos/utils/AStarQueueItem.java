@@ -478,7 +478,7 @@ public final class AStarQueueItem {
         int iIndexEnd = endIndex;
 
         while ((iIndexStart + 3) < returnNewIndex) {
-            alBresenham = Utils.bresenhamLine(alPath.get(iIndexStart), alPath.get(iIndexEnd), z); //, livingType);
+            alBresenham = UtilsLineOfSight.bresenhamLine(alPath.get(iIndexStart), alPath.get(iIndexEnd), z); //, livingType);
             if (alBresenham != null && alBresenham.size() > 2 && countWalk(alPath, iIndexStart, alBresenham.size()) >= countWalk(alBresenham, 0, alBresenham.size())) {
 //			if (alBresenham != null && alBresenham.size () > 2) {
                 // Linea recta, sustituimos

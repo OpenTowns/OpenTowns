@@ -17,6 +17,7 @@ import xaos.tiles.entities.living.LivingEntityManager;
 import xaos.utils.Log;
 import xaos.utils.Messages;
 import xaos.utils.Utils;
+import xaos.utils.UtilsString;
 import xaos.utils.UtilsXML;
 
 public class EventManager {
@@ -253,7 +254,7 @@ public class EventManager {
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "afterEvents"); //$NON-NLS-1$
                         if (sAux != null) {
-                            emi.setAfterEvents(Utils.getArray(sAux));
+                            emi.setAfterEvents(UtilsString.getArray(sAux));
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "shadows"); //$NON-NLS-1$
                         if (sAux != null) {
@@ -277,11 +278,11 @@ public class EventManager {
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "prerequisites"); //$NON-NLS-1$
                         if (sAux != null) {
-                            emi.setPrerequisites(Utils.getArray(sAux));
+                            emi.setPrerequisites(UtilsString.getArray(sAux));
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "eventsImmune"); //$NON-NLS-1$
                         if (sAux != null) {
-                            emi.setEventsImmune(Utils.getArray(sAux));
+                            emi.setEventsImmune(UtilsString.getArray(sAux));
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "waitPCT"); //$NON-NLS-1$
                         if (sAux != null) {
@@ -305,11 +306,11 @@ public class EventManager {
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "siegeLivings"); //$NON-NLS-1$
                         if (sAux != null) {
-                            emi.setSiegeLivings(Utils.getArray(sAux));
+                            emi.setSiegeLivings(UtilsString.getArray(sAux));
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "siegeSize"); //$NON-NLS-1$
                         if (sAux != null) {
-                            emi.setSiegeSize(Utils.getArray(sAux));
+                            emi.setSiegeSize(UtilsString.getArray(sAux));
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "targets"); //$NON-NLS-1$
                         if (sAux != null) {
@@ -317,7 +318,7 @@ public class EventManager {
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "targetsPCT"); //$NON-NLS-1$
                         if (sAux != null) {
-                            emi.setTargetsPCT(Utils.getArray(sAux));
+                            emi.setTargetsPCT(UtilsString.getArray(sAux));
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "targetsRandomCell"); //$NON-NLS-1$
                         if (sAux != null) {
@@ -329,35 +330,35 @@ public class EventManager {
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "effects"); //$NON-NLS-1$
                         if (sAux != null) {
-                            emi.setEffects(Utils.getArray(sAux));
+                            emi.setEffects(UtilsString.getArray(sAux));
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "effectsAfterEat"); //$NON-NLS-1$
                         if (sAux != null) {
-                            emi.setEffectsAfterEat(Utils.getArray(sAux));
+                            emi.setEffectsAfterEat(UtilsString.getArray(sAux));
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "effectsAfterSleep"); //$NON-NLS-1$
                         if (sAux != null) {
-                            emi.setEffectsAfterSleep(Utils.getArray(sAux));
+                            emi.setEffectsAfterSleep(UtilsString.getArray(sAux));
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "items"); //$NON-NLS-1$
                         if (sAux != null) {
-                            emi.setItems(Utils.getArray(sAux));
+                            emi.setItems(UtilsString.getArray(sAux));
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "itemsMaxAgePCT"); //$NON-NLS-1$
                         if (sAux != null) {
-                            emi.setItemsMaxAgePCT(Utils.getArray(sAux));
+                            emi.setItemsMaxAgePCT(UtilsString.getArray(sAux));
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "itemsDeletePCT"); //$NON-NLS-1$
                         if (sAux != null) {
-                            emi.setItemsDeletePCT(Utils.getArray(sAux));
+                            emi.setItemsDeletePCT(UtilsString.getArray(sAux));
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "itemsSpawnLiving"); //$NON-NLS-1$
                         if (sAux != null) {
-                            emi.setItemsSpawnLiving(Utils.getArray(sAux));
+                            emi.setItemsSpawnLiving(UtilsString.getArray(sAux));
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "itemsSpawnLivingSize"); //$NON-NLS-1$
                         if (sAux != null) {
-                            emi.setItemsSpawnLivingSize(Utils.getArray(sAux));
+                            emi.setItemsSpawnLivingSize(UtilsString.getArray(sAux));
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "fxBeforeCooldown"); //$NON-NLS-1$
                         if (sAux != null) {
@@ -381,7 +382,7 @@ public class EventManager {
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "injectActions"); //$NON-NLS-1$
                         if (sAux != null) {
-                            emi.setInjectActions(Utils.getArray(sAux));
+                            emi.setInjectActions(UtilsString.getArray(sAux));
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "useFile"); //$NON-NLS-1$
                         if (sAux != null) {
@@ -389,7 +390,7 @@ public class EventManager {
                         }
                         sAux = UtilsXML.getChildValue(node.getChildNodes(), "useFileIDs"); //$NON-NLS-1$
                         if (sAux != null) {
-                            emi.setUseFileIDs(Utils.getArray(sAux));
+                            emi.setUseFileIDs(UtilsString.getArray(sAux));
                         }
                         emi.loadUseFile(sXMLName);
                     } else {
@@ -400,41 +401,41 @@ public class EventManager {
                         emi.setMinPopulation(UtilsXML.getChildValue(node.getChildNodes(), "minPopulation")); //$NON-NLS-1$
                         emi.setSpawnAtRandom(UtilsXML.getChildValue(node.getChildNodes(), "spawnAtRandom")); //$NON-NLS-1$
                         emi.setEventCooldown(UtilsXML.getChildValue(node.getChildNodes(), "eventCooldown")); //$NON-NLS-1$
-                        emi.setAfterEvents(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "afterEvents"))); //$NON-NLS-1$
+                        emi.setAfterEvents(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "afterEvents"))); //$NON-NLS-1$
                         emi.setShadows(UtilsXML.getChildValue(node.getChildNodes(), "shadows")); //$NON-NLS-1$
                         emi.setHalfShadows(UtilsXML.getChildValue(node.getChildNodes(), "halfShadows")); //$NON-NLS-1$
                         emi.setRed(UtilsXML.getChildValue(node.getChildNodes(), "red")); //$NON-NLS-1$
                         emi.setGreen(UtilsXML.getChildValue(node.getChildNodes(), "green")); //$NON-NLS-1$
                         emi.setBlue(UtilsXML.getChildValue(node.getChildNodes(), "blue")); //$NON-NLS-1$
-                        emi.setPrerequisites(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "prerequisites"))); //$NON-NLS-1$
-                        emi.setEventsImmune(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "eventsImmune"))); //$NON-NLS-1$
+                        emi.setPrerequisites(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "prerequisites"))); //$NON-NLS-1$
+                        emi.setEventsImmune(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "eventsImmune"))); //$NON-NLS-1$
                         emi.setWaitPCT(UtilsXML.getChildValue(node.getChildNodes(), "waitPCT")); //$NON-NLS-1$
                         emi.setWalkSpeedPCT(UtilsXML.getChildValue(node.getChildNodes(), "walkSpeedPCT")); //$NON-NLS-1$
                         emi.setHappinessPCT(UtilsXML.getChildValue(node.getChildNodes(), "happinessPCT")); //$NON-NLS-1$
                         emi.setSiege(UtilsXML.getChildValue(node.getChildNodes(), "siege")); //$NON-NLS-1$
                         emi.setSiegeUnderground(UtilsXML.getChildValue(node.getChildNodes(), "siegeUnderground")); //$NON-NLS-1$
-                        emi.setSiegeLivings(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "siegeLivings"))); //$NON-NLS-1$
-                        emi.setSiegeSize(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "siegeSize"))); //$NON-NLS-1$
+                        emi.setSiegeLivings(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "siegeLivings"))); //$NON-NLS-1$
+                        emi.setSiegeSize(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "siegeSize"))); //$NON-NLS-1$
                         emi.setTargets(UtilsXML.getChildValue(node.getChildNodes(), "targets")); //$NON-NLS-1$
-                        emi.setTargetsPCT(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "targetsPCT"))); //$NON-NLS-1$
+                        emi.setTargetsPCT(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "targetsPCT"))); //$NON-NLS-1$
                         emi.setTargetsRandomCell(UtilsXML.getChildValue(node.getChildNodes(), "targetsRandomCell")); //$NON-NLS-1$
                         emi.setTargetsOpenCell(UtilsXML.getChildValue(node.getChildNodes(), "targetsOpenCell")); //$NON-NLS-1$
-                        emi.setEffects(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "effects"))); //$NON-NLS-1$
-                        emi.setEffectsAfterEat(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "effectsAfterEat"))); //$NON-NLS-1$
-                        emi.setEffectsAfterSleep(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "effectsAfterSleep"))); //$NON-NLS-1$
-                        emi.setItems(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "items"))); //$NON-NLS-1$
-                        emi.setItemsMaxAgePCT(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "itemsMaxAgePCT"))); //$NON-NLS-1$
-                        emi.setItemsDeletePCT(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "itemsDeletePCT"))); //$NON-NLS-1$
-                        emi.setItemsSpawnLiving(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "itemsSpawnLiving"))); //$NON-NLS-1$
-                        emi.setItemsSpawnLivingSize(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "itemsSpawnLivingSize"))); //$NON-NLS-1$
+                        emi.setEffects(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "effects"))); //$NON-NLS-1$
+                        emi.setEffectsAfterEat(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "effectsAfterEat"))); //$NON-NLS-1$
+                        emi.setEffectsAfterSleep(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "effectsAfterSleep"))); //$NON-NLS-1$
+                        emi.setItems(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "items"))); //$NON-NLS-1$
+                        emi.setItemsMaxAgePCT(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "itemsMaxAgePCT"))); //$NON-NLS-1$
+                        emi.setItemsDeletePCT(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "itemsDeletePCT"))); //$NON-NLS-1$
+                        emi.setItemsSpawnLiving(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "itemsSpawnLiving"))); //$NON-NLS-1$
+                        emi.setItemsSpawnLivingSize(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "itemsSpawnLivingSize"))); //$NON-NLS-1$
                         emi.setFxBeforeCooldown(UtilsXML.getChildValue(node.getChildNodes(), "fxBeforeCooldown")); //$NON-NLS-1$
                         emi.setFxAfterCooldown(UtilsXML.getChildValue(node.getChildNodes(), "fxAfterCooldown")); //$NON-NLS-1$
                         emi.setFxRunning(UtilsXML.getChildValue(node.getChildNodes(), "fxRunning")); //$NON-NLS-1$
                         emi.setFxRunningTurns(UtilsXML.getChildValue(node.getChildNodes(), "fxRunningTurns")); //$NON-NLS-1$
                         emi.setFxFinish(UtilsXML.getChildValue(node.getChildNodes(), "fxFinish")); //$NON-NLS-1$
-                        emi.setInjectActions(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "injectActions"))); //$NON-NLS-1$
+                        emi.setInjectActions(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "injectActions"))); //$NON-NLS-1$
                         emi.setUseFile(UtilsXML.getChildValue(node.getChildNodes(), "useFile")); //$NON-NLS-1$
-                        emi.setUseFileIDs(Utils.getArray(UtilsXML.getChildValue(node.getChildNodes(), "useFileIDs"))); //$NON-NLS-1$
+                        emi.setUseFileIDs(UtilsString.getArray(UtilsXML.getChildValue(node.getChildNodes(), "useFileIDs"))); //$NON-NLS-1$
                         emi.loadUseFile(sXMLName);
                     }
 
