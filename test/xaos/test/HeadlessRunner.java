@@ -33,12 +33,15 @@ public final class HeadlessRunner {
         public final String output;
         public final String stateHash;
         public final String terrainHash;
+        /** The counters line: "date=D/M/Y citizens=N livings=N items=N coins=N". */
+        public final String summary;
 
-        Result(int exitCode, String output, String stateHash, String terrainHash) {
+        Result(int exitCode, String output, String stateHash, String terrainHash, String summary) {
             this.exitCode = exitCode;
             this.output = output;
             this.stateHash = stateHash;
             this.terrainHash = terrainHash;
+            this.summary = summary;
         }
     }
 
@@ -78,7 +81,18 @@ public final class HeadlessRunner {
         String output = buffer.toString();
         return new Result(process.exitValue(), output,
                 parseValue(output, "state-hash="),
-                parseValue(output, "terrain-hash="));
+                parseValue(output, "terrain-hash="),
+                parseSummary(output));
+    }
+
+    private static String parseSummary(String output) {
+        for (String line : output.split("\\R")) {
+            int index = line.indexOf("[TownsHeadless] date=");
+            if (index != -1) {
+                return line.substring(index + "[TownsHeadless] ".length()).trim();
+            }
+        }
+        return null;
     }
 
     private static String parseValue(String output, String key) {

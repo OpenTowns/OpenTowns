@@ -1,5 +1,6 @@
 package xaos.test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -61,6 +62,17 @@ class LongRunSmokeTest {
     @AfterAll
     static void cleanup() {
         HeadlessRunner.deleteRecursively(userFolder);
+    }
+
+    @Test
+    void matchesGoldenPin() {
+        // The pin was recorded from a TownsHeadless process run with the
+        // same seed and tick count, so this also proves the in-JVM drive
+        // path (this class) and the process path are equivalent.
+        assertEquals(Golden.get("sim.4242.normal.20000.terrain"),
+                Long.toHexString(xaos.TownsHeadless.computeTerrainHash()));
+        assertEquals(Golden.get("sim.4242.normal.20000.state"),
+                Long.toHexString(xaos.TownsHeadless.computeStateHash()));
     }
 
     @Test

@@ -144,9 +144,29 @@ public final class TownsHeadless {
      * Two runs match iff every line matches.
      */
     private static void printSummary(World world) {
-        long hash = FNV_OFFSET;
+        int numLivings = World.getLivings(true).size() + World.getLivings(false).size();
 
-        // Terrain: type, fluids and mined state of every cell
+        System.out.println("[TownsHeadless] date=" + world.getDate().getDay() + "/" + world.getDate().getMonth() + "/" + world.getDate().getYear()
+                + " citizens=" + World.getCitizenIDs().size()
+                + " livings=" + numLivings
+                + " items=" + World.getItems().size()
+                + " coins=" + world.getCoins());
+        System.out.println("[TownsHeadless] terrain-hash=" + Long.toHexString(computeTerrainHash()));
+        System.out.println("[TownsHeadless] state-hash=" + Long.toHexString(computeStateHash()));
+    }
+
+    /**
+     * FNV-1a-style hash over the terrain of the current world: type, fluids
+     * and mined state of every cell.
+     *
+     * The definition of this hash and computeStateHash is FROZEN: the golden
+     * pins in the test suite record their values for fixed seeds, so any
+     * change here (or in what worldgen/the sim feeds them) invalidates every
+     * pin. Extend the hashed surface only deliberately, updating the pins in
+     * the same commit.
+     */
+    public static long computeTerrainHash() {
+        long hash = FNV_OFFSET;
         Cell[][][] cells = World.getCells();
         for (int x = 0; x < cells.length; x++) {
             for (int y = 0; y < cells[0].length; y++) {
@@ -159,14 +179,21 @@ public final class TownsHeadless {
                 }
             }
         }
-        long terrainHash = hash;
+        return hash;
+    }
+
+    /**
+     * Full world-state hash: the terrain hash continued over livings (id,
+     * kind, position, health) and items (id, kind, position), in sorted-ID
+     * order. Frozen; see computeTerrainHash.
+     */
+    public static long computeStateHash() {
+        long hash = computeTerrainHash();
 
         // Livings: id, kind, position and health, in id order
-        int numLivings = 0;
         for (int d = 0; d < 2; d++) {
             Integer[] ids = World.getLivings(d == 0).keySet().toArray(new Integer[0]);
             java.util.Arrays.sort(ids);
-            numLivings += ids.length;
             for (int i = 0; i < ids.length; i++) {
                 LivingEntity le = World.getLivings(d == 0).get(ids[i]);
                 hash = mix(hash, ids[i].intValue());
@@ -190,13 +217,7 @@ public final class TownsHeadless {
             hash = mix(hash, item.getCoordinates().z);
         }
 
-        System.out.println("[TownsHeadless] date=" + world.getDate().getDay() + "/" + world.getDate().getMonth() + "/" + world.getDate().getYear()
-                + " citizens=" + World.getCitizenIDs().size()
-                + " livings=" + numLivings
-                + " items=" + itemIDs.length
-                + " coins=" + world.getCoins());
-        System.out.println("[TownsHeadless] terrain-hash=" + Long.toHexString(terrainHash));
-        System.out.println("[TownsHeadless] state-hash=" + Long.toHexString(hash));
+        return hash;
     }
 
     private static final long FNV_OFFSET = 0xcbf29ce484222325L;

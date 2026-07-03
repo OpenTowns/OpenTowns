@@ -33,6 +33,7 @@ abstract class WorldgenInvariantsBase {
 
     private static Path userFolder;
     private static World world;
+    private static String mapType;
 
     /** Called from each subclass's @BeforeAll with its map type. */
     static void boot(String map) throws Exception {
@@ -40,6 +41,7 @@ abstract class WorldgenInvariantsBase {
             throw new IllegalStateException("Working directory must be src/ (run via gradlew test)");
         }
         userFolder = HeadlessRunner.newUserFolder();
+        mapType = map;
         // Same order as TownsHeadless: init, then sync + seed, then worldgen.
         Game.initHeadless(userFolder.toString());
         AStarQueue.setSynchronousMode(true);
@@ -128,6 +130,18 @@ abstract class WorldgenInvariantsBase {
         assertTrue(world.getDate().getMonth() >= 1);
         assertTrue(world.getDate().getYear() >= 1);
         assertTrue(World.FRAMES_PER_TURN > 0, "turn cadence not set");
+    }
+
+    @Test
+    void worldgenMatchesGoldenPin() {
+        // Freezes worldgen behavior itself for this seed and map, not just
+        // run-to-run determinism (see Golden for the update workflow).
+        assertEquals(Golden.get("worldgen." + mapType + ".terrain"),
+                Long.toHexString(xaos.TownsHeadless.computeTerrainHash()),
+                "worldgen terrain diverged from golden pin for map " + mapType);
+        assertEquals(Golden.get("worldgen." + mapType + ".state"),
+                Long.toHexString(xaos.TownsHeadless.computeStateHash()),
+                "worldgen state diverged from golden pin for map " + mapType);
     }
 
     private static void assertInBounds(int x, int y, int z, String what) {

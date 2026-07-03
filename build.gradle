@@ -95,6 +95,9 @@ tasks.register('runHeadless', JavaExec) {
     if (project.hasProperty('ticks')) {
         args "--ticks=${project.property('ticks')}"
     }
+    if (project.hasProperty('map')) {
+        args "--map=${project.property('map')}"
+    }
     if (project.hasProperty('userFolder')) {
         args "--user-folder=${project.property('userFolder')}"
     }

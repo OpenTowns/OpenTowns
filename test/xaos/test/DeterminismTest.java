@@ -86,6 +86,30 @@ class DeterminismTest {
         assertNotEquals(seed42.stateHash, seed1234.stateHash, "different seeds produced the same world");
     }
 
+    private static void assertMatchesGolden(String scenario, HeadlessRunner.Result result) {
+        assertEquals(Golden.get(scenario + ".terrain"), result.terrainHash,
+                scenario + " terrain diverged from golden pin");
+        assertEquals(Golden.get(scenario + ".state"), result.stateHash,
+                scenario + " state diverged from golden pin");
+        assertEquals(Golden.get(scenario + ".summary"), result.summary,
+                scenario + " counters diverged from golden pin");
+    }
+
+    @Test
+    void goldenPin_seed42_normal_3000() throws Exception {
+        assertMatchesGolden("sim.42.normal.3000", seededRun(42, 3000, "normal", 1));
+    }
+
+    @Test
+    void goldenPin_seed1234_desert_3000() throws Exception {
+        assertMatchesGolden("sim.1234.desert.3000", seededRun(1234, 3000, "desert", 1));
+    }
+
+    @Test
+    void goldenPin_seed42_normal_20000() throws Exception {
+        assertMatchesGolden("sim.42.normal.20000", seededRun(42, 20000, "normal", 1));
+    }
+
     @Test
     void unseededRunCompletes() throws Exception {
         // Vanilla configuration: time-seeded RNG, async A* worker. Only

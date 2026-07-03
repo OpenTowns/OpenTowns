@@ -166,6 +166,16 @@ suffice (no proprietary files needed), so the suite also runs in CI
 deterministic: a failure always means a real behavior change, never a flake.
 The bury feature stays outside the tested deterministic surface.
 
+**Golden pins** (`test/xaos/test/Golden.java`) freeze vanilla behavior
+itself, not just run-to-run determinism: they record the expected state
+hashes and counters for fixed seed/map/tick scenarios (worldgen at tick 0
+for all six map types, plus three simulated scenarios and the 20k-tick
+in-JVM run), captured while the source was at its original pre-refactor
+behavior. The hash definition lives in `TownsHeadless.computeStateHash` and
+is frozen along with them. A pin mismatch means worldgen or the sim changed
+behavior; updating a pin is a deliberate act that must be explained in the
+same commit (take the new value from the failing assertion message).
+
 ## Next intended steps
 - Decouple `UIPanel`. Extraction of one sub-panel at a time, retaining original behavior.
 - Decouple `Utils`. Extraction into mechanical pieces based on responsibility.
