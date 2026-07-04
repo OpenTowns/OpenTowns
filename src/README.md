@@ -27,7 +27,7 @@ There is a second config layer: the game creates a user folder (`~/Towns` by def
 
 ## Startup flow
 
-`xaos.Towns.main()` initializes the Steam API via JNA if present (failure is silently ignored; the game runs fine without Steam), then constructs `xaos.main.Game`. Game creates the user folder, reads config, opens a GLFW window through the compatibility layer (`xaos.compat.opengl.Display`), initializes OpenAL audio (`utils.UtilsAL`), and enters the main loop in `Game.run()`: poll input, advance the simulation one turn, render, swap buffers, cap the frame rate (`FPS_MAINMENU` and `FPS_INGAME` in towns.ini, both 30 by default).
+`xaos.Towns.main()` first runs the first-run asset setup (`xaos.setup.FirstRunSetup`: if `data/graphics`, `data/audio` or `data/fonts` are missing from the working directory, it locates a Steam Towns install or asks for one via native tinyfd dialogs and copies them in), then initializes the Steam API via JNA if present (failure is silently ignored; the game runs fine without Steam), then constructs `xaos.main.Game`. Game creates the user folder, reads config, opens a GLFW window through the compatibility layer (`xaos.compat.opengl.Display`), initializes OpenAL audio (`utils.UtilsAL`), and enters the main loop in `Game.run()`: poll input, advance the simulation one turn, render, swap buffers, cap the frame rate (`FPS_MAINMENU` and `FPS_INGAME` in towns.ini, both 30 by default).
 
 
 ## Package map
@@ -35,6 +35,7 @@ There is a second config layer: the game creates a user folder (`~/Towns` by def
 ### Core
 
 - `xaos`: `Towns.java` (entry point, .ini property access) and `TownsProperties.java`.
+- `xaos.setup`: first-run asset setup, run from `Towns.main()` before anything else. `SteamLocator` finds a Steam Towns install (registry/default paths + a dumb `libraryfolders.vdf` line scan); `FirstRunSetup` validates, confirms via tinyfd native dialogs (message box + folder picker; no AWT, which would fight GLFW on macOS) and copies `data/graphics`, `data/audio`, `data/fonts` into the working directory (tmp-then-rename per folder, so an interrupted copy never looks complete). Imports nothing from the game packages: it must not class-initialize `Game` or draw RNG. `TownsHeadless` never calls it.
 - `xaos.main`: the two central classes.
   - `Game.java` (2,300 ln): static god-object. Main loop, game states, display init, savegame versioning (`SAVEGAME_V9` through `V14e`), pause, speed, mods list, user folder.
   - `World.java` (4,700 ln): the map. A 200x200 grid, up to 64 Z-levels, the per-turn simulation tick, water/lava fluid simulation, in-game calendar, siege scheduling, and save serialization (`Externalizable`).

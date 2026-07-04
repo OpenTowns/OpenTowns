@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import xaos.main.Game;
+import xaos.setup.FirstRunSetup;
 import xaos.utils.JNASteamAPI;
 import xaos.utils.Log;
 import xaos.utils.Messages;
@@ -38,6 +39,9 @@ public final class Towns {
 
     public static void main(String[] args) {
 //		if (true) System.exit (0);
+        // First run: fetch the proprietary assets from the player's Towns install
+        FirstRunSetup.run();
+
         // Steam
         if (!loadSteamAPI("steam_api")) {
             loadSteamAPI("steam_api64");

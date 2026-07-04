@@ -21,8 +21,9 @@ See `src/README.md` for more information about source status.
 You need a copy of the original game (available on [Steam][Towns game]) for its assets, which are proprietary and not included here.
 
 1. Clone this repository.
-2. From your Towns installation, copy `lib/` and the `data/graphics`, `data/audio`, and `data/fonts` folders into `src/`.
-3. Run `./gradlew run` (or `gradlew.bat run` on Windows). Gradle bootstraps itself, including the correct JDK toolchain.
+2. Run `./gradlew run` (or `gradlew.bat run` on Windows). Gradle bootstraps itself, including the correct JDK toolchain.
+
+On first launch the game looks for a Steam installation of Towns and offers to copy its `data/graphics`, `data/audio` and `data/fonts` folders over automatically; if none is found, it asks you to point at your Towns folder. Copying those three folders into `src/data/` by hand still works too.
 
 # Code License
 

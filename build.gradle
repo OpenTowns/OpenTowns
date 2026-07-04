@@ -78,11 +78,15 @@ dependencies {
     implementation 'org.lwjgl:lwjgl-opengl'
     implementation 'org.lwjgl:lwjgl-openal'
     implementation 'org.lwjgl:lwjgl-stb'
+    // Native OS dialogs (message box, folder picker) for the first-run
+    // asset setup; safe to call before GLFW init.
+    implementation 'org.lwjgl:lwjgl-tinyfd'
     runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-glfw::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-opengl::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-openal::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-stb::$lwjglNatives"
+    runtimeOnly "org.lwjgl:lwjgl-tinyfd::$lwjglNatives"
 }
 
 tasks.withType(JavaCompile).configureEach {
