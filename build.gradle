@@ -154,4 +154,13 @@ tasks.named('run') {
     // access, deprecated for removal (JEP 498). Opt in explicitly until
     // LWJGL moves to the FFM API.
     jvmArgs '--sun-misc-unsafe-memory-access=allow'
+    // macOS: GLFW (and any AppKit windowing) must run on the process's
+    // first thread, so the JVM has to be told to keep the main thread free
+    // for it. Without this the windowed game (xaos.Towns) never opens a
+    // window on a Mac. Windowed only: xaos.TownsHeadless must not require
+    // it, so runHeadless deliberately omits this. The jpackage launcher
+    // will need the same arg baked in for the macOS build.
+    if (osName.contains('mac') || osName.contains('darwin')) {
+        jvmArgs '-XstartOnFirstThread'
+    }
 }
