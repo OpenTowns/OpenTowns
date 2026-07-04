@@ -1,6 +1,28 @@
 Towns patch notes
 =====
 
+The OpenTowns section below covers changes by the OpenTowns restoration project,
+a GPLv3 fork of Towns. Everything from "Version v15" down is the original Towns
+changelog, left as-is.
+
+OpenTowns v1.0.0-rc1
+-----
+(release candidate)
+
+- Change: Ported the game from Java 6-era APIs to Java 25.
+- Change: Replaced the long-abandoned LWJGL 2 with LWJGL 3. Windowing and input now go through GLFW and audio through OpenAL; the rendering code is unchanged.
+- Add: Modern macOS support. The game runs and its window opens on modern MX Macs, including Apple Silicon, which the original could not.
+- Add: Portable, self-contained builds for Windows, macOS and Linux, packaged with jpackage. The Java runtime is bundled in, so players do not need a separate Java install.
+- Add: A headless simulation mode plus a JUnit test suite in CI, pinned to golden hashes so any drift in world generation or simulation behavior is caught.
+- Add: First-run setup that finds a Steam Towns install and copies its graphics, audio and font assets over automatically, or lets you point at them.
+- Fix: Text entry now follows the OS keyboard layout instead of assuming QWERTY.
+- Fix: Startup no longer freezes for ~20 seconds trying to reach the offline townsmods.net server; the lookup is now bounded and runs in the background.
+- Change: The source was fully converted to UTF-8 with normalized (LF) line endings.
+- Change: The oversized Utils and UIPanel classes were split into smaller focused classes for readability, with no change to behavior.
+- Change: Config and data files resolve against the installed app rather than the working directory, so a packaged build finds them wherever it is run. Running from source is unchanged.
+
+-----
+
 Version v15
 -----
 (not released yet)
