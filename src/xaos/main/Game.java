@@ -2202,18 +2202,49 @@ public final class Game {
 				if (sServerAddress.length () > 0) {
 					alServers.add (sServerAddress.trim ());
 
-					// Buscamos el nombre
-					if (headless) {
-						// Test mode stays offline: the lookup is an HTTP call
-						// and the name only feeds the server-list menu
-						alServerNames.add (sServerAddress.trim ());
-					} else {
-						alServerNames.add (UtilsServer.getServerName (sServerAddress.trim ()));
-					}
+					// Seed the display name with the address. The real name is an
+					// HTTP lookup that only labels the main-menu server list;
+					// resolving it here would block boot for up to ~21s per dead
+					// server (see the UtilsServer connect timeout). It is resolved
+					// off the boot path instead (resolveServerNamesAsync). Headless
+					// stays fully offline: it never starts the worker.
+					alServerNames.add (sServerAddress.trim ());
 				}
 			}
 			sortServers ();
+			if (!headless) {
+				resolveServerNamesAsync ();
+			}
 		}
+	}
+
+
+	/**
+	 * Resolves the server display names in the background so a slow or dead
+	 * server never stalls startup. Each placeholder (the address) is replaced
+	 * in place once its real name arrives; set() keeps the list size fixed, so
+	 * the menu's index-based reads stay safe while this runs. Matched by
+	 * address so a concurrent add/remove from the menu never mis-labels a row.
+	 */
+	private static void resolveServerNamesAsync () {
+		final ArrayList<String> addresses = new ArrayList<String> (alServers);
+		Thread worker = new Thread (new Runnable () {
+			public void run () {
+				for (int i = 0; i < addresses.size (); i++) {
+					String address = addresses.get (i);
+					String name = UtilsServer.getServerName (address);
+					if (name == null || name.trim ().length () == 0) {
+						continue;
+					}
+					int index = alServers.indexOf (address);
+					if (index >= 0 && index < alServerNames.size ()) {
+						alServerNames.set (index, name);
+					}
+				}
+			}
+		}, "server-name-resolver"); //$NON-NLS-1$
+		worker.setDaemon (true);
+		worker.start ();
 	}
 
 

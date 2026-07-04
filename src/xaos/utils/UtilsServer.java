@@ -170,6 +170,13 @@ public class UtilsServer {
         URLConnection uc = urlObject.openConnection();
 
         try {
+            // Bound BOTH phases. The connect timeout is the important one: with
+            // it unset, getInputStream() below blocks on the OS default (about
+            // 21s of TCP SYN retries on Windows) whenever the host is dead or
+            // unreachable, which is exactly the case for the defunct
+            // townsmods.net. The read timeout was already set but never helped,
+            // since the stall was in connect, not read.
+            uc.setConnectTimeout (1500);
             uc.setReadTimeout (1500);
         }
         catch (Exception e) {
