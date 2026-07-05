@@ -46,7 +46,14 @@ final class Golden {
             // Pinned from a process run; LongRunSmokeTest asserts them
             // in-JVM, which also proves the two drive paths are equivalent
             Map.entry("sim.4242.normal.20000.terrain", "dc29b967adf18d3f"),
-            Map.entry("sim.4242.normal.20000.state", "5cf51429b84716cc"));
+            Map.entry("sim.4242.normal.20000.state", "5cf51429b84716cc"),
+
+            // L1 scripted-directive scenario (ScenarioMineTest): one mine order
+            // at 68,181,12, seed 42 / normal, 1000 ticks. Freezes active-play
+            // behavior, not just free-run drift.
+            Map.entry("scenario.mine.42.normal.t250.state", "9160bb88f30af7e5"),
+            Map.entry("scenario.mine.42.normal.terrain", "1be34d248eb12b9"),
+            Map.entry("scenario.mine.42.normal.state", "b03820dd46471ba2"));
 
     static String get(String key) {
         String value = PINS.get(key);
