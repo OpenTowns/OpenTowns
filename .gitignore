@@ -4,6 +4,9 @@
 /.gradle/
 *.iml
 
+# Appended by Log on LEVEL_ERROR; lands in src/ when running from source.
+error.log
+
 # Proprietary runtime pieces from Steam install.
 # These must never be committed to a public fork.
 # (original assets are not covered by the GPL code license)
