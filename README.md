@@ -45,7 +45,7 @@ The source code is released under the [GNU GPL v3 license][LICENSE], as was the 
 - You can redistribute it
 - If you distribute a modified version, you must also release it under GPL and make the source code available
 
-See the [LICENSE][] file for the full text.
+See the [LICENSE][] file for the full text. Third-party libraries bundled in the packaged releases are credited, with their licenses, in [THIRD-PARTY-NOTICES.md](./THIRD-PARTY-NOTICES.md).
 
 # Original Assets License Notice
 
