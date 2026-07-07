@@ -1,5 +1,5 @@
 plugins {
-    // Lets Gradle auto-download a JDK 8 toolchain if none is installed locally
+    // Lets Gradle auto-download a JDK 25 toolchain if none is installed locally
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
 }
 
